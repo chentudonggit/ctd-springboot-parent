@@ -15,7 +15,7 @@ import org.springframework.core.annotation.Order;
 @Order(-1)
 @Configuration
 @ComponentScan
-@PropertySource(value = {"classpath:/bootstrap.yml"}, ignoreResourceNotFound = true)
+@PropertySource(value = {"classpath:/config/application.yml"}, ignoreResourceNotFound = true)
 public class MySqlAutoConfiguration
 {
 }
