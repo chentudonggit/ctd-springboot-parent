@@ -21,7 +21,7 @@
     <properties>
         <fastjson.version>1.2.60</fastjson.version>
         <fasterxml.version>2.9.0</fasterxml.version>
-        <jackson.version>2.9.5</jackson.version>
+        <jackson.version>2.10.3</jackson.version>
         <dozer.version>5.5.1</dozer.version>
         <guava.version>24.0-jre</guava.version>
         <spring-cloud-dependencies.version>Greenwich.SR3</spring-cloud-dependencies.version>
