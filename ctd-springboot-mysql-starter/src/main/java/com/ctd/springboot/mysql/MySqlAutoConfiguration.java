@@ -1,12 +1,21 @@
 package com.ctd.springboot.mysql;
 
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.PropertySource;
+import org.springframework.core.annotation.Order;
+
 /**
- * todo 虚位以待，请打造属于自己的品牌
+ * MySqlAutoConfiguration
  *
  * @author chentudong
  * @date 2020/4/16 4:17 下午
  * @since 1.0
  */
-public class C
+@Order(-1)
+@Configuration
+@ComponentScan
+@PropertySource(value = {"classpath:/bootstrap.yml"}, ignoreResourceNotFound = true)
+public class MySqlAutoConfiguration
 {
 }

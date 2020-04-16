@@ -1,4 +1,4 @@
-package com.ctd.framework.web.converter.jackson;
+package com.ctd.springboot.web.converter.jackson;
 
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.core.JsonProcessingException;
