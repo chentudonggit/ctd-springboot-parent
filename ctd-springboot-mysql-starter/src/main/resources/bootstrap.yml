@@ -1,0 +1,20 @@
+spring:
+  datasource:
+    type: com.zaxxer.hikari.HikariDataSource
+    hikari:
+      auto-commit: false
+      transaction-isolation: 4
+      minimum-idle: 3
+      max-lifetime: 1800000
+      connection-timeout: 30000
+      maximum-pool-size: 1000
+      validation-timeout: 3000
+      read-only: false
+      login-timeout: 5
+    driver-class-name: com.mysql.jdbc.Driver
+
+  jpa:
+    database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
+
+  transaction:
+    rollback-on-commit-failure: true
