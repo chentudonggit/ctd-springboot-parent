@@ -1,6 +1,7 @@
-package com.ctd.mall.framework.common.core.utils.mobile;
+package com.ctd.springboot.common.core.utils.mobile;
 
-import com.ctd.mall.framework.common.core.utils.asserts.AssertUtils;
+
+import com.ctd.springboot.common.core.utils.asserts.AssertUtils;
 
 import java.util.Collection;
 import java.util.Objects;

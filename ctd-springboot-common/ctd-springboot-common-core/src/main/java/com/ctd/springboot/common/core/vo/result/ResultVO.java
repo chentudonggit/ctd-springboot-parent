@@ -1,7 +1,7 @@
-package com.ctd.mall.framework.common.core.vo.result;
+package com.ctd.springboot.common.core.vo.result;
 
 import com.alibaba.fastjson.JSON;
-import com.ctd.mall.framework.common.core.enums.code.CodeEnum;
+import com.ctd.springboot.common.core.enums.code.CodeEnum;
 
 import java.io.Serializable;
 

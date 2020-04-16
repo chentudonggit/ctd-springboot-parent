@@ -1,7 +1,7 @@
-package com.ctd.mall.framework.common.core.vo.user;
+package com.ctd.springboot.common.core.vo.user;
 
 import com.alibaba.fastjson.annotation.JSONField;
-import com.ctd.mall.framework.common.core.vo.role.RoleVO;
+import com.ctd.springboot.common.core.vo.role.RoleVO;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.io.Serializable;

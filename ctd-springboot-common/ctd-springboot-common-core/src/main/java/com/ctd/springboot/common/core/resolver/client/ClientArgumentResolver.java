@@ -1,9 +1,9 @@
-package com.ctd.mall.framework.common.core.resolver.client;
+package com.ctd.springboot.common.core.resolver.client;
 
-import com.ctd.mall.framework.common.core.constant.security.SecurityConstants;
-import com.ctd.mall.framework.common.core.annotation.login.LoginClient;
-import com.ctd.mall.framework.common.core.exception.UnifiedException;
-import com.ctd.mall.framework.common.core.utils.asserts.AssertUtils;
+import com.ctd.springboot.common.core.annotation.login.LoginClient;
+import com.ctd.springboot.common.core.constant.security.SecurityConstants;
+import com.ctd.springboot.common.core.exception.UnifiedException;
+import com.ctd.springboot.common.core.utils.asserts.AssertUtils;
 import org.springframework.core.MethodParameter;
 import org.springframework.web.bind.support.WebDataBinderFactory;
 import org.springframework.web.context.request.NativeWebRequest;

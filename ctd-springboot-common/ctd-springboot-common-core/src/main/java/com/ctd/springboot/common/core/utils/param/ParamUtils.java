@@ -1,6 +1,6 @@
-package com.ctd.mall.framework.common.core.utils.param;
+package com.ctd.springboot.common.core.utils.param;
 
-import com.ctd.mall.framework.common.core.utils.asserts.AssertUtils;
+import com.ctd.springboot.common.core.utils.asserts.AssertUtils;
 import org.apache.commons.lang3.StringUtils;
 
 import java.util.Map;

@@ -1,4 +1,4 @@
-package com.ctd.mall.framework.common.core.enums.method;
+package com.ctd.springboot.common.core.enums.method;
 
 import org.apache.commons.lang3.StringUtils;
 

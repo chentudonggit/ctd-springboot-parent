@@ -1,4 +1,4 @@
-package com.ctd.mall.framework.common.core.vo.role;
+package com.ctd.springboot.common.core.vo.role;
 
 import com.alibaba.fastjson.annotation.JSONField;
 import com.fasterxml.jackson.annotation.JsonProperty;

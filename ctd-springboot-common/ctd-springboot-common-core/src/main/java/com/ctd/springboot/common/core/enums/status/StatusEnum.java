@@ -1,4 +1,4 @@
-package com.ctd.mall.framework.common.core.enums.status;
+package com.ctd.springboot.common.core.enums.status;
 
 import java.util.Objects;
 

@@ -1,7 +1,7 @@
-package com.ctd.mall.framework.common.core.enums.code.auth;
+package com.ctd.springboot.common.core.enums.code.auth;
 
-import com.ctd.mall.framework.common.core.constants.code.ResultCodeSequence;
-import com.ctd.mall.framework.common.core.web.result.code.ResultCode;
+import com.ctd.springboot.common.core.constants.code.ResultCodeSequence;
+import com.ctd.springboot.common.core.web.result.code.ResultCode;
 import com.google.common.collect.ImmutableMap;
 
 import java.util.Objects;

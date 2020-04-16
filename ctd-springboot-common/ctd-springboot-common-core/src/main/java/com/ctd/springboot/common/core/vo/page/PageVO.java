@@ -1,4 +1,4 @@
-package com.ctd.mall.framework.common.core.vo.page;
+package com.ctd.springboot.common.core.vo.page;
 
 import com.alibaba.fastjson.annotation.JSONField;
 import com.fasterxml.jackson.annotation.JsonProperty;

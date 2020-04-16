@@ -1,7 +1,7 @@
-package com.ctd.mall.framework.common.core.vo.menu;
+package com.ctd.springboot.common.core.vo.menu;
 
 import com.alibaba.fastjson.annotation.JSONField;
-import com.ctd.mall.framework.common.core.enums.method.MethodEnum;
+import com.ctd.springboot.common.core.enums.method.MethodEnum;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 

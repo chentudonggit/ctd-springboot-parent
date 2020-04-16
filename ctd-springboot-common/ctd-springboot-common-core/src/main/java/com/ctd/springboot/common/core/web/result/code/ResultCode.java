@@ -1,4 +1,4 @@
-package com.ctd.mall.framework.common.core.web.result.code;
+package com.ctd.springboot.common.core.web.result.code;
 
 /**
  * ResultCode

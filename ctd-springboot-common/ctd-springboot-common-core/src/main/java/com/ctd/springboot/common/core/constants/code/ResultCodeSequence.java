@@ -1,4 +1,4 @@
-package com.ctd.mall.framework.common.core.constants.code;
+package com.ctd.springboot.common.core.constants.code;
 
 /**
  * ResultCodeSequence

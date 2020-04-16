@@ -1,7 +1,7 @@
-package com.ctd.mall.framework.common.core.utils.asserts;
+package com.ctd.springboot.common.core.utils.asserts;
 
-import com.ctd.mall.framework.common.core.exception.InternalException;
-import com.ctd.mall.framework.common.core.exception.UnifiedException;
+import com.ctd.springboot.common.core.exception.InternalException;
+import com.ctd.springboot.common.core.exception.UnifiedException;
 import org.apache.commons.lang3.StringUtils;
 
 import java.lang.reflect.Array;

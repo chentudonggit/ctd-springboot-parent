@@ -1,4 +1,4 @@
-package com.ctd.mall.framework.common.core.annotation.login;
+package com.ctd.springboot.common.core.annotation.login;
 
 import java.lang.annotation.*;
 

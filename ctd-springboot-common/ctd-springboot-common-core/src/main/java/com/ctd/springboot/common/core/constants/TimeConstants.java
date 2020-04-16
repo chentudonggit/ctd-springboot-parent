@@ -1,4 +1,4 @@
-package com.ctd.mall.framework.common.core.constants;
+package com.ctd.springboot.common.core.constants;
 
 /**
  * TimeConstants

@@ -1,4 +1,4 @@
-package com.ctd.mall.framework.common.core.config.password.security;
+package com.ctd.springboot.common.core.config.password.security;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;

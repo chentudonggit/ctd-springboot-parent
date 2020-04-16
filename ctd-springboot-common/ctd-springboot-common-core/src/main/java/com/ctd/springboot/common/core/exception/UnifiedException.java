@@ -1,4 +1,4 @@
-package com.ctd.mall.framework.common.core.exception;
+package com.ctd.springboot.common.core.exception;
 
 /**
  * 弹窗提示异常

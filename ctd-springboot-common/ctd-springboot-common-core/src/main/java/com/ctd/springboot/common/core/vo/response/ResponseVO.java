@@ -1,9 +1,9 @@
-package com.ctd.mall.framework.common.core.vo.response;
+package com.ctd.springboot.common.core.vo.response;
 
 import com.alibaba.fastjson.JSONObject;
-import com.ctd.mall.framework.common.core.vo.page.PageVO;
-import com.ctd.mall.framework.common.core.vo.result.ResultVO;
-import com.ctd.mall.framework.common.core.web.result.code.ResultCode;
+import com.ctd.springboot.common.core.vo.page.PageVO;
+import com.ctd.springboot.common.core.vo.result.ResultVO;
+import com.ctd.springboot.common.core.web.result.code.ResultCode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.core.io.buffer.DataBuffer;
 import org.springframework.core.io.buffer.DataBufferFactory;

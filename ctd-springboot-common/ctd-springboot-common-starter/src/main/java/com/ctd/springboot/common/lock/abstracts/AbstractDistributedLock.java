@@ -1,6 +1,7 @@
-package com.ctd.mall.framework.common.lock.abstracts;
+package com.ctd.springboot.common.lock.abstracts;
 
-import com.ctd.mall.framework.common.lock.DistributedLock;
+
+import com.ctd.springboot.common.lock.DistributedLock;
 
 /**
  * AbstractDistributedLock

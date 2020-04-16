@@ -1,4 +1,4 @@
-package com.ctd.mall.framework.common.lock;
+package com.ctd.springboot.common.lock;
 
 /**
  * DistributedLock

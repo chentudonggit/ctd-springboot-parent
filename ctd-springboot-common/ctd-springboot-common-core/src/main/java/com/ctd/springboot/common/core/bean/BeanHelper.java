@@ -1,7 +1,7 @@
-package com.ctd.mall.framework.common.core.bean;
+package com.ctd.springboot.common.core.bean;
 
-import com.ctd.mall.framework.common.core.utils.asserts.AssertUtils;
-import com.ctd.mall.framework.common.core.vo.page.PageVO;
+import com.ctd.springboot.common.core.utils.asserts.AssertUtils;
+import com.ctd.springboot.common.core.vo.page.PageVO;
 import org.dozer.DozerBeanMapper;
 
 import java.util.ArrayList;

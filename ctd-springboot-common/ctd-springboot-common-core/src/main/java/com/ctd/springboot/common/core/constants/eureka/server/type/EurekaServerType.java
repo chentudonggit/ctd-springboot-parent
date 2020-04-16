@@ -1,4 +1,4 @@
-package com.ctd.mall.framework.common.core.constants.eureka.server.type;
+package com.ctd.springboot.common.core.constants.eureka.server.type;
 
 /**
  * EurekaServerType

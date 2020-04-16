@@ -1,4 +1,4 @@
-package com.ctd.mall.framework.common.core.utils.rsa;
+package com.ctd.springboot.common.core.utils.rsa;
 
 import sun.misc.BASE64Decoder;
 import sun.misc.BASE64Encoder;
