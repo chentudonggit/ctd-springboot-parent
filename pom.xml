@@ -21,6 +21,7 @@
         <module>ctd-springboot-redis-starter</module>
         <module>ctd-springboot-cloud-starter</module>
         <module>ctd-springboot-swagger-starter</module>
+        <module>ctd-springboot-backend-starter</module>
     </modules>
 
     <properties>
