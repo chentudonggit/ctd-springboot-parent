@@ -1,6 +1,6 @@
 package com.ctd.springboot.redis.lock.redis;
 
-import com.ctd.mall.framework.common.lock.abstracts.AbstractDistributedLock;
+import com.ctd.springboot.common.lock.abstracts.AbstractDistributedLock;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

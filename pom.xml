@@ -19,6 +19,7 @@
         <module>ctd-springboot-data-jpa-starter</module>
         <module>ctd-springboot-auth-starter</module>
         <module>ctd-springboot-redis-starter</module>
+        <module>ctd-springboot-cloud-starter</module>
     </modules>
 
     <properties>

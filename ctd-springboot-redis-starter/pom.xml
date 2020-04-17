@@ -22,9 +22,9 @@
             </exclusions>
         </dependency>
         <dependency>
-            <groupId>com.ctd.mall</groupId>
-            <artifactId>ctd-mall-framework-common-starter</artifactId>
-            <version>${project.version}</version>
+            <groupId>com.ctd.springboot</groupId>
+            <artifactId>ctd-springboot-common-starter</artifactId>
+            <version>${ctd-springboot.version}</version>
         </dependency>
         <dependency>
             <groupId>io.lettuce</groupId>

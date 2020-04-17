@@ -1,6 +1,6 @@
 package com.ctd.springboot.redis.serializer.redis;
 
-import com.ctd.mall.framework.common.core.utils.asserts.AssertUtils;
+import com.ctd.springboot.common.core.utils.asserts.AssertUtils;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.core.serializer.support.DeserializingConverter;
 import org.springframework.core.serializer.support.SerializingConverter;

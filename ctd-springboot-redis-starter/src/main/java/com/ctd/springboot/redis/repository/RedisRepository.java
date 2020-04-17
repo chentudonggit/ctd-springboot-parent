@@ -1,7 +1,7 @@
 package com.ctd.springboot.redis.repository;
 
 import com.alibaba.fastjson.JSON;
-import com.ctd.mall.framework.common.core.utils.asserts.AssertUtils;
+import com.ctd.springboot.common.core.utils.asserts.AssertUtils;
 import org.apache.commons.collections.CollectionUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
