@@ -1,0 +1,10 @@
+mybatis-plus:
+  mapper-locations: classpath*:**/mapper/**/*.xml
+  typeAliasesPackage: com.ctd.**.domian.**
+  global-config:
+    banner: false
+  configuration:
+    map-underscore-to-camel-case: true
+    cache-enabled: false
+    # 输出日志到控制台
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
