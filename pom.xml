@@ -18,6 +18,7 @@
         <module>ctd-springboot-mysql-starter</module>
         <module>ctd-springboot-data-jpa-starter</module>
         <module>ctd-springboot-auth-starter</module>
+        <module>ctd-springboot-redis-starter</module>
     </modules>
 
     <properties>
