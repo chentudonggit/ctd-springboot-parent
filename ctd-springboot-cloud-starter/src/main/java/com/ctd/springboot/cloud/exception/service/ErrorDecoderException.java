@@ -2,7 +2,7 @@ package com.ctd.springboot.cloud.exception.service;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
-import com.ctd.mall.framework.common.core.exception.InternalException;
+import com.ctd.springboot.common.core.exception.InternalException;
 import feign.Response;
 import feign.Util;
 import feign.codec.ErrorDecoder;
