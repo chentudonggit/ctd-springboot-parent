@@ -20,6 +20,7 @@
         <module>ctd-springboot-auth-starter</module>
         <module>ctd-springboot-redis-starter</module>
         <module>ctd-springboot-cloud-starter</module>
+        <module>ctd-springboot-swagger-starter</module>
     </modules>
 
     <properties>
