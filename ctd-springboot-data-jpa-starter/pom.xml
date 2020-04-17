@@ -19,7 +19,7 @@
         <dependency>
             <groupId>com.ctd.springboot</groupId>
             <artifactId>ctd-springboot-common-core</artifactId>
-            <version>${project.version}</version>
+            <version>${ctd-springboot.version}</version>
         </dependency>
     </dependencies>
 </project>
