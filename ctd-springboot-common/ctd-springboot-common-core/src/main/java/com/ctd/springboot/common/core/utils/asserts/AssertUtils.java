@@ -113,7 +113,7 @@ public final class AssertUtils
      */
     public static <T> T isNullReturnNull(Object obj)
     {
-        return isNull(obj) ? null : (T) obj;
+        return isNull(obj) ? null : transform(obj);
     }
 
     /**
@@ -126,7 +126,7 @@ public final class AssertUtils
      */
     public static <T> T isNullReturnParam(Object obj, T param)
     {
-        return isNull(obj) ? param : (T) obj;
+        return isNull(obj) ? param : transform(obj) ;
     }
 
     /**
@@ -172,5 +172,17 @@ public final class AssertUtils
     public static String msg(String msg, Object... args)
     {
         return StringUtils.isBlank(msg) ? "网络异常，请稍后重试！" : String.format(msg, args);
+    }
+
+    /**
+     * 类型转换
+     *
+     * @param obj obj
+     * @param <T> <T>
+     * @return T
+     */
+    public static <T> T transform(Object obj)
+    {
+        return (T) obj;
     }
 }
