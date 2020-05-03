@@ -9,6 +9,7 @@ import com.baomidou.mybatisplus.core.toolkit.ReflectionKit;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.ctd.springboot.common.core.utils.asserts.AssertUtils;
 import com.ctd.springboot.common.lock.DistributedLock;
+import com.ctd.springboot.mybatis.plus.domain.base.BaseEntity;
 import com.ctd.springboot.mybatis.plus.service.SuperService;
 import org.apache.commons.lang3.StringUtils;
 
@@ -22,7 +23,7 @@ import java.util.Objects;
  * @date 2020/3/8 9:27
  * @since 1.0
  */
-public class SuperServiceImpl<M extends BaseMapper<T>, T> extends ServiceImpl<M, T> implements SuperService<T>
+public class SuperServiceImpl<M extends BaseMapper<T>, T extends BaseEntity<T>> extends ServiceImpl<M, T> implements SuperService<T>
 {
     /**
      * 幂等性新增记录
@@ -35,7 +36,7 @@ public class SuperServiceImpl<M extends BaseMapper<T>, T> extends ServiceImpl<M,
      * @return Boolean
      */
     @Override
-    public Boolean saveIdempotency(T entity, DistributedLock lock, String lockKey, Wrapper<T> countWrapper, String msg)
+    public Boolean saveIdempotent(T entity, DistributedLock lock, String lockKey, Wrapper<T> countWrapper, String msg)
     {
         AssertUtils.isNull(lock, "lock 不能为空");
         AssertUtils.isNull(lockKey, "lockKey 不能为空");
@@ -53,7 +54,7 @@ public class SuperServiceImpl<M extends BaseMapper<T>, T> extends ServiceImpl<M,
                 {
                     if (StringUtils.isBlank(msg))
                     {
-                        msg = "已存在";
+                        msg = entity.getTipsMsg().append("已存在").toString();
                     }
                     AssertUtils.msgDevelopment(msg);
                 }
@@ -78,9 +79,9 @@ public class SuperServiceImpl<M extends BaseMapper<T>, T> extends ServiceImpl<M,
      * @return Boolean
      */
     @Override
-    public Boolean saveIdempotency(T entity, DistributedLock lock, String lockKey, Wrapper<T> countWrapper)
+    public Boolean saveIdempotent(T entity, DistributedLock lock, String lockKey, Wrapper<T> countWrapper)
     {
-        return saveIdempotency(entity, lock, lockKey, countWrapper, null);
+        return saveIdempotent(entity, lock, lockKey, countWrapper, null);
     }
 
     /**
@@ -94,7 +95,7 @@ public class SuperServiceImpl<M extends BaseMapper<T>, T> extends ServiceImpl<M,
      * @return Boolean
      */
     @Override
-    public Boolean saveOrUpdateIdempotency(T entity, DistributedLock lock, String lockKey, Wrapper<T> countWrapper, String msg)
+    public Boolean saveOrUpdateIdempotent(T entity, DistributedLock lock, String lockKey, Wrapper<T> countWrapper, String msg)
     {
         if (Objects.nonNull(entity))
         {
@@ -109,7 +110,7 @@ public class SuperServiceImpl<M extends BaseMapper<T>, T> extends ServiceImpl<M,
                     {
                         msg = "已存在";
                     }
-                    return this.saveIdempotency(entity, lock, lockKey, countWrapper, msg);
+                    return this.saveIdempotent(entity, lock, lockKey, countWrapper, msg);
                 } else
                 {
                     return updateById(entity);
@@ -132,8 +133,8 @@ public class SuperServiceImpl<M extends BaseMapper<T>, T> extends ServiceImpl<M,
      * @return Boolean
      */
     @Override
-    public Boolean saveOrUpdateIdempotency(T entity, DistributedLock lock, String lockKey, Wrapper<T> countWrapper)
+    public Boolean saveOrUpdateIdempotent(T entity, DistributedLock lock, String lockKey, Wrapper<T> countWrapper)
     {
-        return this.saveOrUpdateIdempotency(entity, lock, lockKey, countWrapper, null);
+        return this.saveOrUpdateIdempotent(entity, lock, lockKey, countWrapper, null);
     }
 }

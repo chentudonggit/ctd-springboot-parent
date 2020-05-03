@@ -24,7 +24,7 @@ public interface SuperService<T> extends IService<T>
      * @param msg          对象已存在提示信息
      * @return Boolean
      */
-    Boolean saveIdempotency(T entity, DistributedLock lock, String lockKey, Wrapper<T> countWrapper, String msg);
+    Boolean saveIdempotent(T entity, DistributedLock lock, String lockKey, Wrapper<T> countWrapper, String msg);
 
     /**
      * 幂等性新增记录
@@ -35,7 +35,7 @@ public interface SuperService<T> extends IService<T>
      * @param countWrapper 判断是否存在的条件
      * @return Boolean
      */
-    Boolean saveIdempotency(T entity, DistributedLock lock, String lockKey, Wrapper<T> countWrapper);
+    Boolean saveIdempotent(T entity, DistributedLock lock, String lockKey, Wrapper<T> countWrapper);
 
     /**
      * 幂等性新增或更新记录
@@ -47,7 +47,7 @@ public interface SuperService<T> extends IService<T>
      * @param msg          对象已存在提示信息
      * @return Boolean
      */
-    Boolean saveOrUpdateIdempotency(T entity, DistributedLock lock, String lockKey, Wrapper<T> countWrapper, String msg);
+    Boolean saveOrUpdateIdempotent(T entity, DistributedLock lock, String lockKey, Wrapper<T> countWrapper, String msg);
 
     /**
      * 幂等性新增或更新记录
@@ -58,6 +58,6 @@ public interface SuperService<T> extends IService<T>
      * @param countWrapper 判断是否存在的条件
      * @return Boolean
      */
-    Boolean saveOrUpdateIdempotency(T entity, DistributedLock lock, String lockKey, Wrapper<T> countWrapper);
+    Boolean saveOrUpdateIdempotent(T entity, DistributedLock lock, String lockKey, Wrapper<T> countWrapper);
 
 }
