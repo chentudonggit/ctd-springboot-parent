@@ -1,20 +1,24 @@
 package com.ctd.springboot.mybatis.plus.service.impl;
 
-import com.baomidou.mybatisplus.core.conditions.Wrapper;
-import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.baomidou.mybatisplus.core.metadata.TableInfo;
 import com.baomidou.mybatisplus.core.metadata.TableInfoHelper;
 import com.baomidou.mybatisplus.core.toolkit.ExceptionUtils;
 import com.baomidou.mybatisplus.core.toolkit.ReflectionKit;
-import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.baomidou.mybatisplus.mapper.BaseMapper;
+import com.baomidou.mybatisplus.mapper.Wrapper;
+import com.baomidou.mybatisplus.plugins.Page;
+import com.baomidou.mybatisplus.service.impl.ServiceImpl;
 import com.ctd.springboot.common.core.utils.asserts.AssertUtils;
+import com.ctd.springboot.common.core.vo.search.SearchVO;
 import com.ctd.springboot.common.lock.DistributedLock;
 import com.ctd.springboot.mybatis.plus.domain.base.BaseEntity;
 import com.ctd.springboot.mybatis.plus.service.SuperService;
+import com.ctd.springboot.mybatis.plus.utils.condition.ConditionUtils;
 import org.apache.commons.lang3.StringUtils;
 
 import java.io.Serializable;
 import java.util.Objects;
+
 
 /**
  * SuperServiceImpl
@@ -46,10 +50,10 @@ public class SuperServiceImpl<M extends BaseMapper<T>, T extends BaseEntity<T>> 
             if (lock.lock(lockKey))
             {
                 //判断记录是否已存在
-                int count = super.count(countWrapper);
+                int count = super.selectCount(countWrapper);
                 if (count == 0)
                 {
-                    return super.save(entity);
+                    return super.insert(entity);
                 } else
                 {
                     if (StringUtils.isBlank(msg))
@@ -104,7 +108,7 @@ public class SuperServiceImpl<M extends BaseMapper<T>, T extends BaseEntity<T>> 
             if (Objects.nonNull(tableInfo) && StringUtils.isNotBlank(tableInfo.getKeyProperty()))
             {
                 Object idVal = ReflectionKit.getMethodValue(cls, entity, tableInfo.getKeyProperty());
-                if (com.baomidou.mybatisplus.core.toolkit.StringUtils.checkValNull(idVal) || Objects.isNull(getById((Serializable) idVal)))
+                if (com.baomidou.mybatisplus.core.toolkit.StringUtils.checkValNull(idVal) || Objects.isNull(selectById((Serializable) idVal)))
                 {
                     if (StringUtils.isBlank(msg))
                     {
@@ -136,5 +140,20 @@ public class SuperServiceImpl<M extends BaseMapper<T>, T extends BaseEntity<T>> 
     public Boolean saveOrUpdateIdempotent(T entity, DistributedLock lock, String lockKey, Wrapper<T> countWrapper)
     {
         return this.saveOrUpdateIdempotent(entity, lock, lockKey, countWrapper, null);
+    }
+
+    /**
+     * findAll
+     *
+     * @param search search
+     * @return Page<T>
+     */
+    @Override
+    public Page<T> findAll(SearchVO search)
+    {
+        Integer page = AssertUtils.isNullReturnParam(search.getPage(), 0);
+        Integer size = AssertUtils.isNullReturnParam(search.getSize(), 10);
+        Page<T> result = new Page<>(page, size);
+        return this.selectPage(result, ConditionUtils.getCondition(search));
     }
 }

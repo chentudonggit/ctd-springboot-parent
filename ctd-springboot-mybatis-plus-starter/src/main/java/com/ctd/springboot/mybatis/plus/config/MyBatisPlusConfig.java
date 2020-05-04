@@ -18,7 +18,7 @@ import org.springframework.context.annotation.Configuration;
  * @since 1.0
  */
 @Configuration
-@MapperScan(basePackages = {"com.ctd.mall.**.mapper.**", "com.ctd.mall.**.dao.**"})
+@MapperScan(basePackages = {"com...mapper.**", "com...dao.**"})
 public class MyBatisPlusConfig
 {
     @Bean

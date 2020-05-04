@@ -9,13 +9,13 @@ import java.util.Map;
 import java.util.Objects;
 
 /**
- * ConditionHelper
+ * ConditionUtils
  *
  * @author chentudong
  * @date 2020/5/4 2:12
  * @since 1.0
  */
-public class ConditionHelper
+public class ConditionUtils
 {
     public static final String EQ = "_eq";
     public static final String NE = "_ne";
@@ -35,41 +35,41 @@ public class ConditionHelper
         if (Objects.nonNull(where) && (!where.isEmpty()))
         {
             where.forEach((k, v) -> {
-                if (ConditionHelper.isLoadCondition(EQ, k, v))
+                if (ConditionUtils.isLoadCondition(EQ, k, v))
                 {
                     condition.eq(StringUtils.camelToUnderline(k.split(EQ)[0]), v);
-                } else if (ConditionHelper.isLoadCondition(NE, k, v))
+                } else if (ConditionUtils.isLoadCondition(NE, k, v))
                 {
                     condition.ne(StringUtils.camelToUnderline(k.split(NE)[0]), v);
-                } else if (ConditionHelper.isLoadCondition(LT, k, v))
+                } else if (ConditionUtils.isLoadCondition(LT, k, v))
                 {
                     condition.lt(StringUtils.camelToUnderline(k.split(LT)[0]), v);
-                } else if (ConditionHelper.isLoadCondition(LE, k, v))
+                } else if (ConditionUtils.isLoadCondition(LE, k, v))
                 {
                     condition.le(StringUtils.camelToUnderline(k.split(LE)[0]), v);
-                } else if (ConditionHelper.isLoadCondition(GT, k, v))
+                } else if (ConditionUtils.isLoadCondition(GT, k, v))
                 {
                     condition.gt(StringUtils.camelToUnderline(k.split(GT)[0]), v);
-                } else if (ConditionHelper.isLoadCondition(GE, k, v))
+                } else if (ConditionUtils.isLoadCondition(GE, k, v))
                 {
                     condition.ge(StringUtils.camelToUnderline(k.split(GE)[0]), v);
-                } else if (ConditionHelper.isLoadCondition(L_LIKE, k, v))
+                } else if (ConditionUtils.isLoadCondition(L_LIKE, k, v))
                 {
                     condition.like(StringUtils.camelToUnderline(k.split(L_LIKE)[0]), String.valueOf(v), SqlLike.LEFT);
-                } else if (ConditionHelper.isLoadCondition(R_LIKE, k, v))
+                } else if (ConditionUtils.isLoadCondition(R_LIKE, k, v))
                 {
                     condition.like(StringUtils.camelToUnderline(k.split(R_LIKE)[0]), String.valueOf(v), SqlLike.RIGHT);
-                } else if (ConditionHelper.isLoadCondition(LIKE, k, v))
+                } else if (ConditionUtils.isLoadCondition(LIKE, k, v))
                 {
                     condition.like(StringUtils.camelToUnderline(k.split(LIKE)[0]), String.valueOf(v));
-                } else if (ConditionHelper.isLoadCondition(IN, k, v))
+                } else if (ConditionUtils.isLoadCondition(IN, k, v))
                 {
                     condition.in(StringUtils.camelToUnderline(k.split(IN)[0]), String.valueOf(v));
-                } else if (ConditionHelper.isLoadCondition(ISNULL, k, v))
+                } else if (ConditionUtils.isLoadCondition(ISNULL, k, v))
                 {
                     String camel = StringUtils.camelToUnderline(k.split(ISNULL)[0]);
                     condition.andNew(camel + " IS NULL OR " + camel + " = '' ");
-                } else if (ConditionHelper.isLoadCondition(IS_NOTNULL, k, v))
+                } else if (ConditionUtils.isLoadCondition(IS_NOTNULL, k, v))
                 {
                     condition.isNotNull(StringUtils.camelToUnderline(k.split(IS_NOTNULL)[0]));
                 }

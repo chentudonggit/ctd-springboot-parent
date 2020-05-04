@@ -1,7 +1,9 @@
 package com.ctd.springboot.mybatis.plus.utils.sql;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.plugins.Page;
 import com.ctd.springboot.common.core.bean.BeanHelper;
+import com.ctd.springboot.common.core.utils.asserts.AssertUtils;
 import com.ctd.springboot.common.core.vo.page.PageVO;
 
 import java.util.ArrayList;
@@ -27,31 +29,43 @@ public class CustomSqlUtils
      */
     public static <T, S> PageVO<T> convert(IPage<S> s, Class<T> tClass)
     {
+        Integer current = AssertUtils.isNullReturnParam(s.getCurrent(), 0);
+        Integer pageSize = AssertUtils.isNullReturnParam(s.getSize(), 10);
+        return convert(current, pageSize, s.getPages(), s.getTotal(), s.getRecords(), tClass);
+    }
+
+    public static <T, S> PageVO<T> convert(Page<S> s, Class<T> tClass)
+    {
+        return convert(s.getCurrent(), s.getSize(), s.getPages(), s.getTotal(), s.getRecords(), tClass);
+    }
+
+    /***
+     * convert
+     * @param current current
+     * @param pageSize pageSize
+     * @param pages pages
+     * @param total total
+     * @param records records
+     * @param tClass tClass
+     * @param <T> <T>
+     * @param <S> <S>
+     * @return PageVO<T>
+     */
+    public static <T, S> PageVO<T> convert(Integer current, Integer pageSize, Long pages, Long total, List<S> records, Class<T> tClass)
+    {
         PageVO<T> result = new PageVO<>();
         result.setData(new ArrayList<>());
-        int page = 0;
-        int pages = 0;
-        int size = 10;
-        long total = 0;
-        if (Objects.nonNull(s))
+        if (Objects.nonNull(records))
         {
-            page = (int) s.getCurrent();
-            size = (int) s.getSize();
-            pages = (int) s.getPages();
-            total = s.getTotal();
-            List<S> records = s.getRecords();
-            if (Objects.nonNull(records))
+            for (S record : records)
             {
-                for (S record : records)
-                {
-                    result.getData().add(BeanHelper.convert(record, tClass));
-                }
+                result.getData().add(BeanHelper.convert(record, tClass));
             }
         }
-        result.setPage(page);
-        result.setSize(size);
-        result.setTotalPage(pages);
-        result.setTotalCount(total);
+        result.setPage(AssertUtils.isNullReturnParam(current, 0));
+        result.setSize(AssertUtils.isNullReturnParam(pageSize, 10));
+        result.setTotalPage(AssertUtils.isNullReturnParam(pages, 0));
+        result.setTotalCount(AssertUtils.isNullReturnParam(total, 10L));
         return result;
     }
 }

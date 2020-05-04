@@ -1,7 +1,9 @@
 package com.ctd.springboot.mybatis.plus.service;
 
-import com.baomidou.mybatisplus.core.conditions.Wrapper;
-import com.baomidou.mybatisplus.extension.service.IService;
+import com.baomidou.mybatisplus.mapper.Wrapper;
+import com.baomidou.mybatisplus.plugins.Page;
+import com.baomidou.mybatisplus.service.IService;
+import com.ctd.springboot.common.core.vo.search.SearchVO;
 import com.ctd.springboot.common.lock.DistributedLock;
 
 /**
@@ -60,4 +62,11 @@ public interface SuperService<T> extends IService<T>
      */
     Boolean saveOrUpdateIdempotent(T entity, DistributedLock lock, String lockKey, Wrapper<T> countWrapper);
 
+    /**
+     * findAll
+     *
+     * @param search search
+     * @return Page<T>
+     */
+    Page<T> findAll(SearchVO search);
 }
