@@ -1,13 +1,13 @@
 package com.ctd.springboot.mybatis.plus.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.Wrapper;
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.metadata.TableInfo;
 import com.baomidou.mybatisplus.core.metadata.TableInfoHelper;
-import com.baomidou.mybatisplus.core.toolkit.ExceptionUtils;
 import com.baomidou.mybatisplus.core.toolkit.ReflectionKit;
-import com.baomidou.mybatisplus.mapper.BaseMapper;
-import com.baomidou.mybatisplus.mapper.Wrapper;
-import com.baomidou.mybatisplus.plugins.Page;
-import com.baomidou.mybatisplus.service.impl.ServiceImpl;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.ctd.springboot.common.core.utils.asserts.AssertUtils;
 import com.ctd.springboot.common.core.vo.search.SearchVO;
 import com.ctd.springboot.common.lock.DistributedLock;
@@ -15,8 +15,8 @@ import com.ctd.springboot.mybatis.plus.domain.base.BaseEntity;
 import com.ctd.springboot.mybatis.plus.service.SuperService;
 import com.ctd.springboot.mybatis.plus.utils.condition.ConditionUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 
-import java.io.Serializable;
 import java.util.Objects;
 
 
@@ -29,6 +29,9 @@ import java.util.Objects;
  */
 public class SuperServiceImpl<M extends BaseMapper<T>, T extends BaseEntity<T>> extends ServiceImpl<M, T> implements SuperService<T>
 {
+    @Autowired
+    protected M mapper;
+
     /**
      * 幂等性新增记录
      *
@@ -50,10 +53,10 @@ public class SuperServiceImpl<M extends BaseMapper<T>, T extends BaseEntity<T>> 
             if (lock.lock(lockKey))
             {
                 //判断记录是否已存在
-                int count = super.selectCount(countWrapper);
+                int count = super.count(countWrapper);
                 if (count == 0)
                 {
-                    return super.insert(entity);
+                    return super.save(entity);
                 } else
                 {
                     if (StringUtils.isBlank(msg))
@@ -108,7 +111,7 @@ public class SuperServiceImpl<M extends BaseMapper<T>, T extends BaseEntity<T>> 
             if (Objects.nonNull(tableInfo) && StringUtils.isNotBlank(tableInfo.getKeyProperty()))
             {
                 Object idVal = ReflectionKit.getMethodValue(cls, entity, tableInfo.getKeyProperty());
-                if (com.baomidou.mybatisplus.core.toolkit.StringUtils.checkValNull(idVal) || Objects.isNull(selectById((Serializable) idVal)))
+                if (com.baomidou.mybatisplus.core.toolkit.StringUtils.checkValNull(idVal) || Objects.isNull(entity.selectById()))
                 {
                     if (StringUtils.isBlank(msg))
                     {
@@ -121,7 +124,7 @@ public class SuperServiceImpl<M extends BaseMapper<T>, T extends BaseEntity<T>> 
                 }
             } else
             {
-                throw ExceptionUtils.mpe("Error:  Can not execute. Could not find @TableId.");
+                AssertUtils.msgDevelopment("Error:  Can not execute. Could not find @TableId.");
             }
         }
         return false;
@@ -149,11 +152,10 @@ public class SuperServiceImpl<M extends BaseMapper<T>, T extends BaseEntity<T>> 
      * @return Page<T>
      */
     @Override
-    public Page<T> findAll(SearchVO search)
+    public IPage<T> findAll(SearchVO search)
     {
         Integer page = AssertUtils.isNullReturnParam(search.getPage(), 0);
         Integer size = AssertUtils.isNullReturnParam(search.getSize(), 10);
-        Page<T> result = new Page<>(page, size);
-        return this.selectPage(result, ConditionUtils.getCondition(search));
+        return baseMapper.selectPage(new Page<>(page, size), ConditionUtils.getCondition(search));
     }
 }

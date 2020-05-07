@@ -1,3 +1,4 @@
 # Auto Configure
 org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
-  com.ctd.springboot.mybatis.plus.CustomMyBatisPlusAutoConfiguration
+  com.ctd.springboot.mybatis.plus.CustomMyBatisPlusAutoConfiguration,\
+  com.ctd.springboot.mybatis.plus.config.CustomMyBatisPlusConfig

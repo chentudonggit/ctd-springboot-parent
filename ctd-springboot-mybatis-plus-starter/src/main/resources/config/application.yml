@@ -3,9 +3,8 @@ mybatis-plus:
     - classpath*:/mybatis/mapper/**/*.xml
     - classpath*:/mapper/**/*.xml
 
-  typeAliasesPackage: com...domian.**
-  global-config:
-    banner: false
+  type-aliases-package: com.ctd.**.domian.**,com.point.**.domian.**
+
   configuration:
     map-underscore-to-camel-case: true
     cache-enabled: false

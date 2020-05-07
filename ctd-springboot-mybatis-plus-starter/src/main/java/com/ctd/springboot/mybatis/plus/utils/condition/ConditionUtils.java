@@ -1,8 +1,9 @@
 package com.ctd.springboot.mybatis.plus.utils.condition;
 
-import com.baomidou.mybatisplus.enums.SqlLike;
-import com.baomidou.mybatisplus.mapper.Condition;
-import com.baomidou.mybatisplus.toolkit.StringUtils;
+import com.baomidou.mybatisplus.core.conditions.AbstractWrapper;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.toolkit.StringUtils;
+import com.ctd.springboot.common.core.utils.asserts.AssertUtils;
 import com.ctd.springboot.common.core.vo.search.SearchVO;
 
 import java.util.Map;
@@ -30,7 +31,7 @@ public class ConditionUtils
     public static final String ISNULL = "_isNull";
     public static final String IS_NOTNULL = "_isNotNull";
 
-    public static void searchConditions(Map<String, Object> where, Condition condition)
+    public static void searchConditions(Map<String, Object> where, AbstractWrapper condition)
     {
         if (Objects.nonNull(where) && (!where.isEmpty()))
         {
@@ -55,10 +56,10 @@ public class ConditionUtils
                     condition.ge(StringUtils.camelToUnderline(k.split(GE)[0]), v);
                 } else if (ConditionUtils.isLoadCondition(L_LIKE, k, v))
                 {
-                    condition.like(StringUtils.camelToUnderline(k.split(L_LIKE)[0]), String.valueOf(v), SqlLike.LEFT);
+                    condition.likeLeft(StringUtils.camelToUnderline(k.split(L_LIKE)[0]), String.valueOf(v));
                 } else if (ConditionUtils.isLoadCondition(R_LIKE, k, v))
                 {
-                    condition.like(StringUtils.camelToUnderline(k.split(R_LIKE)[0]), String.valueOf(v), SqlLike.RIGHT);
+                    condition.likeRight(StringUtils.camelToUnderline(k.split(R_LIKE)[0]), String.valueOf(v));
                 } else if (ConditionUtils.isLoadCondition(LIKE, k, v))
                 {
                     condition.like(StringUtils.camelToUnderline(k.split(LIKE)[0]), String.valueOf(v));
@@ -68,7 +69,7 @@ public class ConditionUtils
                 } else if (ConditionUtils.isLoadCondition(ISNULL, k, v))
                 {
                     String camel = StringUtils.camelToUnderline(k.split(ISNULL)[0]);
-                    condition.andNew(camel + " IS NULL OR " + camel + " = '' ");
+                    condition.comment(camel + " IS NULL OR " + camel + " = '' ");
                 } else if (ConditionUtils.isLoadCondition(IS_NOTNULL, k, v))
                 {
                     condition.isNotNull(StringUtils.camelToUnderline(k.split(IS_NOTNULL)[0]));
@@ -77,37 +78,43 @@ public class ConditionUtils
         }
     }
 
-
-    public static Condition getCondition(SearchVO search) {
-        Condition condition = Condition.create();
-        if (Objects.nonNull(search)) {
-             searchConditions(search.getWhere(), condition);
-             sortConditions(search.getOrderBy(), condition);
-        }
-        return condition;
+    public static AbstractWrapper getCondition(SearchVO search)
+    {
+        return getCondition(search, null);
     }
 
-    public static void sortConditions(Map<String, String> orderBy, Condition condition) {
-        if (orderBy != null && !orderBy.isEmpty()) {
-            StringBuilder stringBuilder = new StringBuilder();
+    public static AbstractWrapper getCondition(SearchVO search, AbstractWrapper wrapper)
+    {
+        wrapper = Objects.isNull(wrapper) ? new QueryWrapper<>() : wrapper;
+        if (Objects.nonNull(search))
+        {
+            searchConditions(search.getWhere(), wrapper);
+            sortConditions(search.getOrderBy(), wrapper);
+        }
+        return wrapper;
+    }
+
+    public static void sortConditions(Map<String, String> orderBy, AbstractWrapper wrapper)
+    {
+        if (AssertUtils.nonNull(orderBy))
+        {
             orderBy.forEach((k, v) -> {
-                if (k.trim().length() > 0 && v.trim().length() > 0) {
-                    stringBuilder.append(StringUtils.camelToUnderline(k));
-                    stringBuilder.append("asc".equals(v.toLowerCase()) ? " ASC , " : " DESC ,");
+                if (k.trim().length() > 0 && v.trim().length() > 0)
+                {
+                    wrapper.orderBy(true, "asc".equals(v.toLowerCase()), StringUtils.camelToUnderline(k));
                 }
             });
-            String orderBySql = stringBuilder.toString().trim();
-            condition.orderBy(orderBySql.substring(0, orderBySql.length() - 1));
-        } else {
-            condition.orderBy("update_time", false);
+        } else
+        {
+            wrapper.orderByDesc("update_time");
         }
     }
 
-    public static Condition searchConditions(Map<String, Object> where)
+    public static AbstractWrapper searchConditions(Map<String, Object> where)
     {
-        Condition condition = Condition.create();
-        searchConditions(where, condition);
-        return condition;
+        AbstractWrapper wrapper = new QueryWrapper();
+        searchConditions(where, wrapper);
+        return wrapper;
     }
 
     public static boolean isLoadCondition(String conditionSuffix, String k, Object v)

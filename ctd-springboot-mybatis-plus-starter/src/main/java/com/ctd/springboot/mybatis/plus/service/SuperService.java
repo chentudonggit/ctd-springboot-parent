@@ -1,8 +1,8 @@
 package com.ctd.springboot.mybatis.plus.service;
 
-import com.baomidou.mybatisplus.mapper.Wrapper;
-import com.baomidou.mybatisplus.plugins.Page;
-import com.baomidou.mybatisplus.service.IService;
+import com.baomidou.mybatisplus.core.conditions.Wrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.service.IService;
 import com.ctd.springboot.common.core.vo.search.SearchVO;
 import com.ctd.springboot.common.lock.DistributedLock;
 
@@ -66,7 +66,7 @@ public interface SuperService<T> extends IService<T>
      * findAll
      *
      * @param search search
-     * @return Page<T>
+     * @return IPage<T>
      */
-    Page<T> findAll(SearchVO search);
+    IPage<T> findAll(SearchVO search);
 }

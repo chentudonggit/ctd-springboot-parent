@@ -174,7 +174,7 @@ public class ResponseVO extends LinkedHashMap<String, Object> implements Seriali
      * @return ResponseVO
      * @since 1.0
      */
-    public static ResponseVO data(PageVO page)
+    public static ResponseVO page(PageVO<?> page)
     {
         HttpStatus httpStatus = HttpStatus.OK;
         ResponseVO responseResult = new ResponseVO(httpStatus.value(), true,
