@@ -99,7 +99,7 @@ public class ConditionUtils
             String orderBySql = stringBuilder.toString().trim();
             condition.orderBy(orderBySql.substring(0, orderBySql.length() - 1));
         } else {
-            condition.orderBy("updated_dt", false);
+            condition.orderBy("update_time", false);
         }
     }
 

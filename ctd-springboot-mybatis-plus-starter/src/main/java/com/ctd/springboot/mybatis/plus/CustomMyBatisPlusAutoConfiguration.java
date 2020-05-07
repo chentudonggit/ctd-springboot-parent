@@ -16,6 +16,6 @@ import org.springframework.core.annotation.Order;
 @Configuration
 @ComponentScan
 @PropertySource(value = {"classpath:/config/application.yml"}, ignoreResourceNotFound = true)
-public class MyBatisPlusAutoConfiguration
+public class CustomMyBatisPlusAutoConfiguration
 {
 }

@@ -1,6 +1,6 @@
 mybatis-plus:
   mapper-locations:
-    - classpath*:**/mapper/**/*.xml
+    - classpath*:/mybatis/mapper/**/*.xml
     - classpath*:/mapper/**/*.xml
 
   typeAliasesPackage: com...domian.**

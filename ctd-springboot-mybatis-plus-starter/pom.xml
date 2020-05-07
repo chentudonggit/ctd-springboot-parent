@@ -12,10 +12,6 @@
     <artifactId>ctd-springboot-mybatis-plus-starter</artifactId>
     <dependencies>
         <dependency>
-            <groupId>com.baomidou</groupId>
-            <artifactId>mybatis-plus-boot-starter</artifactId>
-        </dependency>
-        <dependency>
             <groupId>com.ctd.springboot</groupId>
             <artifactId>ctd-springboot-common-starter</artifactId>
             <version>${ctd-springboot.version}</version>
@@ -24,6 +20,9 @@
             <groupId>com.baomidou</groupId>
             <artifactId>mybatis-plus-support</artifactId>
         </dependency>
+        <dependency>
+            <groupId>com.baomidou</groupId>
+            <artifactId>mybatis-plus-boot-starter</artifactId>
+        </dependency>
     </dependencies>
-
 </project>
