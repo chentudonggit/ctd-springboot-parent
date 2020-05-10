@@ -1,7 +1,6 @@
 package com.ctd.springboot.mybatis.plus.config;
 
 import cn.hutool.core.collection.CollUtil;
-import com.baomidou.mybatisplus.core.handlers.MetaObjectHandler;
 import com.baomidou.mybatisplus.core.parser.ISqlParserFilter;
 import com.baomidou.mybatisplus.extension.plugins.PaginationInterceptor;
 import com.baomidou.mybatisplus.extension.plugins.PerformanceInterceptor;
@@ -55,14 +54,8 @@ public class DefaultMybatisPlusConfig
      * 设置 dev test 环境开启
      */
     @Bean
-    @Profile({"development","testing"})
+    @Profile({"development","dev","testing","test"})
     public PerformanceInterceptor performanceInterceptor() {
         return new PerformanceInterceptor();
-    }
-
-    @Bean
-    protected MetaObjectHandler setMetaObjectHandler()
-    {
-        return new BaseMetaObjectHandler();
     }
 }
