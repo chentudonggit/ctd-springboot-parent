@@ -1,7 +1,5 @@
 package com.ctd.springboot.mybatis.plus.processor;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.config.YamlPropertiesFactoryBean;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.env.EnvironmentPostProcessor;
@@ -22,7 +20,6 @@ import java.util.Properties;
 @Component
 public class CustomEnvironmentPostProcessor implements EnvironmentPostProcessor
 {
-    private static final Logger LOGGER = LoggerFactory.getLogger(CustomEnvironmentPostProcessor.class);
     @Override
     public void postProcessEnvironment(ConfigurableEnvironment environment, SpringApplication application)
     {
