@@ -2,7 +2,6 @@ package com.ctd.springboot.mybatis.plus;
 
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.annotation.Order;
 
 /**
@@ -15,7 +14,6 @@ import org.springframework.core.annotation.Order;
 @Order(-1)
 @Configuration
 @ComponentScan
-@PropertySource(value = {"classpath:/config/application.yml"}, ignoreResourceNotFound = true)
 public class CustomMyBatisPlusAutoConfiguration
 {
 }

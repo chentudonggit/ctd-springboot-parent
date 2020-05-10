@@ -1,7 +1,6 @@
 package com.ctd.springboot.mybatis.plus.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.Wrapper;
-import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.metadata.TableInfo;
 import com.baomidou.mybatisplus.core.metadata.TableInfoHelper;
@@ -12,6 +11,7 @@ import com.ctd.springboot.common.core.utils.asserts.AssertUtils;
 import com.ctd.springboot.common.core.vo.search.SearchVO;
 import com.ctd.springboot.common.lock.DistributedLock;
 import com.ctd.springboot.mybatis.plus.domain.base.BaseEntity;
+import com.ctd.springboot.mybatis.plus.mapper.SuperMapper;
 import com.ctd.springboot.mybatis.plus.service.SuperService;
 import com.ctd.springboot.mybatis.plus.utils.condition.ConditionUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -27,7 +27,7 @@ import java.util.Objects;
  * @date 2020/3/8 9:27
  * @since 1.0
  */
-public class SuperServiceImpl<M extends BaseMapper<T>, T extends BaseEntity<T>> extends ServiceImpl<M, T> implements SuperService<T>
+public class SuperServiceImpl<M extends SuperMapper<T>, T extends BaseEntity<T>> extends ServiceImpl<M, T> implements SuperService<T>
 {
     @Autowired
     protected M mapper;
@@ -156,6 +156,6 @@ public class SuperServiceImpl<M extends BaseMapper<T>, T extends BaseEntity<T>> 
     {
         Integer page = AssertUtils.isNullReturnParam(search.getPage(), 0);
         Integer size = AssertUtils.isNullReturnParam(search.getSize(), 10);
-        return baseMapper.selectPage(new Page<>(page, size), ConditionUtils.getCondition(search));
+        return page(new Page<>(page, size), ConditionUtils.getCondition(search));
     }
 }

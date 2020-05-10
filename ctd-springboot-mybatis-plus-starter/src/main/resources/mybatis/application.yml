@@ -1,9 +1,14 @@
 mybatis-plus:
   mapper-locations:
-    - classpath*:/mybatis/mapper/**/*.xml
     - classpath*:/mapper/**/*.xml
+    - classpath*:/mybatis/mapper/**/*.xml
 
   type-aliases-package: com.ctd.**.domian.**,com.point.**.domian.**
+
+  global-config:
+    db-config:
+      logic-delete-value: "'DISABLE'"
+      logic-not-delete-value: "'ENABLE'"
 
   configuration:
     map-underscore-to-camel-case: true
