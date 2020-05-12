@@ -44,12 +44,6 @@ public abstract class BaseEntity<T extends Model<T>> extends Model<T>
     protected StatusEnum status;
 
     /**
-     * remark
-     */
-    @TableField("remark")
-    protected String remark;
-
-    /**
      * createTime
      */
     @TableField(value = "create_time", fill = FieldFill.INSERT)
@@ -89,16 +83,6 @@ public abstract class BaseEntity<T extends Model<T>> extends Model<T>
     public void setStatus(StatusEnum status)
     {
         this.status = status;
-    }
-
-    public String getRemark()
-    {
-        return remark;
-    }
-
-    public void setRemark(String remark)
-    {
-        this.remark = remark;
     }
 
     public Date getCreateTime()
