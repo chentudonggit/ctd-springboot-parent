@@ -2,11 +2,9 @@ package com.ctd.springboot.mybatis.plus.config.handler;
 
 import com.baomidou.mybatisplus.core.handlers.MetaObjectHandler;
 import com.ctd.springboot.common.core.enums.status.StatusEnum;
-import org.apache.commons.lang3.StringUtils;
 import org.apache.ibatis.reflection.MetaObject;
 
 import java.util.Date;
-import java.util.Objects;
 
 /**
  * 自动填充
@@ -41,8 +39,7 @@ public class BaseMetaObjectHandler implements MetaObjectHandler
     }
     private void fieldValByName(String key, Object fieldVal, MetaObject metaObject)
     {
-        Object fieldValByName = this.getFieldValByName(key, metaObject);
-        if (Objects.nonNull(fieldValByName) && StringUtils.isNotBlank(fieldValByName.toString()))
+        if (metaObject.hasGetter(key))
         {
             this.setFieldValByName(key, fieldVal, metaObject);
         }

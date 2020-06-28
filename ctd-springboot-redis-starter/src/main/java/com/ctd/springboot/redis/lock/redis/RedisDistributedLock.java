@@ -9,6 +9,7 @@ import org.springframework.data.redis.connection.ReturnType;
 import org.springframework.data.redis.core.RedisCallback;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.types.Expiration;
+import org.springframework.stereotype.Component;
 
 import java.util.UUID;
 import java.util.concurrent.TimeUnit;
@@ -20,6 +21,7 @@ import java.util.concurrent.TimeUnit;
  * @date 2020/3/7 21:37
  * @since 1.0
  */
+@Component
 public class RedisDistributedLock extends AbstractDistributedLock
 {
     private static final Logger LOGGER = LoggerFactory.getLogger(RedisDistributedLock.class);
