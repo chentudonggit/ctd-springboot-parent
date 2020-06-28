@@ -33,7 +33,7 @@ public abstract class BaseEntity<T extends Model<T>> extends Model<T>
      * 版本号
      */
     @Version
-    @TableField(value = "version", fill = FieldFill.INSERT)
+    @TableField(value = "version", fill = FieldFill.INSERT, update="%s+1")
     protected Long version;
 
     /**
