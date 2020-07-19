@@ -86,9 +86,7 @@ public class ResponseVO extends LinkedHashMap<String, Object> implements Seriali
 
     public static void responseWrite(ObjectMapper objectMapper, HttpServletResponse response, ResultVO<Object> result) throws IOException {
         response.setContentType(MediaType.APPLICATION_JSON_UTF8_VALUE);
-        try (
-                Writer writer = response.getWriter()
-        ) {
+        try (Writer writer = response.getWriter()) {
             writer.write(objectMapper.writeValueAsString(result));
             writer.flush();
         }

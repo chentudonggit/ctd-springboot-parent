@@ -15,7 +15,6 @@ import org.springframework.security.oauth2.provider.token.store.KeyStoreKeyFacto
 import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
-import java.security.KeyPair;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
@@ -45,19 +44,18 @@ public class AuthJwtTokenStore {
     public JwtAccessTokenConverter jwtAccessTokenConverter() {
         final JwtAccessTokenConverter converter = new JwtAccessTokenConverter();
         KeyProperties.KeyStore keyStore = keyProperties.getKeyStore();
-        org.springframework.core.io.Resource resource = null;
-        String alias = null;
         char[] chars = new char[0];
         if (Objects.nonNull(keyStore)) {
-            resource = keyStore.getLocation();
-            alias = keyStore.getAlias();
+            org.springframework.core.io.Resource resource = keyStore.getLocation();
+            String alias = keyStore.getAlias();
             String secret = keyStore.getSecret();
             if (StringUtils.isNoneBlank(secret)) {
                 chars = secret.toCharArray();
             }
+            if (Objects.nonNull(resource)) {
+                converter.setKeyPair(new KeyStoreKeyFactory(resource, chars).getKeyPair(alias));
+            }
         }
-        KeyPair keyPair = new KeyStoreKeyFactory(resource, chars).getKeyPair(alias);
-        converter.setKeyPair(keyPair);
         DefaultAccessTokenConverter tokenConverter = (DefaultAccessTokenConverter) converter.getAccessTokenConverter();
         tokenConverter.setUserTokenConverter(new CustomUserAuthenticationConverter());
         return converter;
