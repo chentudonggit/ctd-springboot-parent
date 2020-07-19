@@ -2,6 +2,7 @@ package com.ctd.springboot.auth.store.jwt;
 
 import com.ctd.springboot.auth.converter.authentication.CustomUserAuthenticationConverter;
 import com.ctd.springboot.common.core.vo.user.UserVO;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.cloud.bootstrap.encrypt.KeyProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.oauth2.common.DefaultOAuth2AccessToken;
@@ -17,6 +18,7 @@ import javax.annotation.Resource;
 import java.security.KeyPair;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 /**
  * JWT RSA 非对称加密令牌
@@ -42,9 +44,19 @@ public class AuthJwtTokenStore {
     @Bean
     public JwtAccessTokenConverter jwtAccessTokenConverter() {
         final JwtAccessTokenConverter converter = new JwtAccessTokenConverter();
-        KeyPair keyPair = new KeyStoreKeyFactory
-                (keyProperties.getKeyStore().getLocation(), keyProperties.getKeyStore().getSecret().toCharArray())
-                .getKeyPair(keyProperties.getKeyStore().getAlias());
+        KeyProperties.KeyStore keyStore = keyProperties.getKeyStore();
+        org.springframework.core.io.Resource resource = null;
+        String alias = null;
+        char[] chars = new char[0];
+        if (Objects.nonNull(keyStore)) {
+            resource = keyStore.getLocation();
+            alias = keyStore.getAlias();
+            String secret = keyStore.getSecret();
+            if (StringUtils.isNoneBlank(secret)) {
+                chars = secret.toCharArray();
+            }
+        }
+        KeyPair keyPair = new KeyStoreKeyFactory(resource, chars).getKeyPair(alias);
         converter.setKeyPair(keyPair);
         DefaultAccessTokenConverter tokenConverter = (DefaultAccessTokenConverter) converter.getAccessTokenConverter();
         tokenConverter.setUserTokenConverter(new CustomUserAuthenticationConverter());
