@@ -26,25 +26,21 @@ import java.util.Map;
  * @since 1.0
  */
 @Component
-public class AuthJwtTokenStore
-{
+public class AuthJwtTokenStore {
     @Bean("keyProp")
-    public KeyProperties keyProperties()
-    {
+    public KeyProperties keyProperties() {
         return new KeyProperties();
     }
 
     @Resource(name = "keyProp")
     private KeyProperties keyProperties;
 
-    public TokenStore tokenStore(JwtAccessTokenConverter jwtAccessTokenConverter)
-    {
+    public TokenStore tokenStore(JwtAccessTokenConverter jwtAccessTokenConverter) {
         return new JwtTokenStore(jwtAccessTokenConverter);
     }
 
     @Bean
-    public JwtAccessTokenConverter jwtAccessTokenConverter()
-    {
+    public JwtAccessTokenConverter jwtAccessTokenConverter() {
         final JwtAccessTokenConverter converter = new JwtAccessTokenConverter();
         KeyPair keyPair = new KeyStoreKeyFactory
                 (keyProperties.getKeyStore().getLocation(), keyProperties.getKeyStore().getSecret().toCharArray())
@@ -61,14 +57,12 @@ public class AuthJwtTokenStore
      * @return TokenEnhancer
      */
     @Bean
-    public TokenEnhancer tokenEnhancer()
-    {
+    public TokenEnhancer tokenEnhancer() {
         return (accessToken, authentication) -> {
             final Map<String, Object> additionalInfo = new HashMap<>(1);
             Object principal = authentication.getPrincipal();
             //增加id参数
-            if (principal instanceof UserVO)
-            {
+            if (principal instanceof UserVO) {
                 UserVO user = (UserVO) principal;
                 additionalInfo.put("id", user.getId());
             }

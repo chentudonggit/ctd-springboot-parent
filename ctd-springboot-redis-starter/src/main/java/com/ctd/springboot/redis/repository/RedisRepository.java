@@ -26,8 +26,7 @@ import java.util.*;
  * @date 2020/3/7 21:39
  * @since 1.0
  */
-public class RedisRepository
-{
+public class RedisRepository {
     private static final Logger LOGGER = LoggerFactory.getLogger(RedisRepository.class);
 
     /**
@@ -46,8 +45,7 @@ public class RedisRepository
      */
     private RedisTemplate<String, String> redisTemplate;
 
-    public RedisRepository(RedisTemplate<String, String> redisTemplate)
-    {
+    public RedisRepository(RedisTemplate<String, String> redisTemplate) {
         this.redisTemplate = redisTemplate;
         this.redisTemplate.setKeySerializer(STRING_SERIALIZER);
         this.redisTemplate.setValueSerializer(STRING_SERIALIZER);
@@ -56,16 +54,14 @@ public class RedisRepository
     /**
      * 获取链接工厂
      */
-    public RedisConnectionFactory getConnectionFactory()
-    {
+    public RedisConnectionFactory getConnectionFactory() {
         return this.redisTemplate.getConnectionFactory();
     }
 
     /**
      * 获取 RedisTemplate对象
      */
-    public RedisTemplate<String, String> getRedisTemplate()
-    {
+    public RedisTemplate<String, String> getRedisTemplate() {
         return redisTemplate;
     }
 
@@ -74,8 +70,7 @@ public class RedisRepository
      *
      * @param node redis 节点
      */
-    public void flushDB(RedisClusterNode node)
-    {
+    public void flushDB(RedisClusterNode node) {
         this.redisTemplate.opsForCluster().flushDb(node);
     }
 
@@ -86,8 +81,7 @@ public class RedisRepository
      * @param value 值
      * @param time  过期时间(单位秒)
      */
-    public void setExpire(final byte[] key, final byte[] value, final long time)
-    {
+    public void setExpire(final byte[] key, final byte[] value, final long time) {
         redisTemplate.execute((RedisCallback<Long>) connection -> {
             connection.setEx(key, time, value);
             LOGGER.debug("[redisTemplate redis]放入 缓存  url:{} ========缓存时间为{}秒", key, time);
@@ -102,8 +96,7 @@ public class RedisRepository
      * @param value 值
      * @param time  过期时间(单位秒)
      */
-    public void setExpire(final String key, final Object value, final long time)
-    {
+    public void setExpire(final String key, final Object value, final long time) {
         redisTemplate.execute((RedisCallback<Long>) connection -> {
             RedisSerializer<String> serializer = getRedisSerializer();
             byte[] keys = serializer.serialize(key);
@@ -120,16 +113,13 @@ public class RedisRepository
      * @param values 值数组
      * @param time   过期时间(单位秒)
      */
-    public void setExpire(final String[] keys, final Object[] values, final long time)
-    {
+    public void setExpire(final String[] keys, final Object[] values, final long time) {
         redisTemplate.execute((RedisCallback<Long>) connection -> {
             RedisSerializer<String> serializer = getRedisSerializer();
-            for (int i = 0; i < keys.length; i++)
-            {
+            for (int i = 0; i < keys.length; i++) {
                 byte[] bKeys = serializer.serialize(keys[i]);
                 byte[] bValues = STRING_SERIALIZER.serialize(JSON.toJSONString(values[i]));
-                if (!AssertUtils.nonNull(bKeys) && AssertUtils.nonNull(bValues))
-                {
+                if (!AssertUtils.nonNull(bKeys) && AssertUtils.nonNull(bValues)) {
                     connection.setEx(bKeys, time, bValues);
                 }
             }
@@ -144,16 +134,13 @@ public class RedisRepository
      * @param keys   the keys
      * @param values the values
      */
-    public void set(final String[] keys, final Object[] values)
-    {
+    public void set(final String[] keys, final Object[] values) {
         redisTemplate.execute((RedisCallback<Long>) connection -> {
             RedisSerializer<String> serializer = getRedisSerializer();
-            for (int i = 0; i < keys.length; i++)
-            {
+            for (int i = 0; i < keys.length; i++) {
                 byte[] bKeys = serializer.serialize(keys[i]);
                 byte[] bValues = STRING_SERIALIZER.serialize(JSON.toJSONString(values[i]));
-                if (!AssertUtils.nonNull(bKeys) && AssertUtils.nonNull(bValues))
-                {
+                if (!AssertUtils.nonNull(bKeys) && AssertUtils.nonNull(bValues)) {
                     connection.set(bKeys, bValues);
                 }
             }
@@ -168,14 +155,12 @@ public class RedisRepository
      * @param key   the key
      * @param value the value
      */
-    public void set(final String key, final Object value)
-    {
+    public void set(final String key, final Object value) {
         redisTemplate.execute((RedisCallback<Long>) connection -> {
             RedisSerializer<String> serializer = getRedisSerializer();
             byte[] keys = serializer.serialize(key);
             byte[] values = STRING_SERIALIZER.serialize(JSON.toJSONString(value));
-            if (AssertUtils.nonNull(keys) && AssertUtils.nonNull(values))
-            {
+            if (AssertUtils.nonNull(keys) && AssertUtils.nonNull(values)) {
                 connection.set(keys, values);
                 LOGGER.debug("[redisTemplate redis]放入 缓存  url:{}", key);
                 return 1L;
@@ -191,16 +176,13 @@ public class RedisRepository
      * @param time the time
      * @return the list
      */
-    public List<String> willExpire(final String key, final long time)
-    {
+    public List<String> willExpire(final String key, final long time) {
         final List<String> keysList = new ArrayList<>();
         redisTemplate.execute((RedisCallback<List<String>>) connection -> {
             Set<String> keys = redisTemplate.keys(key + "*");
-            for (String key1 : keys)
-            {
+            for (String key1 : keys) {
                 Long ttl = connection.ttl(key1.getBytes(DEFAULT_CHARSET));
-                if (0 <= ttl && ttl <= 2 * time)
-                {
+                if (0 <= ttl && ttl <= 2 * time) {
                     keysList.add(key1);
                 }
             }
@@ -216,8 +198,7 @@ public class RedisRepository
      * @param keyPatten the key patten
      * @return the set
      */
-    public Set<String> keys(final String keyPatten)
-    {
+    public Set<String> keys(final String keyPatten) {
         return redisTemplate.execute((RedisCallback<Set<String>>) connection -> redisTemplate.keys(keyPatten + "*"));
     }
 
@@ -227,8 +208,7 @@ public class RedisRepository
      * @param key the key
      * @return the byte [ ]
      */
-    public byte[] get(final byte[] key)
-    {
+    public byte[] get(final byte[] key) {
         byte[] result = redisTemplate.execute((RedisCallback<byte[]>) connection -> connection.get(key));
         LOGGER.debug("[redisTemplate redis]取出 缓存  url:{} ", key);
         return result;
@@ -240,13 +220,11 @@ public class RedisRepository
      * @param key the key
      * @return the string
      */
-    public String get(final String key)
-    {
+    public String get(final String key) {
         return redisTemplate.execute((RedisCallback<String>) connection -> {
             RedisSerializer<String> serializer = getRedisSerializer();
             byte[] keys = serializer.serialize(key);
-            if (AssertUtils.nonNull(keys))
-            {
+            if (AssertUtils.nonNull(keys)) {
                 LOGGER.debug("[redisTemplate redis]取出 缓存  url:{} ", key);
                 return STRING_SERIALIZER.deserialize(connection.get(keys));
             }
@@ -261,20 +239,16 @@ public class RedisRepository
      * @param keyPatten the key patten
      * @return the keys values
      */
-    public Map<String, Object> getKeysValues(final String keyPatten)
-    {
+    public Map<String, Object> getKeysValues(final String keyPatten) {
         LOGGER.debug("[redisTemplate redis]  getValues()  patten={} ", keyPatten);
         return redisTemplate.execute((RedisCallback<Map<String, Object>>) connection -> {
             RedisSerializer<String> serializer = getRedisSerializer();
             Map<String, Object> maps = new HashMap<>(16);
             Set<String> keys = redisTemplate.keys(keyPatten + "*");
-            if (CollectionUtils.isNotEmpty(keys))
-            {
-                for (String key : keys)
-                {
+            if (CollectionUtils.isNotEmpty(keys)) {
+                for (String key : keys) {
                     byte[] bKeys = serializer.serialize(key);
-                    if (AssertUtils.nonNull(bKeys))
-                    {
+                    if (AssertUtils.nonNull(bKeys)) {
                         maps.put(key, STRING_SERIALIZER.deserialize(connection.get(bKeys)));
                     }
                 }
@@ -288,8 +262,7 @@ public class RedisRepository
      *
      * @return the hash operations
      */
-    public HashOperations<String, String, Object> opsForHash()
-    {
+    public HashOperations<String, String, Object> opsForHash() {
         return redisTemplate.opsForHash();
     }
 
@@ -300,8 +273,7 @@ public class RedisRepository
      * @param hashKey   the hash key
      * @param hashValue the hash value
      */
-    public void putHashValue(String key, String hashKey, Object hashValue)
-    {
+    public void putHashValue(String key, String hashKey, Object hashValue) {
         LOGGER.debug("[redisTemplate redis]  putHashValue()  key={},hashKey={},hashValue={} ", key, hashKey, hashValue);
         opsForHash().put(key, hashKey, hashValue);
     }
@@ -313,8 +285,7 @@ public class RedisRepository
      * @param hashKey the hash key
      * @return the hash values
      */
-    public Object getHashValues(String key, String hashKey)
-    {
+    public Object getHashValues(String key, String hashKey) {
         LOGGER.debug("[redisTemplate redis]  getHashValues()  key={},hashKey={}", key, hashKey);
         return opsForHash().get(key, hashKey);
     }
@@ -325,8 +296,7 @@ public class RedisRepository
      * @param key      the key
      * @param hashKeys the hash keys
      */
-    public void delHashValues(String key, Object... hashKeys)
-    {
+    public void delHashValues(String key, Object... hashKeys) {
         LOGGER.debug("[redisTemplate redis]  delHashValues()  key={}", key);
         opsForHash().delete(key, hashKeys);
     }
@@ -337,8 +307,7 @@ public class RedisRepository
      * @param key the key
      * @return the hash value
      */
-    public Map<String, Object> getHashValue(String key)
-    {
+    public Map<String, Object> getHashValue(String key) {
         LOGGER.debug("[redisTemplate redis]  getHashValue()  key={}", key);
         return opsForHash().entries(key);
     }
@@ -349,8 +318,7 @@ public class RedisRepository
      * @param key the key
      * @param map the map
      */
-    public void putHashValues(String key, Map<String, Object> map)
-    {
+    public void putHashValues(String key, Map<String, Object> map) {
         opsForHash().putAll(key, map);
     }
 
@@ -359,13 +327,11 @@ public class RedisRepository
      *
      * @return the long
      */
-    public long dbSize()
-    {
-        if (Objects.isNull(redisTemplate))
-        {
+    public long dbSize() {
+        if (Objects.isNull(redisTemplate)) {
             return 0L;
         }
-        return redisTemplate.execute(RedisServerCommands :: dbSize);
+        return redisTemplate.execute(RedisServerCommands::dbSize);
     }
 
     /**
@@ -373,8 +339,7 @@ public class RedisRepository
      *
      * @return the string
      */
-    public String flushDB()
-    {
+    public String flushDB() {
         return redisTemplate.execute((RedisCallback<String>) connection -> {
             connection.flushDb();
             return "ok";
@@ -387,8 +352,7 @@ public class RedisRepository
      * @param key the key
      * @return the boolean
      */
-    public boolean exists(final String key)
-    {
+    public boolean exists(final String key) {
         return redisTemplate.execute((RedisCallback<Boolean>) connection -> connection.exists(key.getBytes(DEFAULT_CHARSET)));
     }
 
@@ -399,12 +363,10 @@ public class RedisRepository
      * @param keys the keys
      * @return the long
      */
-    public long del(final String... keys)
-    {
+    public long del(final String... keys) {
         return redisTemplate.execute((RedisCallback<Long>) connection -> {
             long result = 0;
-            for (String key : keys)
-            {
+            for (String key : keys) {
                 result = connection.del(key.getBytes(DEFAULT_CHARSET));
             }
             return result;
@@ -416,8 +378,7 @@ public class RedisRepository
      *
      * @return the redis serializer
      */
-    protected RedisSerializer<String> getRedisSerializer()
-    {
+    protected RedisSerializer<String> getRedisSerializer() {
         return redisTemplate.getStringSerializer();
     }
 
@@ -427,8 +388,7 @@ public class RedisRepository
      * @param key the key
      * @return the long
      */
-    public long incr(final String key)
-    {
+    public long incr(final String key) {
         return redisTemplate.execute((RedisCallback<Long>) connection -> {
             RedisSerializer<String> redisSerializer = getRedisSerializer();
             return connection.incr(redisSerializer.serialize(key));
@@ -440,8 +400,7 @@ public class RedisRepository
      *
      * @return the list operations
      */
-    public ListOperations<String, String> opsForList()
-    {
+    public ListOperations<String, String> opsForList() {
         return redisTemplate.opsForList();
     }
 
@@ -452,8 +411,7 @@ public class RedisRepository
      * @param value the value
      * @return the long
      */
-    public Long leftPush(String key, String value)
-    {
+    public Long leftPush(String key, String value) {
         return opsForList().leftPush(key, value);
     }
 
@@ -463,8 +421,7 @@ public class RedisRepository
      * @param key the key
      * @return the string
      */
-    public Object leftPop(String key)
-    {
+    public Object leftPop(String key) {
         return opsForList().leftPop(key);
     }
 
@@ -475,8 +432,7 @@ public class RedisRepository
      * @param value the value
      * @return the long
      */
-    public Long in(String key, String value)
-    {
+    public Long in(String key, String value) {
         return opsForList().rightPush(key, value);
     }
 
@@ -486,8 +442,7 @@ public class RedisRepository
      * @param key the key
      * @return the string
      */
-    public Object rightPop(String key)
-    {
+    public Object rightPop(String key) {
         return opsForList().rightPop(key);
     }
 
@@ -498,8 +453,7 @@ public class RedisRepository
      * @param key the key
      * @return the long
      */
-    public Long length(String key)
-    {
+    public Long length(String key) {
         return opsForList().size(key);
     }
 
@@ -511,8 +465,7 @@ public class RedisRepository
      * @param i     the
      * @param value the value
      */
-    public void remove(String key, long i, String value)
-    {
+    public void remove(String key, long i, String value) {
         opsForList().remove(key, i, value);
     }
 
@@ -523,8 +476,7 @@ public class RedisRepository
      * @param index the index
      * @param value the value
      */
-    public void set(String key, long index, String value)
-    {
+    public void set(String key, long index, String value) {
         opsForList().set(key, index, value);
     }
 
@@ -536,8 +488,7 @@ public class RedisRepository
      * @param end   the end
      * @return the list
      */
-    public List<String> getList(String key, int start, int end)
-    {
+    public List<String> getList(String key, int start, int end) {
         return opsForList().range(key, start, end);
     }
 
@@ -548,8 +499,7 @@ public class RedisRepository
      * @param list the list
      * @return the long
      */
-    public Long leftPushAll(String key, List<String> list)
-    {
+    public Long leftPushAll(String key, List<String> list) {
         return opsForList().leftPushAll(key, list);
     }
 
@@ -560,8 +510,7 @@ public class RedisRepository
      * @param index the index
      * @param value the value
      */
-    public void insert(String key, long index, String value)
-    {
+    public void insert(String key, long index, String value) {
         opsForList().set(key, index, value);
     }
 }

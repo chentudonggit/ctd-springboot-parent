@@ -21,8 +21,7 @@ import org.springframework.format.FormatterRegistry;
  * @since 1.0
  */
 @Configuration
-public class FeignConfigRegistrar implements FeignFormatterRegistrar
-{
+public class FeignConfigRegistrar implements FeignFormatterRegistrar {
     /**
      * 注入Bean : HttpMessageConverters，以支持fastjson
      *
@@ -30,8 +29,7 @@ public class FeignConfigRegistrar implements FeignFormatterRegistrar
      */
     @Primary
     @Bean
-    public HttpMessageConverters fastJsonHttpMessageConverters()
-    {
+    public HttpMessageConverters fastJsonHttpMessageConverters() {
         FastJsonHttpMessageConverter fastConvert = new FastJsonHttpMessageConverter();
         FastJsonConfig fastJsonConfig = new FastJsonConfig();
         fastJsonConfig.setSerializerFeatures(SerializerFeature.DisableCircularReferenceDetect);
@@ -45,14 +43,12 @@ public class FeignConfigRegistrar implements FeignFormatterRegistrar
      * @return ErrorDecoder
      */
     @Bean
-    public ErrorDecoder errorDecoder()
-    {
+    public ErrorDecoder errorDecoder() {
         return new ErrorDecoderException();
     }
 
     @Override
-    public void registerFormatters(FormatterRegistry registry)
-    {
+    public void registerFormatters(FormatterRegistry registry) {
         registry.addFormatter(new DateFormatter());
     }
 }

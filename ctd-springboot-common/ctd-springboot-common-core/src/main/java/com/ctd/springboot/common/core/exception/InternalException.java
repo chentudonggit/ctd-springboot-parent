@@ -7,8 +7,7 @@ package com.ctd.springboot.common.core.exception;
  * @date 2020/3/7 10:50
  * @since 1.0
  */
-public class InternalException extends RuntimeException
-{
+public class InternalException extends RuntimeException {
     /**
      * Constructs a new runtime exception with the specified detail message.
      * The cause is not initialized, and may subsequently be initialized by a
@@ -17,8 +16,7 @@ public class InternalException extends RuntimeException
      * @param message the detail message. The detail message is saved for
      *                later retrieval by the {@link #getMessage()} method.
      */
-    public InternalException(String message)
-    {
+    public InternalException(String message) {
         super(message);
     }
 
@@ -36,8 +34,7 @@ public class InternalException extends RuntimeException
      *                unknown.)
      * @since 1.4
      */
-    public InternalException(String message, Throwable cause)
-    {
+    public InternalException(String message, Throwable cause) {
         super(message, cause);
     }
 }

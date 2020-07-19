@@ -16,17 +16,14 @@ import java.util.Objects;
  * @date 2020/3/7 10:31
  * @since 1.0
  */
-public class BeanHelper
-{
+public class BeanHelper {
     private static DozerBeanMapper dozerBeanMapper;
 
-    static
-    {
+    static {
         dozerBeanMapper = new DozerBeanMapper();
     }
 
-    private BeanHelper()
-    {
+    private BeanHelper() {
         throw new IllegalStateException("Utility class");
     }
 
@@ -39,10 +36,8 @@ public class BeanHelper
      * @param <S>    S
      * @return T
      */
-    public static <T, S> T convert(S s, Class<T> tClass)
-    {
-        if (Objects.isNull(s))
-        {
+    public static <T, S> T convert(S s, Class<T> tClass) {
+        if (Objects.isNull(s)) {
             return null;
         }
         return dozerBeanMapper.map(s, tClass);
@@ -57,13 +52,10 @@ public class BeanHelper
      * @param clazz   the clazz
      * @return the list
      */
-    public static <T, S> List<T> convert(List<S> sources, Class<T> clazz)
-    {
+    public static <T, S> List<T> convert(List<S> sources, Class<T> clazz) {
         List<T> result = new ArrayList<>();
-        for (S s : sources)
-        {
-            if (!AssertUtils.isNull(s))
-            {
+        for (S s : sources) {
+            if (!AssertUtils.isNull(s)) {
                 result.add(dozerBeanMapper.map(s, clazz));
             }
         }
@@ -78,10 +70,8 @@ public class BeanHelper
      * @param <T> T
      * @return T
      */
-    public static <T> T getParams(Map map, String key)
-    {
-        if (AssertUtils.isNull(map) || AssertUtils.isNull(key))
-        {
+    public static <T> T getParams(Map map, String key) {
+        if (AssertUtils.isNull(map) || AssertUtils.isNull(key)) {
             return null;
         }
         return (T) map.get(key);
@@ -95,13 +85,11 @@ public class BeanHelper
      * @param size size
      * @return PageVO
      */
-    public static <T> PageVO<T> convertListToPageVO(List<T> list, Integer page, Integer size)
-    {
+    public static <T> PageVO<T> convertListToPageVO(List<T> list, Integer page, Integer size) {
         page = AssertUtils.isNullReturnParam(page, 0);
         size = AssertUtils.isNullReturnParam(size, 10);
         PageVO<T> pageVO = new PageVO<>();
-        if (Objects.isNull(list) || list.isEmpty())
-        {
+        if (Objects.isNull(list) || list.isEmpty()) {
             pageVO.setPage(size);
             pageVO.setTotalCount(0L);
             pageVO.setTotalPage(0);
@@ -112,17 +100,13 @@ public class BeanHelper
         pageVO.setSize(size);
         pageVO.setTotalCount((long) list.size());
         List<T> resultList = new ArrayList<>();
-        for (int i = page * size; i < (page + 1) * size; i++)
-        {
-            if (i < (list.size()))
-            {
+        for (int i = page * size; i < (page + 1) * size; i++) {
+            if (i < (list.size())) {
                 T t = list.get(i);
-                if (Objects.nonNull(t))
-                {
+                if (Objects.nonNull(t)) {
                     resultList.add(list.get(i));
                 }
-            } else
-            {
+            } else {
                 break;
             }
         }
@@ -139,8 +123,7 @@ public class BeanHelper
      * @param <T>    <T>
      * @return PageVO<T>
      */
-    public static <T> PageVO<T> initPageVO(Class<T> source, Integer page, Integer size)
-    {
+    public static <T> PageVO<T> initPageVO(Class<T> source, Integer page, Integer size) {
         AssertUtils.isNull(source, "source 不能为空");
         size = AssertUtils.isNullReturnParam(size, 10);
         page = AssertUtils.isNullReturnParam(page, 0);

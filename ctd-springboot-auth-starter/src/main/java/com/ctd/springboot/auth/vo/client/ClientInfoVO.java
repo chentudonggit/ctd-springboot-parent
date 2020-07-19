@@ -11,8 +11,7 @@ import java.io.Serializable;
  * @date 2020/3/14 13:20
  * @since 1.0
  */
-public class ClientInfoVO implements Serializable
-{
+public class ClientInfoVO implements Serializable {
     private static final long serialVersionUID = -6757014431727661041L;
 
     /**
@@ -27,29 +26,24 @@ public class ClientInfoVO implements Serializable
     @JSONField(name = "client_secret")
     private String clientSecret;
 
-    public String getClientId()
-    {
+    public String getClientId() {
         return clientId;
     }
 
-    public void setClientId(String clientId)
-    {
+    public void setClientId(String clientId) {
         this.clientId = clientId;
     }
 
-    public String getClientSecret()
-    {
+    public String getClientSecret() {
         return clientSecret;
     }
 
-    public void setClientSecret(String clientSecret)
-    {
+    public void setClientSecret(String clientSecret) {
         this.clientSecret = clientSecret;
     }
 
     @Override
-    public String toString()
-    {
+    public String toString() {
         return "ClientInfoVO{" +
                 "clientId='" + clientId + '\'' +
                 ", clientSecret='" + clientSecret + '\'' +

@@ -11,20 +11,17 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
  * @since 1.0
  */
 @ConfigurationProperties(prefix = "ctd.oauth2.token.store")
-public class TokenStoreProperties
-{
+public class TokenStoreProperties {
     /**
      * type
      */
     private TokenStoreType type = TokenStoreType.redis;
 
-    public TokenStoreType getType()
-    {
+    public TokenStoreType getType() {
         return type;
     }
 
-    public void setType(TokenStoreType type)
-    {
+    public void setType(TokenStoreType type) {
         this.type = type;
     }
 }

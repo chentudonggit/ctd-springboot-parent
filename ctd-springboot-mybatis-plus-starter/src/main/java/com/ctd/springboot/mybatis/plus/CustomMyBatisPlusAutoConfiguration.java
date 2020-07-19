@@ -14,6 +14,5 @@ import org.springframework.core.annotation.Order;
 @Order(-1)
 @Configuration
 @ComponentScan
-public class CustomMyBatisPlusAutoConfiguration
-{
+public class CustomMyBatisPlusAutoConfiguration {
 }

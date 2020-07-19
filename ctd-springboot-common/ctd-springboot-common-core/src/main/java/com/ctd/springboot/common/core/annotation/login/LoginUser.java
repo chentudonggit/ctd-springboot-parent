@@ -12,8 +12,7 @@ import java.lang.annotation.*;
 @Target(ElementType.PARAMETER)
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
-public @interface LoginUser
-{
+public @interface LoginUser {
     /**
      * 所有信息
      *

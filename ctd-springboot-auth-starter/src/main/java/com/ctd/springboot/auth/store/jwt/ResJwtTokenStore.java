@@ -35,19 +35,16 @@ import java.util.stream.Collectors;
  * @since 1.0
  */
 @Component
-public class ResJwtTokenStore
-{
+public class ResJwtTokenStore {
     @Autowired
     private ResourceServerProperties resource;
 
-    public TokenStore tokenStore(JwtAccessTokenConverter jwtAccessTokenConverter)
-    {
+    public TokenStore tokenStore(JwtAccessTokenConverter jwtAccessTokenConverter) {
         return new JwtTokenStore(jwtAccessTokenConverter);
     }
 
     @Bean
-    public JwtAccessTokenConverter jwtAccessTokenConverter()
-    {
+    public JwtAccessTokenConverter jwtAccessTokenConverter() {
         JwtAccessTokenConverter converter = new JwtAccessTokenConverter();
         converter.setVerifierKey(getPubKey());
         DefaultAccessTokenConverter tokenConverter = (DefaultAccessTokenConverter) converter.getAccessTokenConverter();
@@ -60,14 +57,11 @@ public class ResJwtTokenStore
      *
      * @return 公钥 Key
      */
-    private String getPubKey()
-    {
+    private String getPubKey() {
         Resource res = new ClassPathResource(SecurityConstants.RSA_PUBLIC_KEY);
-        try (BufferedReader br = new BufferedReader(new InputStreamReader(res.getInputStream())))
-        {
+        try (BufferedReader br = new BufferedReader(new InputStreamReader(res.getInputStream()))) {
             return br.lines().collect(Collectors.joining("\n"));
-        } catch (IOException ioe)
-        {
+        } catch (IOException ioe) {
             return getKeyFromAuthorizationServer();
         }
     }
@@ -77,15 +71,12 @@ public class ResJwtTokenStore
      *
      * @return 公钥 Key
      */
-    private String getKeyFromAuthorizationServer()
-    {
-        if (StringUtils.isNotBlank(this.resource.getJwt().getKeyUri()))
-        {
+    private String getKeyFromAuthorizationServer() {
+        if (StringUtils.isNotBlank(this.resource.getJwt().getKeyUri())) {
             final HttpHeaders headers = new HttpHeaders();
             final String username = this.resource.getClientId();
             final String password = this.resource.getClientSecret();
-            if (StringUtils.isNotBlank(username) && StringUtils.isNotBlank(password))
-            {
+            if (StringUtils.isNotBlank(username) && StringUtils.isNotBlank(password)) {
                 final byte[] token = Base64.getEncoder().encode((username + ":" + password).getBytes());
                 headers.add("Authorization", "Basic " + new String(token));
             }

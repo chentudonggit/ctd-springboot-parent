@@ -7,8 +7,7 @@ package com.ctd.springboot.common.core.constants.code;
  * @date 2020/3/7 11:44
  * @since 1.0
  */
-public interface ResultCodeSequence
-{
+public interface ResultCodeSequence {
     /**
      * 成功
      */

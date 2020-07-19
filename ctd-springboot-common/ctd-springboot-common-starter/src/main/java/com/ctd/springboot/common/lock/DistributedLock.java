@@ -7,8 +7,7 @@ package com.ctd.springboot.common.lock;
  * @date 2020/3/7 21:35
  * @since 1.0
  */
-public interface DistributedLock
-{
+public interface DistributedLock {
     /**
      * 默认超时时间
      */

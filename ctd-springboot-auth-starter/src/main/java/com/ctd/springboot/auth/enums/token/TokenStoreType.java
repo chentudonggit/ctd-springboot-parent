@@ -7,8 +7,7 @@ package com.ctd.springboot.auth.enums.token;
  * @date 2020/3/7 21:03
  * @since 1.0
  */
-public enum TokenStoreType
-{
+public enum TokenStoreType {
     /**
      * db
      */

@@ -29,8 +29,7 @@ import java.util.Objects;
  * @since 1.0
  */
 @ControllerAdvice
-public class CatchExceptionAdvice
-{
+public class CatchExceptionAdvice {
     private static final Logger LOGGER = LoggerFactory.getLogger(CatchExceptionAdvice.class);
     private static final String MESSAGE = "message:";
 
@@ -43,8 +42,7 @@ public class CatchExceptionAdvice
      */
     protected static ImmutableMap.Builder<Class<? extends Throwable>, ResultCode> builder = ImmutableMap.builder();
 
-    static
-    {
+    static {
         //在这里加入一些基础的异常类型判断
         builder.put(RetryableException.class, CodeEnum.SERVICE_CALL_ERROR);
         builder.put(ClientException.class, CodeEnum.SERVICE_CALL_ERROR);
@@ -59,8 +57,7 @@ public class CatchExceptionAdvice
      */
     @ExceptionHandler(InternalException.class)
     @ResponseBody
-    public ResponseVO customException(InternalException e)
-    {
+    public ResponseVO customException(InternalException e) {
         // 记录日志
         LOGGER.error(e.getMessage(), e);
         // 把错误信息返回给前端
@@ -69,13 +66,13 @@ public class CatchExceptionAdvice
 
     /**
      * 统一弹窗提示
+     *
      * @param e e
      * @return ResponseResult
      */
     @ExceptionHandler(UnifiedException.class)
     @ResponseBody
-    public ResponseVO unifiedException(UnifiedException e)
-    {
+    public ResponseVO unifiedException(UnifiedException e) {
         // 记录日志
         LOGGER.error(e.getMessage(), e);
         // 把错误信息返回给前端
@@ -90,29 +87,23 @@ public class CatchExceptionAdvice
      */
     @ResponseBody
     @ExceptionHandler(Exception.class)
-    public ResponseVO exception(Exception e)
-    {
+    public ResponseVO exception(Exception e) {
         LOGGER.error("catch exception : {}\r\nexception: ", e.getMessage(), e);
-        if (Objects.isNull(EXCEPTIONS))
-        {
+        if (Objects.isNull(EXCEPTIONS)) {
             EXCEPTIONS = builder.build();
         }
         Throwable cause = e.getCause();
         Class c;
-        if (Objects.isNull(cause))
-        {
+        if (Objects.isNull(cause)) {
             c = e.getClass();
-        } else
-        {
+        } else {
             c = cause.getClass();
         }
         final ResultCode resultCode = EXCEPTIONS.get(c);
         final ResponseVO responseResult;
-        if (Objects.nonNull(resultCode))
-        {
+        if (Objects.nonNull(resultCode)) {
             responseResult = new ResponseVO(resultCode);
-        } else
-        {
+        } else {
             responseResult = new ResponseVO(CodeEnum.SERVER_ERROR);
         }
         return responseResult;
@@ -124,19 +115,15 @@ public class CatchExceptionAdvice
      * @param e e
      * @return String
      */
-    private String getMessage(Exception e)
-    {
+    private String getMessage(Exception e) {
         AssertUtils.isNull(e, "异常类不能为空");
         // 把错误信息返回给前端
         String message = e.getMessage();
-        if (StringUtils.isNoneBlank(message))
-        {
-            if (message.contains(MESSAGE))
-            {
+        if (StringUtils.isNoneBlank(message)) {
+            if (message.contains(MESSAGE)) {
                 message = message.substring(message.lastIndexOf(MESSAGE)).replace(MESSAGE, "");
             }
-        } else
-        {
+        } else {
             message = "未知错误！";
         }
         return message;

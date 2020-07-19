@@ -23,8 +23,7 @@ import java.util.*;
  * @see org.springframework.security.oauth2.provider.token.DefaultUserAuthenticationConverter
  * @since 1.0
  */
-public class CustomUserAuthenticationConverter implements UserAuthenticationConverter
-{
+public class CustomUserAuthenticationConverter implements UserAuthenticationConverter {
     /**
      * defaultAuthorities
      */
@@ -41,8 +40,7 @@ public class CustomUserAuthenticationConverter implements UserAuthenticationConv
      *
      * @param userDetailsService the userDetailsService to set
      */
-    public void setUserDetailsService(UserDetailsService userDetailsService)
-    {
+    public void setUserDetailsService(UserDetailsService userDetailsService) {
         this.userDetailsService = userDetailsService;
     }
 
@@ -53,8 +51,7 @@ public class CustomUserAuthenticationConverter implements UserAuthenticationConv
      *
      * @param defaultAuthorities the defaultAuthorities to set. Default null.
      */
-    public void setDefaultAuthorities(String[] defaultAuthorities)
-    {
+    public void setDefaultAuthorities(String[] defaultAuthorities) {
         this.defaultAuthorities = AuthorityUtils.commaSeparatedStringToAuthorityList(StringUtils
                 .arrayToCommaDelimitedString(defaultAuthorities));
     }
@@ -66,14 +63,12 @@ public class CustomUserAuthenticationConverter implements UserAuthenticationConv
      * @return Map<String, ?>
      */
     @Override
-    public Map<String, ?> convertUserAuthentication(Authentication authentication)
-    {
+    public Map<String, ?> convertUserAuthentication(Authentication authentication) {
         Map<String, Object> response = new LinkedHashMap<>();
         response.put(USERNAME, authentication.getName());
         //权限是否为空
         Collection<? extends GrantedAuthority> authorities = authentication.getAuthorities();
-        if (AssertUtils.nonNull(authorities))
-        {
+        if (AssertUtils.nonNull(authorities)) {
             response.put(AUTHORITIES, AuthorityUtils.authorityListToSet(authentication.getAuthorities()));
         }
         return response;
@@ -86,21 +81,16 @@ public class CustomUserAuthenticationConverter implements UserAuthenticationConv
      * @return Authentication
      */
     @Override
-    public Authentication extractAuthentication(Map<String, ?> map)
-    {
-        if (!AssertUtils.isNull(map))
-        {
-            if (map.containsKey(USERNAME))
-            {
+    public Authentication extractAuthentication(Map<String, ?> map) {
+        if (!AssertUtils.isNull(map)) {
+            if (map.containsKey(USERNAME)) {
                 Object principal = map.get(USERNAME);
                 Collection<? extends GrantedAuthority> authorities = getAuthorities(map);
-                if (Objects.nonNull(userDetailsService))
-                {
+                if (Objects.nonNull(userDetailsService)) {
                     UserDetails user = userDetailsService.loadUserByUsername((String) map.get(USERNAME));
                     authorities = user.getAuthorities();
                     principal = user;
-                } else
-                {
+                } else {
                     UserVO user = new UserVO();
                     user.setUsername((String) principal);
                     user.setId(ParamUtils.getParam(map, "id"));
@@ -118,24 +108,19 @@ public class CustomUserAuthenticationConverter implements UserAuthenticationConv
      * @param map map
      * @return Collection
      */
-    private Collection<? extends GrantedAuthority> getAuthorities(Map<String, ?> map)
-    {
-        if (AssertUtils.isNull(map))
-        {
+    private Collection<? extends GrantedAuthority> getAuthorities(Map<String, ?> map) {
+        if (AssertUtils.isNull(map)) {
             return new ArrayList<>(0);
         }
         //默认
-        if (!map.containsKey(AUTHORITIES))
-        {
+        if (!map.containsKey(AUTHORITIES)) {
             return defaultAuthorities;
         }
         Object authorities = map.get(AUTHORITIES);
-        if (authorities instanceof String)
-        {
+        if (authorities instanceof String) {
             return AuthorityUtils.commaSeparatedStringToAuthorityList((String) authorities);
         }
-        if (authorities instanceof Collection)
-        {
+        if (authorities instanceof Collection) {
             return AuthorityUtils.commaSeparatedStringToAuthorityList(StringUtils
                     .collectionToCommaDelimitedString((Collection<?>) authorities));
         }

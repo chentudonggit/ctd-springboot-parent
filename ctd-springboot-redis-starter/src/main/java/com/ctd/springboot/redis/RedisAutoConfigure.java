@@ -37,8 +37,7 @@ import java.util.Objects;
 @EnableConfigurationProperties({RedisProperties.class, CacheManagerProperties.class})
 @EnableCaching
 @Configuration
-public class RedisAutoConfigure
-{
+public class RedisAutoConfigure {
     @Autowired
     private CacheManagerProperties cacheManagerProperties;
 
@@ -49,8 +48,7 @@ public class RedisAutoConfigure
      * @return RedisTemplate<String, Object>
      */
     @Bean
-    public RedisTemplate<String, String> redisTemplate(RedisConnectionFactory factory)
-    {
+    public RedisTemplate<String, String> redisTemplate(RedisConnectionFactory factory) {
         RedisTemplate<String, String> redisTemplate = new RedisTemplate<>();
         redisTemplate.setConnectionFactory(factory);
         RedisSerializer stringSerializer = new StringRedisSerializer();
@@ -69,23 +67,20 @@ public class RedisAutoConfigure
      */
     @Bean
     @ConditionalOnMissingBean
-    public RedisRepository redisRepository(RedisTemplate<String, String> redisTemplate)
-    {
+    public RedisRepository redisRepository(RedisTemplate<String, String> redisTemplate) {
         return new RedisRepository(redisTemplate);
     }
 
     @Bean(name = "cacheManager")
     @Primary
-    public CacheManager cacheManager(RedisConnectionFactory redisConnectionFactory)
-    {
+    public CacheManager cacheManager(RedisConnectionFactory redisConnectionFactory) {
         RedisCacheConfiguration difConf = getDefConf().entryTtl(Duration.ofHours(1));
 
         //自定义的缓存过期时间配置
         List<CacheManagerProperties.CacheConfig> configs = cacheManagerProperties.getConfigs();
-        int configSize =  Objects.isNull(configs) ? 0 : configs.size();
+        int configSize = Objects.isNull(configs) ? 0 : configs.size();
         Map<String, RedisCacheConfiguration> redisCacheConfigurationMap = new HashMap<>(configSize);
-        if (configSize > 0)
-        {
+        if (configSize > 0) {
             cacheManagerProperties.getConfigs().forEach(e -> {
                 RedisCacheConfiguration conf = getDefConf().entryTtl(Duration.ofSeconds(e.getSecond()));
                 redisCacheConfigurationMap.put(e.getKey(), conf);
@@ -99,22 +94,19 @@ public class RedisAutoConfigure
     }
 
     @Bean
-    public KeyGenerator keyGenerator()
-    {
+    public KeyGenerator keyGenerator() {
         return (target, method, objects) -> {
             StringBuilder sb = new StringBuilder();
             sb.append(target.getClass().getName());
             sb.append(":").append(method.getName()).append(":");
-            for (Object obj : objects)
-            {
+            for (Object obj : objects) {
                 sb.append(obj.toString());
             }
             return sb.toString();
         };
     }
 
-    private RedisCacheConfiguration getDefConf()
-    {
+    private RedisCacheConfiguration getDefConf() {
         return RedisCacheConfiguration.defaultCacheConfig()
                 .disableCachingNullValues()
                 .computePrefixWith(cacheName -> "cache".concat(":").concat(cacheName).concat(":"))

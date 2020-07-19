@@ -12,18 +12,14 @@ import org.apache.ibatis.mapping.MappedStatement;
  * @date 2020/3/8 9:20
  * @since 1.0
  */
-public class DeleteAll extends AbstractMethod
-{
+public class DeleteAll extends AbstractMethod {
     @Override
-    public MappedStatement injectMappedStatement(Class<?> mapperClass, Class<?> modelClass, TableInfo tableInfo)
-    {
+    public MappedStatement injectMappedStatement(Class<?> mapperClass, Class<?> modelClass, TableInfo tableInfo) {
         String sql;
         SqlMethodEnum sqlMethod = SqlMethodEnum.DELETE_ALL;
-        if (tableInfo.isLogicDelete())
-        {
+        if (tableInfo.isLogicDelete()) {
             sql = String.format(sqlMethod.getSql(), tableInfo.getTableName(), tableInfo, sqlWhereEntityWrapper(true, tableInfo));
-        } else
-        {
+        } else {
             sql = String.format(sqlMethod.getSql(), tableInfo.getTableName(), sqlWhereEntityWrapper(true, tableInfo));
         }
         return addUpdateMappedStatement(mapperClass, modelClass, sqlMethod.getMethod(), languageDriver.createSqlSource(configuration, sql, modelClass));

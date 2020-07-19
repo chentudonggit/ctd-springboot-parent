@@ -10,8 +10,7 @@ import com.ctd.springboot.common.core.web.result.code.ResultCode;
  * @date 2020/3/7 11:42
  * @since 1.0
  */
-public enum CodeEnum implements ResultCode
-{
+public enum CodeEnum implements ResultCode {
     /**
      * SUCCESS 操作成功
      */
@@ -62,20 +61,17 @@ public enum CodeEnum implements ResultCode
      */
     private String message;
 
-    CodeEnum(Boolean success, Integer code, String message)
-    {
+    CodeEnum(Boolean success, Integer code, String message) {
         this.code = code;
         this.success = success;
         this.message = message;
     }
 
-    public Integer getCode()
-    {
+    public Integer getCode() {
         return code;
     }
 
-    public Boolean getSuccess()
-    {
+    public Boolean getSuccess() {
         return success;
     }
 
@@ -85,8 +81,7 @@ public enum CodeEnum implements ResultCode
      * @return Boolean
      */
     @Override
-    public Boolean success()
-    {
+    public Boolean success() {
         return success;
     }
 
@@ -96,8 +91,7 @@ public enum CodeEnum implements ResultCode
      * @return Integer
      */
     @Override
-    public Integer code()
-    {
+    public Integer code() {
         return code;
     }
 
@@ -107,8 +101,7 @@ public enum CodeEnum implements ResultCode
      * @return String
      */
     @Override
-    public String message()
-    {
+    public String message() {
         return message;
     }
 }

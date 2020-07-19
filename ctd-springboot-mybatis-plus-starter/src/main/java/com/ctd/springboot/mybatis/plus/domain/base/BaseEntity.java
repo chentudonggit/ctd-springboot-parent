@@ -17,8 +17,7 @@ import java.util.Date;
  * @date 2020/3/8 9:23
  * @since 1.0
  */
-public abstract class BaseEntity<T extends Model<T>> extends Model<T>
-{
+public abstract class BaseEntity<T extends Model<T>> extends Model<T> {
     private static final long serialVersionUID = -4526116791401550737L;
 
     /**
@@ -33,7 +32,7 @@ public abstract class BaseEntity<T extends Model<T>> extends Model<T>
      * 版本号
      */
     @Version
-    @TableField(value = "version", fill = FieldFill.INSERT, update="%s+1")
+    @TableField(value = "version", fill = FieldFill.INSERT, update = "%s+1")
     protected Long version;
 
     /**
@@ -65,53 +64,43 @@ public abstract class BaseEntity<T extends Model<T>> extends Model<T>
     public static final String UPDATE_TIME = "updateTime";
     public static final String STATUS = "status";
 
-    public Long getVersion()
-    {
+    public Long getVersion() {
         return version;
     }
 
-    public void setVersion(Long version)
-    {
+    public void setVersion(Long version) {
         this.version = version;
     }
 
-    public StatusEnum getStatus()
-    {
+    public StatusEnum getStatus() {
         return status;
     }
 
-    public void setStatus(StatusEnum status)
-    {
+    public void setStatus(StatusEnum status) {
         this.status = status;
     }
 
-    public Date getCreateTime()
-    {
+    public Date getCreateTime() {
         return createTime;
     }
 
-    public void setCreateTime(Date createTime)
-    {
+    public void setCreateTime(Date createTime) {
         this.createTime = createTime;
     }
 
-    public Date getUpdateTime()
-    {
+    public Date getUpdateTime() {
         return updateTime;
     }
 
-    public void setUpdateTime(Date updateTime)
-    {
+    public void setUpdateTime(Date updateTime) {
         this.updateTime = updateTime;
     }
 
-    public void setTipsMsg(Object tipsMsg)
-    {
+    public void setTipsMsg(Object tipsMsg) {
         getTipsMsg().append(tipsMsg);
     }
 
-    public StringBuilder getTipsMsg()
-    {
+    public StringBuilder getTipsMsg() {
         return tipsMsg;
     }
 }

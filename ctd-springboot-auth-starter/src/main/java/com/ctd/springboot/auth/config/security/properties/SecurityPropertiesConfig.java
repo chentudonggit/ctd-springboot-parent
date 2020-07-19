@@ -11,6 +11,5 @@ import org.springframework.boot.context.properties.EnableConfigurationProperties
  * @since 1.0
  */
 @EnableConfigurationProperties(SecurityProperties.class)
-public class SecurityPropertiesConfig
-{
+public class SecurityPropertiesConfig {
 }

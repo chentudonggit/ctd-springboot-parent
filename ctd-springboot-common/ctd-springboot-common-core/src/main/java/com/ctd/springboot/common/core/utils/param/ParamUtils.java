@@ -13,10 +13,8 @@ import java.util.Objects;
  * @date 2020/3/7 17:08
  * @since 1.0
  */
-public final class ParamUtils
-{
-    private ParamUtils()
-    {
+public final class ParamUtils {
+    private ParamUtils() {
         throw new IllegalStateException("Utility class");
     }
 
@@ -31,10 +29,8 @@ public final class ParamUtils
      * @param <T> <T>
      * @return T
      */
-    public static <T> T getParam(Map map, String key)
-    {
-        if (AssertUtils.nonNull(map) && StringUtils.isNotBlank(key))
-        {
+    public static <T> T getParam(Map map, String key) {
+        if (AssertUtils.nonNull(map) && StringUtils.isNotBlank(key)) {
             return getParam(map.get(key));
         }
         return null;
@@ -47,10 +43,8 @@ public final class ParamUtils
      * @param <T> <T>
      * @return T
      */
-    public static <T> T getParam(Object obj)
-    {
-        if (AssertUtils.nonNull(obj) && StringUtils.isNotBlank(obj.toString()))
-        {
+    public static <T> T getParam(Object obj) {
+        if (AssertUtils.nonNull(obj) && StringUtils.isNotBlank(obj.toString())) {
             return (T) obj;
         }
         return null;
@@ -64,13 +58,10 @@ public final class ParamUtils
      * @param <T>      <T>
      * @return T
      */
-    public static <T> T returnParam(T param, T newParam)
-    {
-        if (Objects.nonNull(newParam))
-        {
+    public static <T> T returnParam(T param, T newParam) {
+        if (Objects.nonNull(newParam)) {
             return newParam;
-        } else
-        {
+        } else {
             return param;
         }
     }

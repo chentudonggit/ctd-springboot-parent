@@ -22,27 +22,21 @@ import java.util.Objects;
  * @date 2020/3/7 22:06
  * @since 1.0
  */
-public class ErrorDecoderException implements ErrorDecoder
-{
+public class ErrorDecoderException implements ErrorDecoder {
     private static final Logger LOGGER = LoggerFactory.getLogger(ErrorDecoderException.class);
 
     @Override
-    public Exception decode(String methodKey, Response response)
-    {
-        try
-        {
+    public Exception decode(String methodKey, Response response) {
+        try {
             Response.Body body = response.body();
-            if (Objects.nonNull(body))
-            {
+            if (Objects.nonNull(body)) {
                 // 获取原始的返回内容
                 String json = Util.toString(body.asReader());
                 JSONObject responseJson = JSON.parseObject(json);
                 String classPath = responseJson.getString("exception");
-                if (StringUtils.isBlank(classPath))
-                {
+                if (StringUtils.isBlank(classPath)) {
                     String error = responseJson.getString("error");
-                    if (StringUtils.isNotBlank(error))
-                    {
+                    if (StringUtils.isNotBlank(error)) {
                         Exception exception = new InternalException("path:" + responseJson.getString("path")
                                 + "  error:" + responseJson.getString("error")
                                 + "  status:" + responseJson.getString("status")
@@ -58,8 +52,7 @@ public class ErrorDecoderException implements ErrorDecoder
                 LOGGER.error("catch exception : {}\r\nexception: ", json, exception);
                 return exception;
             }
-        } catch (Exception var4)
-        {
+        } catch (Exception var4) {
             return new InternalException(var4.getMessage());
         }
         return new InternalException("处理失败.");

@@ -7,8 +7,7 @@ package com.ctd.springboot.common.core.constant;
  * @date 2020/5/12 11:22 上午
  * @since 1.0
  */
-public interface CommonConstant
-{
+public interface CommonConstant {
     /**
      * 菜单
      */

@@ -12,6 +12,5 @@ import org.springframework.context.annotation.Configuration;
  */
 @Configuration
 @ComponentScan
-public class OauthAutoConfiguration
-{
+public class OauthAutoConfiguration {
 }

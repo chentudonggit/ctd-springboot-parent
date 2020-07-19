@@ -12,8 +12,7 @@ import java.io.Serializable;
  * @date 2020/3/7 11:41
  * @since 1.0
  */
-public class ResultVO<T> implements Serializable
-{
+public class ResultVO<T> implements Serializable {
     private static final long serialVersionUID = 5277095580059488244L;
 
     /**
@@ -31,12 +30,10 @@ public class ResultVO<T> implements Serializable
      */
     private String message;
 
-    public ResultVO()
-    {
+    public ResultVO() {
     }
 
-    public ResultVO(T data, Integer code, String message)
-    {
+    public ResultVO(T data, Integer code, String message) {
         this.data = data;
         this.code = code;
         this.message = message;
@@ -70,39 +67,32 @@ public class ResultVO<T> implements Serializable
         return new ResultVO<>(data, code, msg);
     }
 
-    public T getData()
-    {
+    public T getData() {
         return data;
     }
 
-    public void setData(T data)
-    {
+    public void setData(T data) {
         this.data = data;
     }
 
-    public Integer getCode()
-    {
+    public Integer getCode() {
         return code;
     }
 
-    public void setCode(Integer code)
-    {
+    public void setCode(Integer code) {
         this.code = code;
     }
 
-    public String getMessage()
-    {
+    public String getMessage() {
         return message;
     }
 
-    public void setMessage(String message)
-    {
+    public void setMessage(String message) {
         this.message = message;
     }
 
     @Override
-    public String toString()
-    {
+    public String toString() {
         return "ResultVO{" +
                 "data=" + data +
                 ", code=" + code +
@@ -110,8 +100,7 @@ public class ResultVO<T> implements Serializable
                 '}';
     }
 
-    public String toJsonString()
-    {
+    public String toJsonString() {
         return JSON.toJSONString(this);
     }
 }

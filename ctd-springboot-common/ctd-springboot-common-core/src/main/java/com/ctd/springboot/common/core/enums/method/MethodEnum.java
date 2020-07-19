@@ -9,8 +9,7 @@ import org.apache.commons.lang3.StringUtils;
  * @date 2020/3/8 23:02
  * @since 1.0
  */
-public enum MethodEnum
-{
+public enum MethodEnum {
     /**
      *
      */
@@ -30,15 +29,13 @@ public enum MethodEnum
      * Delete
      */
     DELETE;
-    public static MethodEnum value(String key)
-    {
-        if (StringUtils.isBlank(key))
-        {
+
+    public static MethodEnum value(String key) {
+        if (StringUtils.isBlank(key)) {
             return null;
         }
 
-        switch (key)
-        {
+        switch (key) {
             case "Get":
             case "GET":
             case "get":

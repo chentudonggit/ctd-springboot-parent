@@ -25,8 +25,7 @@ import org.springframework.security.oauth2.provider.token.store.JwtAccessTokenCo
  */
 @Configuration
 @EnableConfigurationProperties(TokenStoreProperties.class)
-public class TokenStoreConfig
-{
+public class TokenStoreConfig {
     @Autowired(required = false)
     private AuthDbTokenStore authDbTokenStore;
     private final TokenStoreProperties tokenStoreProperties;
@@ -39,8 +38,7 @@ public class TokenStoreConfig
                             AuthRedisTokenStore authRedisTokenStore,
                             AuthJwtTokenStore authJwtTokenStore,
                             ResJwtTokenStore resJwtTokenStore,
-                            JwtAccessTokenConverter jwtAccessTokenConverter)
-    {
+                            JwtAccessTokenConverter jwtAccessTokenConverter) {
         this.tokenStoreProperties = tokenStoreProperties;
         this.authRedisTokenStore = authRedisTokenStore;
         this.authJwtTokenStore = authJwtTokenStore;
@@ -51,25 +49,20 @@ public class TokenStoreConfig
     @Primary
     @Bean
     @ConditionalOnMissingBean(TokenStore.class)
-    public TokenStore tokenStore()
-    {
+    public TokenStore tokenStore() {
         TokenStoreType type = tokenStoreProperties.getType();
-        if (TokenStoreType.jwtRsa.equals(type))
-        {
+        if (TokenStoreType.jwtRsa.equals(type)) {
             return resJwtTokenStore.tokenStore(jwtAccessTokenConverter);
-        } else if (TokenStoreType.db.equals(type))
-        {
+        } else if (TokenStoreType.db.equals(type)) {
             AssertUtils.isNull(authDbTokenStore, "token:store:type：db，请配置数据库。");
             authDbTokenStore.tokenStore();
-        } else if (TokenStoreType.jwt.equals(type))
-        {
+        } else if (TokenStoreType.jwt.equals(type)) {
             return authJwtTokenStore.tokenStore(jwtAccessTokenConverter);
         }
         return authRedisTokenStore.tokenStore();
     }
 
-    public TokenStore getTokenStore()
-    {
+    public TokenStore getTokenStore() {
         return tokenStore();
     }
 }

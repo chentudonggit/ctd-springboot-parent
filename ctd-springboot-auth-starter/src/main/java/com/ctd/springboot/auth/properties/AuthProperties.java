@@ -9,8 +9,7 @@ import com.ctd.springboot.auth.properties.url.UrlPermissionProperties;
  * @date 2020/3/7 15:32
  * @since 1.0
  */
-public class AuthProperties
-{
+public class AuthProperties {
     /**
      * 优先级大于忽略认证配置
      * <p>
@@ -28,33 +27,27 @@ public class AuthProperties
      */
     private UrlPermissionProperties urlPermission = new UrlPermissionProperties();
 
-    public String[] getUrls()
-    {
+    public String[] getUrls() {
         return urls;
     }
 
-    public void setUrls(String[] urls)
-    {
+    public void setUrls(String[] urls) {
         this.urls = urls;
     }
 
-    public RenewProperties getRenew()
-    {
+    public RenewProperties getRenew() {
         return renew;
     }
 
-    public void setRenew(RenewProperties renew)
-    {
+    public void setRenew(RenewProperties renew) {
         this.renew = renew;
     }
 
-    public UrlPermissionProperties getUrlPermission()
-    {
+    public UrlPermissionProperties getUrlPermission() {
         return urlPermission;
     }
 
-    public void setUrlPermission(UrlPermissionProperties urlPermission)
-    {
+    public void setUrlPermission(UrlPermissionProperties urlPermission) {
         this.urlPermission = urlPermission;
     }
 }

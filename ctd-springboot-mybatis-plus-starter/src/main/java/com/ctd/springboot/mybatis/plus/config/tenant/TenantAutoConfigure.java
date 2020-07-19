@@ -21,8 +21,7 @@ import org.springframework.context.annotation.Bean;
  * @since 1.0
  */
 @EnableConfigurationProperties(TenantProperties.class)
-public class TenantAutoConfigure
-{
+public class TenantAutoConfigure {
     @Autowired
     private TenantProperties tenantProperties;
 

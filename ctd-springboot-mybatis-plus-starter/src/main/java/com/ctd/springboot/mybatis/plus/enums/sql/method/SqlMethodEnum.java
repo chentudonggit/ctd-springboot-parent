@@ -7,8 +7,7 @@ package com.ctd.springboot.mybatis.plus.enums.sql.method;
  * @date 2020/3/8 9:21
  * @since 1.0
  */
-public enum SqlMethodEnum
-{
+public enum SqlMethodEnum {
     /**
      * 删除全部
      */
@@ -29,25 +28,21 @@ public enum SqlMethodEnum
      */
     private final String sql;
 
-    SqlMethodEnum(String method, String desc, String sql)
-    {
+    SqlMethodEnum(String method, String desc, String sql) {
         this.method = method;
         this.desc = desc;
         this.sql = sql;
     }
 
-    public String getMethod()
-    {
+    public String getMethod() {
         return method;
     }
 
-    public String getDesc()
-    {
+    public String getDesc() {
         return desc;
     }
 
-    public String getSql()
-    {
+    public String getSql() {
         return sql;
     }
 }

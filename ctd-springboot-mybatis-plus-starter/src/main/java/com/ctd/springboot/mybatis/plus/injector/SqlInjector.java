@@ -15,11 +15,9 @@ import java.util.stream.Stream;
  * @date 2020/3/8 9:19
  * @since 1.0
  */
-public class SqlInjector extends AbstractSqlInjector
-{
+public class SqlInjector extends AbstractSqlInjector {
     @Override
-    public List<AbstractMethod> getMethodList(Class<?> mapperClass)
-    {
+    public List<AbstractMethod> getMethodList(Class<?> mapperClass) {
         return Stream.of(new DeleteAll()).collect(Collectors.toList());
     }
 }

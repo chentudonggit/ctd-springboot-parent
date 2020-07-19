@@ -25,21 +25,15 @@ import java.util.*;
  * @date 2020/3/27 17:35
  * @since 1.0
  */
-public class OAuth2AuthenticationSerializer implements ObjectDeserializer
-{
+public class OAuth2AuthenticationSerializer implements ObjectDeserializer {
     @Override
-    public <T> T deserialze(DefaultJSONParser parser, Type type, Object fieldName)
-    {
-        if (type == OAuth2Authentication.class)
-        {
-            try
-            {
+    public <T> T deserialze(DefaultJSONParser parser, Type type, Object fieldName) {
+        if (type == OAuth2Authentication.class) {
+            try {
                 Object o = parse(parser);
-                if (Objects.isNull(o))
-                {
+                if (Objects.isNull(o)) {
                     return null;
-                } else if (o instanceof OAuth2Authentication)
-                {
+                } else if (o instanceof OAuth2Authentication) {
                     return (T) o;
                 }
 
@@ -47,8 +41,7 @@ public class OAuth2AuthenticationSerializer implements ObjectDeserializer
                 OAuth2Request request = parseOauthRequest(jsonObject);
                 AbstractAuthenticationToken userAuthentication = jsonObject.getObject("userAuthentication", AbstractAuthenticationToken.class);
                 return (T) new OAuth2Authentication(request, userAuthentication);
-            } catch (Exception e)
-            {
+            } catch (Exception e) {
                 e.printStackTrace();
             }
             return null;
@@ -62,10 +55,8 @@ public class OAuth2AuthenticationSerializer implements ObjectDeserializer
      * @param jsonObject jsonObject
      * @return OAuth2Request
      */
-    private OAuth2Request parseOauthRequest(JSONObject jsonObject)
-    {
-        if (AssertUtils.isNull(jsonObject))
-        {
+    private OAuth2Request parseOauthRequest(JSONObject jsonObject) {
+        if (AssertUtils.isNull(jsonObject)) {
             return null;
         }
         JSONObject json = jsonObject.getObject("oAuth2Request", JSONObject.class);
@@ -93,12 +84,10 @@ public class OAuth2AuthenticationSerializer implements ObjectDeserializer
      * @param key  key
      * @return Set<GrantedAuthority>
      */
-    public Set<GrantedAuthority> grantedAuthorities(JSONObject json, String key)
-    {
+    public Set<GrantedAuthority> grantedAuthorities(JSONObject json, String key) {
         Set<GrantedAuthority> grantedAuthorities = new HashSet<>();
         Set<String> authorities = getSet(json, key);
-        if (AssertUtils.nonNull(authorities))
-        {
+        if (AssertUtils.nonNull(authorities)) {
             authorities.forEach(s -> grantedAuthorities.add(new SimpleGrantedAuthority(s)));
         }
         return grantedAuthorities;
@@ -111,13 +100,10 @@ public class OAuth2AuthenticationSerializer implements ObjectDeserializer
      * @param key  key
      * @return Map<String, Serializable>
      */
-    public Map<String, Serializable> getMap(JSONObject json, String key)
-    {
-        if (Objects.nonNull(json) && StringUtils.isNotBlank(key))
-        {
+    public Map<String, Serializable> getMap(JSONObject json, String key) {
+        if (Objects.nonNull(json) && StringUtils.isNotBlank(key)) {
             json.getObject(key,
-                    new TypeReference<HashMap<String, Serializable>>()
-                    {
+                    new TypeReference<HashMap<String, Serializable>>() {
                     });
         }
         return new HashMap<>(0);
@@ -130,21 +116,16 @@ public class OAuth2AuthenticationSerializer implements ObjectDeserializer
      * @param key  key
      * @return Map<String, String>
      */
-    public Map<String, String> getStringMap(JSONObject json, String key)
-    {
-        if (Objects.nonNull(json) && StringUtils.isNotBlank(key))
-        {
+    public Map<String, String> getStringMap(JSONObject json, String key) {
+        if (Objects.nonNull(json) && StringUtils.isNotBlank(key)) {
             return json.getObject(key, Map.class);
         }
         return new HashMap<>(0);
     }
 
-    public Set<String> getSet(JSONObject json, String key)
-    {
-        if (Objects.nonNull(json) && StringUtils.isNotBlank(key))
-        {
-            return json.getObject(key, new TypeReference<HashSet<String>>()
-            {
+    public Set<String> getSet(JSONObject json, String key) {
+        if (Objects.nonNull(json) && StringUtils.isNotBlank(key)) {
+            return json.getObject(key, new TypeReference<HashSet<String>>() {
             });
         }
         return new HashSet<>(0);
@@ -152,23 +133,18 @@ public class OAuth2AuthenticationSerializer implements ObjectDeserializer
 
 
     @Override
-    public int getFastMatchToken()
-    {
+    public int getFastMatchToken() {
         return 0;
     }
 
-    private Object parse(DefaultJSONParser parse)
-    {
+    private Object parse(DefaultJSONParser parse) {
         JSONObject object = new JSONObject(parse.lexer.isEnabled(Feature.OrderedField));
         Object parsedObject = parse.parseObject(object);
-        if (parsedObject instanceof JSONObject)
-        {
+        if (parsedObject instanceof JSONObject) {
             return parsedObject;
-        } else if (parsedObject instanceof OAuth2Authentication)
-        {
+        } else if (parsedObject instanceof OAuth2Authentication) {
             return parsedObject;
-        } else
-        {
+        } else {
             return Objects.isNull(parsedObject) ? null : new JSONObject((Map<String, Object>) parsedObject);
         }
     }

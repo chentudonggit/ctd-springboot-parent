@@ -13,13 +13,11 @@ import javax.sql.DataSource;
  * @date 2020/3/7 16:08
  * @since 1.0
  */
-public class AuthDbTokenStore
-{
+public class AuthDbTokenStore {
     @Autowired(required = false)
     private DataSource dataSource;
 
-    public TokenStore tokenStore()
-    {
+    public TokenStore tokenStore() {
         return new JdbcTokenStore(dataSource);
     }
 }

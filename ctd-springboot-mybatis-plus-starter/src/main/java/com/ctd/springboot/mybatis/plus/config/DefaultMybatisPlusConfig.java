@@ -21,8 +21,7 @@ import org.springframework.context.annotation.Profile;
  * @since 1.0
  */
 @Import(BaseMetaObjectHandler.class)
-public class DefaultMybatisPlusConfig
-{
+public class DefaultMybatisPlusConfig {
     @Autowired
     private TenantHandler tenantHandler;
 
@@ -54,7 +53,7 @@ public class DefaultMybatisPlusConfig
      * 设置 dev test 环境开启
      */
     @Bean
-    @Profile({"development","dev","testing","test"})
+    @Profile({"development", "dev", "testing", "test"})
     public PerformanceInterceptor performanceInterceptor() {
         return new PerformanceInterceptor();
     }

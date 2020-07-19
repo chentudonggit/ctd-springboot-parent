@@ -19,8 +19,7 @@ import java.util.Objects;
  * @date 2020/3/28 12:28
  * @since 1.0
  */
-public class JpaSqlUtils
-{
+public class JpaSqlUtils {
     public static final String CREATE_TIME = "createTime";
     public static final String UPDATE_TIME = "updateTime";
 
@@ -30,10 +29,8 @@ public class JpaSqlUtils
      * @param obj obj
      * @return String
      */
-    public static String appendSqlLike(Object obj)
-    {
-        if (Objects.nonNull(obj))
-        {
+    public static String appendSqlLike(Object obj) {
+        if (Objects.nonNull(obj)) {
             return "%" + obj.toString().trim() + "%";
         }
         return "%%";
@@ -48,16 +45,13 @@ public class JpaSqlUtils
      * @param properties properties
      * @return Pageable
      */
-    public static Pageable initPageable(Integer page, Integer size, Sort.Direction direction, String... properties)
-    {
+    public static Pageable initPageable(Integer page, Integer size, Sort.Direction direction, String... properties) {
         page = AssertUtils.isNullReturnParam(page, 0);
         size = AssertUtils.isNullReturnParam(size, 10);
         size = Objects.isNull(size) ? 10 : size;
-        if (Objects.nonNull(direction) && Objects.nonNull(properties))
-        {
+        if (Objects.nonNull(direction) && Objects.nonNull(properties)) {
             return PageRequest.of(page, size, new Sort(direction, properties));
-        } else if (Objects.nonNull(direction))
-        {
+        } else if (Objects.nonNull(direction)) {
             return PageRequest.of(page, size, Sort.by(direction));
         }
         return PageRequest.of(page, size);
@@ -71,23 +65,20 @@ public class JpaSqlUtils
      * @param <T>    T
      * @param <S>    S
      */
-    public static <T, S> PageVO<T> convert(Page<S> s, Class<T> tClass)
-    {
+    public static <T, S> PageVO<T> convert(Page<S> s, Class<T> tClass) {
         PageVO<T> result = new PageVO<>();
         result.setData(new ArrayList<>());
         int page = 0;
         int pages = 0;
         int size = 10;
         long total = 0;
-        if (Objects.nonNull(s))
-        {
+        if (Objects.nonNull(s)) {
             size = s.getSize();
             pages = s.getTotalPages();
             total = s.getTotalElements();
             List<S> records = s.getContent();
             page = s.getPageable().getPageNumber();
-            for (S record : records)
-            {
+            for (S record : records) {
                 result.getData().add(BeanHelper.convert(record, tClass));
             }
         }

@@ -13,8 +13,7 @@ import java.util.Date;
  * @date 2020/3/8 9:16
  * @since 1.0
  */
-public class BaseMetaObjectHandler implements MetaObjectHandler
-{
+public class BaseMetaObjectHandler implements MetaObjectHandler {
     public static final String VERSION = "version";
     public static final String CREATE_TIME = "createTime";
     public static final String UPDATE_TIME = "updateTime";
@@ -22,8 +21,7 @@ public class BaseMetaObjectHandler implements MetaObjectHandler
     public static final String PARENT_ID = "parentId";
 
     @Override
-    public void insertFill(MetaObject metaObject)
-    {
+    public void insertFill(MetaObject metaObject) {
         Date now = new Date();
         fieldValByName(VERSION, 1L, metaObject);
         fieldValByName(PARENT_ID, 0, metaObject);
@@ -33,14 +31,12 @@ public class BaseMetaObjectHandler implements MetaObjectHandler
     }
 
     @Override
-    public void updateFill(MetaObject metaObject)
-    {
+    public void updateFill(MetaObject metaObject) {
         this.setFieldValByName(UPDATE_TIME, new Date(), metaObject);
     }
-    private void fieldValByName(String key, Object fieldVal, MetaObject metaObject)
-    {
-        if (metaObject.hasGetter(key))
-        {
+
+    private void fieldValByName(String key, Object fieldVal, MetaObject metaObject) {
+        if (metaObject.hasGetter(key)) {
             this.setFieldValByName(key, fieldVal, metaObject);
         }
     }

@@ -20,8 +20,7 @@ import java.util.Objects;
  * @date 2020/3/26 1:02
  * @since 1.0
  */
-public class ClientArgumentResolver implements HandlerMethodArgumentResolver
-{
+public class ClientArgumentResolver implements HandlerMethodArgumentResolver {
     /**
      * 入参筛选
      *
@@ -29,8 +28,7 @@ public class ClientArgumentResolver implements HandlerMethodArgumentResolver
      * @return 格式化后的参数
      */
     @Override
-    public boolean supportsParameter(MethodParameter methodParameter)
-    {
+    public boolean supportsParameter(MethodParameter methodParameter) {
         return methodParameter.hasParameterAnnotation(LoginClient.class) && methodParameter.getParameterType().equals(String.class);
     }
 
@@ -45,11 +43,9 @@ public class ClientArgumentResolver implements HandlerMethodArgumentResolver
     public Object resolveArgument(MethodParameter methodParameter,
                                   ModelAndViewContainer modelAndViewContainer,
                                   NativeWebRequest nativeWebRequest,
-                                  WebDataBinderFactory webDataBinderFactory)
-    {
+                                  WebDataBinderFactory webDataBinderFactory) {
         HttpServletRequest request = nativeWebRequest.getNativeRequest(HttpServletRequest.class);
-        if (Objects.nonNull(request))
-        {
+        if (Objects.nonNull(request)) {
             String clientId = request.getHeader(SecurityConstants.TENANT_HEADER);
             AssertUtils.isNullToUser(clientId, "服务器异常，请联系管理员。");
             return clientId;

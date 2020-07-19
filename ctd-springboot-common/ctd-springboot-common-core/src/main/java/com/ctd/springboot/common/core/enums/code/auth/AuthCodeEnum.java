@@ -13,8 +13,7 @@ import java.util.Objects;
  * @date 2020/3/7 11:49
  * @since 1.0
  */
-public enum AuthCodeEnum implements ResultCode
-{
+public enum AuthCodeEnum implements ResultCode {
     /**
      * AUTH_USERNAME_NONE 请输入账号
      *
@@ -95,22 +94,18 @@ public enum AuthCodeEnum implements ResultCode
 
     private static final ImmutableMap<Integer, AuthCodeEnum> CACHE;
 
-    static
-    {
+    static {
         final ImmutableMap.Builder<Integer, AuthCodeEnum> builder = ImmutableMap.builder();
-        for (AuthCodeEnum authCodeEnum : values())
-        {
+        for (AuthCodeEnum authCodeEnum : values()) {
             Integer authCode = authCodeEnum.code();
-            if (Objects.nonNull(authCode))
-            {
+            if (Objects.nonNull(authCode)) {
                 builder.put(authCode, authCodeEnum);
             }
         }
         CACHE = builder.build();
     }
 
-    AuthCodeEnum(boolean success, Integer code, String message)
-    {
+    AuthCodeEnum(boolean success, Integer code, String message) {
         this.success = success;
         this.code = code;
         this.message = message;
@@ -122,8 +117,7 @@ public enum AuthCodeEnum implements ResultCode
      * @return Boolean
      */
     @Override
-    public Boolean success()
-    {
+    public Boolean success() {
         return success;
     }
 
@@ -133,8 +127,7 @@ public enum AuthCodeEnum implements ResultCode
      * @return Integer
      */
     @Override
-    public Integer code()
-    {
+    public Integer code() {
         return code;
     }
 
@@ -144,8 +137,7 @@ public enum AuthCodeEnum implements ResultCode
      * @return String
      */
     @Override
-    public String message()
-    {
+    public String message() {
         return message;
     }
 }

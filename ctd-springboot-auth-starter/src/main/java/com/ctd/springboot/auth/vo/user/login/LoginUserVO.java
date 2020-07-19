@@ -20,8 +20,7 @@ import java.util.Set;
  * @date 2020/3/8 8:31
  * @since 1.0
  */
-public class LoginUserVO extends UserVO implements SocialUserDetails
-{
+public class LoginUserVO extends UserVO implements SocialUserDetails {
     private static final long serialVersionUID = 2845676515016887521L;
     /**
      * 权限集合
@@ -35,59 +34,49 @@ public class LoginUserVO extends UserVO implements SocialUserDetails
      */
     @JsonIgnore
     @Override
-    public Collection<? extends GrantedAuthority> getAuthorities()
-    {
+    public Collection<? extends GrantedAuthority> getAuthorities() {
         Collection<GrantedAuthority> collection = new HashSet<>();
-        if (!CollectionUtils.isEmpty(super.getRoles()))
-        {
+        if (!CollectionUtils.isEmpty(super.getRoles())) {
             super.getRoles().parallelStream().forEach(role -> collection.add(new SimpleGrantedAuthority(role.getCode())));
         }
         return collection;
     }
 
     @Override
-    public boolean isAccountNonExpired()
-    {
+    public boolean isAccountNonExpired() {
         return true;
     }
 
     @Override
-    public boolean isAccountNonLocked()
-    {
+    public boolean isAccountNonLocked() {
         return true;
     }
 
     @Override
-    public boolean isCredentialsNonExpired()
-    {
+    public boolean isCredentialsNonExpired() {
         return true;
     }
 
     @Override
-    public boolean isEnabled()
-    {
+    public boolean isEnabled() {
         return getEnabled();
     }
 
     @Override
-    public String getUserId()
-    {
+    public String getUserId() {
         return getOpenId();
     }
 
-    public Set<String> getPermissions()
-    {
+    public Set<String> getPermissions() {
         return permissions;
     }
 
-    public void setPermissions(Set<String> permissions)
-    {
+    public void setPermissions(Set<String> permissions) {
         this.permissions = permissions;
     }
 
     @Override
-    public String toString()
-    {
+    public String toString() {
         return "LoginUserVO{" +
                 "permissions=" + permissions +
                 '}';

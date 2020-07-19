@@ -14,8 +14,7 @@ import org.springframework.stereotype.Component;
  * @since 1.0
  */
 @Component
-public class AuthRedisTokenStore
-{
+public class AuthRedisTokenStore {
     @Autowired
     private RedisConnectionFactory connectionFactory;
 

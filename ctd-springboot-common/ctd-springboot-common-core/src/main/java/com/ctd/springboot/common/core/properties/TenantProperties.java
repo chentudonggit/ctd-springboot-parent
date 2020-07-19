@@ -15,8 +15,7 @@ import java.util.List;
  */
 @ConfigurationProperties(prefix = "ctd.tenant")
 @RefreshScope
-public class TenantProperties
-{
+public class TenantProperties {
     /**
      * 是否开启多租户
      */
@@ -33,33 +32,27 @@ public class TenantProperties
      */
     private List<String> ignoreSqls = new ArrayList<>();
 
-    public Boolean getEnable()
-    {
+    public Boolean getEnable() {
         return enable;
     }
 
-    public void setEnable(Boolean enable)
-    {
+    public void setEnable(Boolean enable) {
         this.enable = enable;
     }
 
-    public List<String> getIgnoreTables()
-    {
+    public List<String> getIgnoreTables() {
         return ignoreTables;
     }
 
-    public void setIgnoreTables(List<String> ignoreTables)
-    {
+    public void setIgnoreTables(List<String> ignoreTables) {
         this.ignoreTables = ignoreTables;
     }
 
-    public List<String> getIgnoreSqls()
-    {
+    public List<String> getIgnoreSqls() {
         return ignoreSqls;
     }
 
-    public void setIgnoreSqls(List<String> ignoreSqls)
-    {
+    public void setIgnoreSqls(List<String> ignoreSqls) {
         this.ignoreSqls = ignoreSqls;
     }
 }

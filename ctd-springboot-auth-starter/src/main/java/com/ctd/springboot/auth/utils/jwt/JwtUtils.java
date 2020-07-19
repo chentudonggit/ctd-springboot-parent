@@ -22,8 +22,7 @@ import java.util.stream.Collectors;
  * @date 2020/3/7 20:28
  * @since 1.0
  */
-public final class JwtUtils
-{
+public final class JwtUtils {
     private static final String PUBLIC_KEY_START = "-----BEGIN PUBLIC KEY-----";
     private static final String PUBLIC_KEY_END = "-----END PUBLIC KEY-----";
     public static final String EXP = "exp";
@@ -31,16 +30,13 @@ public final class JwtUtils
     /**
      * 通过classpath获取公钥值
      */
-    public static RSAPublicKey getRsaPublicKey()
-    {
+    public static RSAPublicKey getRsaPublicKey() {
         Resource res = new ClassPathResource(SecurityConstants.RSA_PUBLIC_KEY);
-        try (BufferedReader br = new BufferedReader(new InputStreamReader(res.getInputStream())))
-        {
+        try (BufferedReader br = new BufferedReader(new InputStreamReader(res.getInputStream()))) {
             String pubKey = br.lines().collect(Collectors.joining("\n"));
             pubKey = pubKey.substring(PUBLIC_KEY_START.length(), pubKey.indexOf(PUBLIC_KEY_END));
             return RsaUtils.getPublicKey(pubKey);
-        } catch (Exception ioe)
-        {
+        } catch (Exception ioe) {
             ioe.printStackTrace();
         }
         return null;
@@ -53,8 +49,7 @@ public final class JwtUtils
      * @param rsaPublicKey 公钥
      * @return JSONObject
      */
-    public static JSONObject decodeAndVerify(String jwtToken, RSAPublicKey rsaPublicKey)
-    {
+    public static JSONObject decodeAndVerify(String jwtToken, RSAPublicKey rsaPublicKey) {
         SignatureVerifier rsaVerifier = new RsaVerifier(rsaPublicKey);
         Jwt jwt = JwtHelper.decodeAndVerify(jwtToken, rsaVerifier);
         return JSONObject.parseObject(jwt.getClaims());
@@ -66,8 +61,7 @@ public final class JwtUtils
      * @param jwtToken token值
      * @return JSONObject
      */
-    public static JSONObject decodeAndVerify(String jwtToken)
-    {
+    public static JSONObject decodeAndVerify(String jwtToken) {
         return decodeAndVerify(jwtToken, getRsaPublicKey());
     }
 
@@ -78,8 +72,7 @@ public final class JwtUtils
      * @param currTime 当前时间
      * @return 未过期：true，已过期：false
      */
-    public static boolean checkExp(JSONObject claims, long currTime)
-    {
+    public static boolean checkExp(JSONObject claims, long currTime) {
         long exp = claims.getLong(EXP);
         return exp >= currTime;
     }
@@ -90,8 +83,7 @@ public final class JwtUtils
      * @param claims jwt内容
      * @return 未过期：true，已过期：false
      */
-    public static boolean checkExp(JSONObject claims)
-    {
+    public static boolean checkExp(JSONObject claims) {
         return checkExp(claims, System.currentTimeMillis());
     }
 }

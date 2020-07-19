@@ -17,8 +17,7 @@ import java.util.Objects;
  * @date 2020/3/28 12:30
  * @since 1.0
  */
-public class CustomSqlUtils
-{
+public class CustomSqlUtils {
     /**
      * 实体转换
      *
@@ -27,15 +26,13 @@ public class CustomSqlUtils
      * @param <T>    T
      * @param <S>    S
      */
-    public static <T, S> PageVO<T> convert(IPage<S> s, Class<T> tClass)
-    {
+    public static <T, S> PageVO<T> convert(IPage<S> s, Class<T> tClass) {
         long current = AssertUtils.isNullReturnParam(s.getCurrent(), 0L);
         long pageSize = AssertUtils.isNullReturnParam(s.getSize(), 10L);
         return convert(current, pageSize, s.getPages(), s.getTotal(), s.getRecords(), tClass);
     }
 
-    public static <T, S> PageVO<T> convert(Page<S> s, Class<T> tClass)
-    {
+    public static <T, S> PageVO<T> convert(Page<S> s, Class<T> tClass) {
         return convert(s.getCurrent(), s.getSize(), s.getPages(), s.getTotal(), s.getRecords(), tClass);
     }
 
@@ -51,24 +48,21 @@ public class CustomSqlUtils
      * @param <S> <S>
      * @return PageVO<T>
      */
-    public static <T, S> PageVO<T> convert(Long current, Long pageSize, Long pages, Long total, List<S> records, Class<T> tClass)
-    {
+    public static <T, S> PageVO<T> convert(Long current, Long pageSize, Long pages, Long total, List<S> records, Class<T> tClass) {
         PageVO<T> result = new PageVO<>();
         result.setData(new ArrayList<>());
-        if (Objects.nonNull(records))
-        {
-            for (S record : records)
-            {
+        if (Objects.nonNull(records)) {
+            for (S record : records) {
                 result.getData().add(BeanHelper.convert(record, tClass));
             }
         }
         current = AssertUtils.isNullReturnParam(current, 0L);
-        pageSize= AssertUtils.isNullReturnParam(pageSize, 10L);
+        pageSize = AssertUtils.isNullReturnParam(pageSize, 10L);
         pages = AssertUtils.isNullReturnParam(pages, 0L);
         result.setPage(Integer.valueOf(current.toString()));
         result.setSize(Integer.valueOf(pageSize.toString()));
         result.setTotalPage(Integer.valueOf(pages.toString()));
-        result.setTotalCount( AssertUtils.isNullReturnParam(total, 0L));
+        result.setTotalCount(AssertUtils.isNullReturnParam(total, 0L));
         return result;
     }
 }

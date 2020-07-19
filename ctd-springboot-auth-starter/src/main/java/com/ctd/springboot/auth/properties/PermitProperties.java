@@ -11,8 +11,7 @@ import java.util.Objects;
  * @date 2020/3/7 15:33
  * @since 1.0
  */
-public class PermitProperties
-{
+public class PermitProperties {
     /**
      * 默认无需认证
      */
@@ -32,18 +31,15 @@ public class PermitProperties
      */
     private String[] urls = {};
 
-    public String[] getUrls()
-    {
-        if (Objects.isNull(urls) || urls.length <= 0)
-        {
+    public String[] getUrls() {
+        if (Objects.isNull(urls) || urls.length <= 0) {
             return ENDPOINTS;
         }
         List<String> result = Arrays.asList(urls);
         return result.toArray(new String[0]);
     }
 
-    public void setUrls(String[] urls)
-    {
+    public void setUrls(String[] urls) {
         this.urls = urls;
     }
 }

@@ -11,10 +11,9 @@ import org.springframework.security.crypto.password.PasswordEncoder;
  * @date 2020/3/8 17:08
  * @since 1.0
  */
-public class DefaultPasswordConfig
-{
+public class DefaultPasswordConfig {
     @Bean
-    public PasswordEncoder passwordEncoder()	{
+    public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
 }

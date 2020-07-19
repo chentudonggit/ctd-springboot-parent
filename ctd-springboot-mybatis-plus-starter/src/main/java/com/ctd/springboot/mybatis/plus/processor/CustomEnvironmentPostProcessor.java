@@ -18,11 +18,9 @@ import java.util.Properties;
  * @since 1.0
  */
 @Component
-public class CustomEnvironmentPostProcessor implements EnvironmentPostProcessor
-{
+public class CustomEnvironmentPostProcessor implements EnvironmentPostProcessor {
     @Override
-    public void postProcessEnvironment(ConfigurableEnvironment environment, SpringApplication application)
-    {
+    public void postProcessEnvironment(ConfigurableEnvironment environment, SpringApplication application) {
         YamlPropertiesFactoryBean yaml = new YamlPropertiesFactoryBean();
         ClassPathResource classPathResource = new ClassPathResource("/mybatis/application.yml");
         yaml.setResources(classPathResource);

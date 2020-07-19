@@ -18,8 +18,7 @@ import java.security.spec.X509EncodedKeySpec;
  * @date 2020/3/7 20:29
  * @since 1.0
  */
-public final class RsaUtils
-{
+public final class RsaUtils {
     private static final String CIPHER_INSTANCE = "RSA/ECB/PKCS1Padding";
     private static final String RSA = "RSA";
 
@@ -29,17 +28,14 @@ public final class RsaUtils
      * @param content   要加密的内容
      * @param publicKey 公钥
      */
-    public static String encrypt(String content, PublicKey publicKey)
-    {
-        try
-        {
+    public static String encrypt(String content, PublicKey publicKey) {
+        try {
             Cipher cipher = Cipher.getInstance(CIPHER_INSTANCE);
             cipher.init(Cipher.ENCRYPT_MODE, publicKey);
             byte[] output = cipher.doFinal(content.getBytes());
             BASE64Encoder encoder = new BASE64Encoder();
             return encoder.encode(output);
-        } catch (Exception e)
-        {
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return null;
@@ -51,15 +47,12 @@ public final class RsaUtils
      * @param content   要加密的内容
      * @param publicKey 公钥
      */
-    public static byte[] encrypt(byte[] content, PublicKey publicKey)
-    {
-        try
-        {
+    public static byte[] encrypt(byte[] content, PublicKey publicKey) {
+        try {
             Cipher cipher = Cipher.getInstance(CIPHER_INSTANCE);
             cipher.init(Cipher.ENCRYPT_MODE, publicKey);
             return cipher.doFinal(content);
-        } catch (Exception e)
-        {
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return null;
@@ -71,15 +64,12 @@ public final class RsaUtils
      * @param content    要解密的内容
      * @param privateKey 私钥
      */
-    public static byte[] decrypt(byte[] content, PrivateKey privateKey)
-    {
-        try
-        {
+    public static byte[] decrypt(byte[] content, PrivateKey privateKey) {
+        try {
             Cipher cipher = Cipher.getInstance(CIPHER_INSTANCE);
             cipher.init(Cipher.DECRYPT_MODE, privateKey);
             return cipher.doFinal(content);
-        } catch (Exception e)
-        {
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return null;
@@ -91,17 +81,14 @@ public final class RsaUtils
      * @param content    要解密的内容
      * @param privateKey 私钥
      */
-    public static String decrypt(String content, PrivateKey privateKey)
-    {
-        try
-        {
+    public static String decrypt(String content, PrivateKey privateKey) {
+        try {
             Cipher cipher = Cipher.getInstance(CIPHER_INSTANCE);
             cipher.init(Cipher.DECRYPT_MODE, privateKey);
             byte[] b = cipher.doFinal(content.getBytes());
             BASE64Encoder encoder = new BASE64Encoder();
             return encoder.encode(b);
-        } catch (Exception e)
-        {
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return null;
@@ -112,8 +99,7 @@ public final class RsaUtils
      *
      * @param key 公钥字符
      */
-    public static RSAPublicKey getPublicKey(String key) throws Exception
-    {
+    public static RSAPublicKey getPublicKey(String key) throws Exception {
         byte[] keyBytes;
         keyBytes = (new BASE64Decoder()).decodeBuffer(key);
         X509EncodedKeySpec keySpec = new X509EncodedKeySpec(keyBytes);
@@ -126,8 +112,7 @@ public final class RsaUtils
      *
      * @param key 私钥字符
      */
-    public static PrivateKey getPrivateKey(String key) throws Exception
-    {
+    public static PrivateKey getPrivateKey(String key) throws Exception {
         byte[] keyBytes;
         keyBytes = (new BASE64Decoder()).decodeBuffer(key);
         PKCS8EncodedKeySpec keySpec = new PKCS8EncodedKeySpec(keyBytes);

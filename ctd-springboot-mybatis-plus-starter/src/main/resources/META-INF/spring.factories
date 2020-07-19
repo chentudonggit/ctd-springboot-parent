@@ -2,6 +2,5 @@
 org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
   com.ctd.springboot.mybatis.plus.config.tenant.TenantAutoConfigure,\
   com.ctd.springboot.mybatis.plus.CustomMyBatisPlusAutoConfiguration
-
 org.springframework.boot.env.EnvironmentPostProcessor=\
   com.ctd.springboot.mybatis.plus.processor.CustomEnvironmentPostProcessor

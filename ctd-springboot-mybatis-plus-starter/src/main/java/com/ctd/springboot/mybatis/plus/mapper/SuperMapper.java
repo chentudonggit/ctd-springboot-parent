@@ -9,6 +9,5 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
  * @date 2020/5/8 2:03
  * @since 1.0
  */
-public interface SuperMapper<T> extends BaseMapper<T>
-{
+public interface SuperMapper<T> extends BaseMapper<T> {
 }

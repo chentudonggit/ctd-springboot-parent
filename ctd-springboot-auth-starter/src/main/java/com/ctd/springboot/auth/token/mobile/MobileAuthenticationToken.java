@@ -14,23 +14,21 @@ import java.util.Collection;
  * @date 2020/3/7 20:14
  * @since 1.0
  */
-public class MobileAuthenticationToken extends AbstractAuthenticationToken
-{
+public class MobileAuthenticationToken extends AbstractAuthenticationToken {
     private static final long serialVersionUID = SpringSecurityCoreVersion.SERIAL_VERSION_UID;
 
     private final Object principal;
     private Object credentials;
     transient private boolean isSmsCode;
 
-    public MobileAuthenticationToken(Object principal, Object credentials)
-    {
+    public MobileAuthenticationToken(Object principal, Object credentials) {
         super(null);
         this.principal = principal;
         this.credentials = credentials;
         setAuthenticated(false);
     }
-    public MobileAuthenticationToken(Object principal, Object credentials, boolean isSmsCode)
-    {
+
+    public MobileAuthenticationToken(Object principal, Object credentials, boolean isSmsCode) {
         super(null);
         this.principal = principal;
         this.credentials = credentials;
@@ -39,8 +37,7 @@ public class MobileAuthenticationToken extends AbstractAuthenticationToken
     }
 
     public MobileAuthenticationToken(Object principal, Object credentials,
-                                     Collection<? extends GrantedAuthority> authorities)
-    {
+                                     Collection<? extends GrantedAuthority> authorities) {
         super(authorities);
         this.principal = principal;
         this.credentials = credentials;
@@ -48,22 +45,18 @@ public class MobileAuthenticationToken extends AbstractAuthenticationToken
     }
 
     @Override
-    public Object getCredentials()
-    {
+    public Object getCredentials() {
         return this.credentials;
     }
 
     @Override
-    public Object getPrincipal()
-    {
+    public Object getPrincipal() {
         return this.principal;
     }
 
     @Override
-    public void setAuthenticated(boolean isAuthenticated)
-    {
-        if (isAuthenticated)
-        {
+    public void setAuthenticated(boolean isAuthenticated) {
+        if (isAuthenticated) {
             AssertUtils.msgDevelopment(
                     "Cannot set this token to trusted - use constructor which takes a GrantedAuthority list instead");
         }
@@ -71,18 +64,15 @@ public class MobileAuthenticationToken extends AbstractAuthenticationToken
     }
 
     @Override
-    public void eraseCredentials()
-    {
+    public void eraseCredentials() {
         super.eraseCredentials();
     }
 
-    public boolean isSmsCode()
-    {
+    public boolean isSmsCode() {
         return isSmsCode;
     }
 
-    public void setSmsCode(boolean smsCode)
-    {
+    public void setSmsCode(boolean smsCode) {
         isSmsCode = smsCode;
     }
 }

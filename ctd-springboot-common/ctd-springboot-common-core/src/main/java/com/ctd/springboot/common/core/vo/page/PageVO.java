@@ -15,8 +15,7 @@ import java.util.Objects;
  * @date 2020/3/7 12:14
  * @since 1.0
  */
-public class PageVO<T> implements Serializable
-{
+public class PageVO<T> implements Serializable {
     private static final long serialVersionUID = -4315354068187132885L;
 
     /**
@@ -52,59 +51,48 @@ public class PageVO<T> implements Serializable
     @JSONField(name = "data")
     private List<T> data;
 
-    public Integer getPage()
-    {
+    public Integer getPage() {
         return page;
     }
 
-    public void setPage(Integer page)
-    {
+    public void setPage(Integer page) {
         this.page = page;
     }
 
-    public Integer getSize()
-    {
+    public Integer getSize() {
         return size;
     }
 
-    public void setSize(Integer size)
-    {
+    public void setSize(Integer size) {
         this.size = size;
     }
 
-    public Integer getTotalPage()
-    {
+    public Integer getTotalPage() {
         return totalPage;
     }
 
-    public void setTotalPage(Integer totalPage)
-    {
+    public void setTotalPage(Integer totalPage) {
         this.totalPage = totalPage;
     }
 
-    public Long getTotalCount()
-    {
+    public Long getTotalCount() {
         return totalCount;
     }
 
-    public void setTotalCount(Long totalCount)
-    {
+    public void setTotalCount(Long totalCount) {
         this.totalCount = totalCount;
     }
 
-    public List<T> getData()
-    {
+    public List<T> getData() {
         return data;
     }
 
-    public void setData(List<T> data)
-    {
+    public void setData(List<T> data) {
         this.data = data;
     }
 
     @Override
-    public String toString()
-    {
+    public String toString() {
         return "PageVO{" +
                 "page=" + page +
                 ", size=" + size +
@@ -122,8 +110,7 @@ public class PageVO<T> implements Serializable
      * @param <T>  <T>
      * @return Page<T>
      */
-    public static <T> PageVO<T> init(Integer page, Integer size)
-    {
+    public static <T> PageVO<T> init(Integer page, Integer size) {
         PageVO<T> result = new PageVO<>();
         result.setTotalCount(0L);
         result.setPage(Objects.isNull(page) ? 0 : size);

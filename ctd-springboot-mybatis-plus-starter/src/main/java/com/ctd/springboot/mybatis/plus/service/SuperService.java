@@ -13,8 +13,7 @@ import com.ctd.springboot.common.lock.DistributedLock;
  * @date 2020/3/8 9:25
  * @since 1.0
  */
-public interface SuperService<T> extends IService<T>
-{
+public interface SuperService<T> extends IService<T> {
 
     /**
      * 幂等性新增记录

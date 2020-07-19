@@ -7,8 +7,7 @@ package com.ctd.springboot.common.core.constant.security;
  * @date 2020/3/7 18:09
  * @since 1.0
  */
-public interface SecurityConstants
-{
+public interface SecurityConstants {
     /**
      * 用户信息分隔符
      */

@@ -15,8 +15,7 @@ import org.springframework.cloud.context.config.annotation.RefreshScope;
  */
 @ConfigurationProperties(prefix = "ctd.security")
 @RefreshScope
-public class SecurityProperties
-{
+public class SecurityProperties {
     /**
      * 认证
      */
@@ -32,33 +31,27 @@ public class SecurityProperties
      */
     private ValidateCodeProperties code = new ValidateCodeProperties();
 
-    public AuthProperties getAuth()
-    {
+    public AuthProperties getAuth() {
         return auth;
     }
 
-    public void setAuth(AuthProperties auth)
-    {
+    public void setAuth(AuthProperties auth) {
         this.auth = auth;
     }
 
-    public PermitProperties getIgnore()
-    {
+    public PermitProperties getIgnore() {
         return ignore;
     }
 
-    public void setIgnore(PermitProperties ignore)
-    {
+    public void setIgnore(PermitProperties ignore) {
         this.ignore = ignore;
     }
 
-    public ValidateCodeProperties getCode()
-    {
+    public ValidateCodeProperties getCode() {
         return code;
     }
 
-    public void setCode(ValidateCodeProperties code)
-    {
+    public void setCode(ValidateCodeProperties code) {
         this.code = code;
     }
 }

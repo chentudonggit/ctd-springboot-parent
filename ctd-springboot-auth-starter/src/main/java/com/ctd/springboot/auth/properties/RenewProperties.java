@@ -10,8 +10,7 @@ import java.util.List;
  * @date 2020/3/7 15:32
  * @since 1.0
  */
-public class RenewProperties
-{
+public class RenewProperties {
     /**
      * 是否开启token自动续签
      * 默认redis，其他方式需要自己实现
@@ -35,43 +34,35 @@ public class RenewProperties
      */
     private Double timeRatio = 0.5;
 
-    public Boolean getEnable()
-    {
+    public Boolean getEnable() {
         return enable;
     }
 
-    public void setEnable(Boolean enable)
-    {
+    public void setEnable(Boolean enable) {
         this.enable = enable;
     }
 
-    public List<String> getIncludeClientIds()
-    {
+    public List<String> getIncludeClientIds() {
         return includeClientIds;
     }
 
-    public void setIncludeClientIds(List<String> includeClientIds)
-    {
+    public void setIncludeClientIds(List<String> includeClientIds) {
         this.includeClientIds = includeClientIds;
     }
 
-    public List<String> getExclusiveClientIds()
-    {
+    public List<String> getExclusiveClientIds() {
         return exclusiveClientIds;
     }
 
-    public void setExclusiveClientIds(List<String> exclusiveClientIds)
-    {
+    public void setExclusiveClientIds(List<String> exclusiveClientIds) {
         this.exclusiveClientIds = exclusiveClientIds;
     }
 
-    public Double getTimeRatio()
-    {
+    public Double getTimeRatio() {
         return timeRatio;
     }
 
-    public void setTimeRatio(Double timeRatio)
-    {
+    public void setTimeRatio(Double timeRatio) {
         this.timeRatio = timeRatio;
     }
 }

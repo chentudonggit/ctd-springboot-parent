@@ -10,8 +10,7 @@ import com.ctd.springboot.common.lock.DistributedLock;
  * @date 2020/3/7 21:34
  * @since 1.0
  */
-public abstract class AbstractDistributedLock implements DistributedLock
-{
+public abstract class AbstractDistributedLock implements DistributedLock {
     /**
      * 获取锁
      *
@@ -19,8 +18,7 @@ public abstract class AbstractDistributedLock implements DistributedLock
      * @return Boolean
      */
     @Override
-    public Boolean lock(String key)
-    {
+    public Boolean lock(String key) {
         return lock(key, TIMEOUT_MILLIS, RETRY_TIMES, SLEEP_MILLIS);
     }
 
@@ -32,8 +30,7 @@ public abstract class AbstractDistributedLock implements DistributedLock
      * @return Boolean
      */
     @Override
-    public Boolean lock(String key, int retryTimes)
-    {
+    public Boolean lock(String key, int retryTimes) {
         return lock(key, TIMEOUT_MILLIS, retryTimes, SLEEP_MILLIS);
     }
 
@@ -46,8 +43,7 @@ public abstract class AbstractDistributedLock implements DistributedLock
      * @return Boolean
      */
     @Override
-    public Boolean lock(String key, int retryTimes, long sleepMillis)
-    {
+    public Boolean lock(String key, int retryTimes, long sleepMillis) {
         return lock(key, TIMEOUT_MILLIS, retryTimes, sleepMillis);
     }
 
@@ -59,8 +55,7 @@ public abstract class AbstractDistributedLock implements DistributedLock
      * @return Boolean
      */
     @Override
-    public Boolean lock(String key, long expire)
-    {
+    public Boolean lock(String key, long expire) {
         return lock(key, expire, RETRY_TIMES, SLEEP_MILLIS);
     }
 
@@ -73,8 +68,7 @@ public abstract class AbstractDistributedLock implements DistributedLock
      * @return Boolean
      */
     @Override
-    public Boolean lock(String key, long expire, int retryTimes)
-    {
+    public Boolean lock(String key, long expire, int retryTimes) {
         return lock(key, expire, retryTimes, SLEEP_MILLIS);
     }
 }

@@ -7,8 +7,7 @@ package com.ctd.springboot.common.core.constant.tencent;
  * @date 2020/4/4 22:23
  * @since 1.0
  */
-public interface TencentConstants
-{
+public interface TencentConstants {
     /**
      * 微信地址
      */

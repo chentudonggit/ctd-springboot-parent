@@ -28,8 +28,7 @@ import java.util.LinkedHashMap;
  * @date 2020/3/7 11:38
  * @since 1.0
  */
-public class ResponseVO extends LinkedHashMap<String, Object> implements Serializable
-{
+public class ResponseVO extends LinkedHashMap<String, Object> implements Serializable {
     private static final long serialVersionUID = -6870182069212716606L;
 
     /**
@@ -81,18 +80,15 @@ public class ResponseVO extends LinkedHashMap<String, Object> implements Seriali
      */
     private static final String KEY_SIZE = "size";
 
-    public static void responseWriter(ObjectMapper objectMapper, HttpServletResponse response, String msg, int httpStatus) throws IOException
-    {
+    public static void responseWriter(ObjectMapper objectMapper, HttpServletResponse response, String msg, int httpStatus) throws IOException {
         responseWrite(objectMapper, response, ResultVO.succeedWith(null, httpStatus, msg));
     }
 
-    public static void responseWrite(ObjectMapper objectMapper, HttpServletResponse response, ResultVO<Object> result) throws IOException
-    {
+    public static void responseWrite(ObjectMapper objectMapper, HttpServletResponse response, ResultVO<Object> result) throws IOException {
         response.setContentType(MediaType.APPLICATION_JSON_UTF8_VALUE);
         try (
                 Writer writer = response.getWriter()
-        )
-        {
+        ) {
             writer.write(objectMapper.writeValueAsString(result));
             writer.flush();
         }
@@ -101,8 +97,7 @@ public class ResponseVO extends LinkedHashMap<String, Object> implements Seriali
     /**
      * webflux的response返回json对象
      */
-    public static Mono<Void> responseWriter(ServerWebExchange exchange, int httpStatus, String msg)
-    {
+    public static Mono<Void> responseWriter(ServerWebExchange exchange, int httpStatus, String msg) {
         ResultVO result = ResultVO.succeedWith(null, httpStatus, msg);
         ServerHttpResponse response = exchange.getResponse();
         response.setStatusCode(HttpStatus.valueOf(result.getCode()));
@@ -119,8 +114,7 @@ public class ResponseVO extends LinkedHashMap<String, Object> implements Seriali
      *
      * @param resultCode resultCode
      */
-    public ResponseVO(ResultCode resultCode)
-    {
+    public ResponseVO(ResultCode resultCode) {
         this.put(KEY_CODE, resultCode.code());
         this.put(KEY_MESSAGE, resultCode.message());
         this.put(KEY_SUCCESS, resultCode.success());
@@ -133,8 +127,7 @@ public class ResponseVO extends LinkedHashMap<String, Object> implements Seriali
      * @param successful successful
      * @param message    message
      */
-    public ResponseVO(Integer code, Boolean successful, String message)
-    {
+    public ResponseVO(Integer code, Boolean successful, String message) {
         this.put(KEY_CODE, code);
         this.put(KEY_MESSAGE, message);
         this.put(KEY_SUCCESS, successful);
@@ -147,8 +140,7 @@ public class ResponseVO extends LinkedHashMap<String, Object> implements Seriali
      * @return ResponseVO
      * @since 1.0
      */
-    public static ResponseVO code(ResultCode resultCode)
-    {
+    public static ResponseVO code(ResultCode resultCode) {
         return new ResponseVO(resultCode);
     }
 
@@ -159,8 +151,7 @@ public class ResponseVO extends LinkedHashMap<String, Object> implements Seriali
      * @return ResponseVO
      * @since 1.0
      */
-    public static ResponseVO data(Object data)
-    {
+    public static ResponseVO data(Object data) {
         HttpStatus httpStatus = HttpStatus.OK;
         ResponseVO responseResult = new ResponseVO(httpStatus.value(), true, httpStatus.getReasonPhrase());
         responseResult.put(KEY_DATA, data);
@@ -174,8 +165,7 @@ public class ResponseVO extends LinkedHashMap<String, Object> implements Seriali
      * @return ResponseVO
      * @since 1.0
      */
-    public static ResponseVO page(PageVO<?> page)
-    {
+    public static ResponseVO page(PageVO<?> page) {
         HttpStatus httpStatus = HttpStatus.OK;
         ResponseVO responseResult = new ResponseVO(httpStatus.value(), true,
                 httpStatus.getReasonPhrase());
@@ -196,12 +186,10 @@ public class ResponseVO extends LinkedHashMap<String, Object> implements Seriali
      * @return ResponseVO
      * @since 1.0
      */
-    public static ResponseVO row(long row)
-    {
+    public static ResponseVO row(long row) {
         HttpStatus httpStatus = HttpStatus.OK;
         boolean isSuccessful = true;
-        if (row == 0L)
-        {
+        if (row == 0L) {
             isSuccessful = false;
             httpStatus = HttpStatus.NOT_MODIFIED;
         }
@@ -219,8 +207,7 @@ public class ResponseVO extends LinkedHashMap<String, Object> implements Seriali
      * @param obj          obj
      * @throws IOException IOException
      */
-    public static void responseSucceed(ObjectMapper objectMapper, HttpServletResponse response, Object obj) throws IOException
-    {
+    public static void responseSucceed(ObjectMapper objectMapper, HttpServletResponse response, Object obj) throws IOException {
         responseWrite(objectMapper, response, ResultVO.succeed(obj));
     }
 
@@ -231,11 +218,9 @@ public class ResponseVO extends LinkedHashMap<String, Object> implements Seriali
      * @return ResponseVO
      * @since 1.0
      */
-    public ResponseVO successfulMessage(String message)
-    {
+    public ResponseVO successfulMessage(String message) {
         boolean isSuccessful = (Boolean) this.get(KEY_SUCCESS);
-        if (isSuccessful)
-        {
+        if (isSuccessful) {
             this.put(KEY_MESSAGE, message);
         }
         return this;
@@ -248,11 +233,9 @@ public class ResponseVO extends LinkedHashMap<String, Object> implements Seriali
      * @return ResponseVO
      * @since 1.0
      */
-    public ResponseVO errorMessage(String message)
-    {
+    public ResponseVO errorMessage(String message) {
         boolean isSuccessful = (Boolean) this.get(KEY_SUCCESS);
-        if (!isSuccessful)
-        {
+        if (!isSuccessful) {
             this.put(KEY_MESSAGE, message);
         }
         return this;
@@ -265,8 +248,7 @@ public class ResponseVO extends LinkedHashMap<String, Object> implements Seriali
      * @return ResponseVO
      * @since 1.0
      */
-    public ResponseVO failure(String message)
-    {
+    public ResponseVO failure(String message) {
         this.put(KEY_SUCCESS, false);
         this.put(KEY_CODE, HttpStatus.BAD_GATEWAY);
         this.put(KEY_MESSAGE, message);
@@ -280,8 +262,7 @@ public class ResponseVO extends LinkedHashMap<String, Object> implements Seriali
      * @param message message
      * @return ResponseVO
      */
-    public ResponseVO failure(Integer code, String message)
-    {
+    public ResponseVO failure(Integer code, String message) {
         this.put(KEY_SUCCESS, false);
         this.put(KEY_CODE, code);
         this.put(KEY_MESSAGE, message);
@@ -296,8 +277,7 @@ public class ResponseVO extends LinkedHashMap<String, Object> implements Seriali
      * @return ResponseVO
      * @since 1.0
      */
-    public ResponseVO addAttribute(String key, Object value)
-    {
+    public ResponseVO addAttribute(String key, Object value) {
         this.put(key, value);
         return this;
     }

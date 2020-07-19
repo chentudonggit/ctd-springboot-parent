@@ -9,8 +9,7 @@ import java.util.Objects;
  * @date 2020/3/8 9:18
  * @since 1.0
  */
-public enum StatusEnum
-{
+public enum StatusEnum {
     /**
      * 启用
      */
@@ -32,40 +31,32 @@ public enum StatusEnum
     private String message;
 
 
-    StatusEnum(int code, String message)
-    {
+    StatusEnum(int code, String message) {
         this.code = code;
         this.message = message;
     }
 
-    public Integer getCode()
-    {
+    public Integer getCode() {
         return code;
     }
 
-    public void setCode(Integer code)
-    {
+    public void setCode(Integer code) {
         this.code = code;
     }
 
-    public String getMessage()
-    {
+    public String getMessage() {
         return message;
     }
 
-    public void setMessage(String message)
-    {
+    public void setMessage(String message) {
         this.message = message;
     }
 
-    public static StatusEnum value(Integer key)
-    {
-        if (Objects.isNull(key))
-        {
+    public static StatusEnum value(Integer key) {
+        if (Objects.isNull(key)) {
             return null;
         }
-        switch (key)
-        {
+        switch (key) {
             case 1:
                 return StatusEnum.ENABLE;
             case 0:

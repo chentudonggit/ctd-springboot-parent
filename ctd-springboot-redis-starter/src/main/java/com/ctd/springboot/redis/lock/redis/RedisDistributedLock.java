@@ -9,6 +9,7 @@ import org.springframework.data.redis.connection.ReturnType;
 import org.springframework.data.redis.core.RedisCallback;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.types.Expiration;
+import org.springframework.stereotype.Component;
 
 import java.util.UUID;
 import java.util.concurrent.TimeUnit;
@@ -20,8 +21,8 @@ import java.util.concurrent.TimeUnit;
  * @date 2020/3/7 21:37
  * @since 1.0
  */
-public class RedisDistributedLock extends AbstractDistributedLock
-{
+@Component
+public class RedisDistributedLock extends AbstractDistributedLock {
     private static final Logger LOGGER = LoggerFactory.getLogger(RedisDistributedLock.class);
 
     @Autowired
@@ -34,8 +35,7 @@ public class RedisDistributedLock extends AbstractDistributedLock
     /*
      * 通过lua脚本释放锁,来达到释放锁的原子操作
      */
-    static
-    {
+    static {
         UNLOCK_LUA = "if redis.call(\"get\",KEYS[1]) == ARGV[1] " +
                 "then " +
                 "    return redis.call(\"del\",KEYS[1]) " +
@@ -54,18 +54,14 @@ public class RedisDistributedLock extends AbstractDistributedLock
      * @return Boolean
      */
     @Override
-    public Boolean lock(String key, long expire, int retryTimes, long sleepMillis)
-    {
+    public Boolean lock(String key, long expire, int retryTimes, long sleepMillis) {
         boolean result = setRedis(key, expire);
         // 如果获取锁失败，按照传入的重试次数进行重试
-        while ((!result) && retryTimes-- > 0)
-        {
-            try
-            {
+        while ((!result) && retryTimes-- > 0) {
+            try {
                 LOGGER.debug("get redisDistributeLock failed, retrying..." + retryTimes);
                 Thread.sleep(sleepMillis);
-            } catch (InterruptedException e)
-            {
+            } catch (InterruptedException e) {
                 LOGGER.warn("Interrupted!", e);
                 Thread.currentThread().interrupt();
             }
@@ -87,30 +83,24 @@ public class RedisDistributedLock extends AbstractDistributedLock
      * @return Boolean
      */
     @Override
-    public Boolean releaseLock(String key)
-    {
-        try
-        {
+    public Boolean releaseLock(String key) {
+        try {
             return redisTemplate.execute((RedisCallback<Boolean>) connection -> {
                 byte[] scriptByte = redisTemplate.getStringSerializer().serialize(UNLOCK_LUA);
                 return connection.eval(scriptByte, ReturnType.BOOLEAN, 1
                         , redisTemplate.getStringSerializer().serialize(key)
                         , redisTemplate.getStringSerializer().serialize(lockFlag.get()));
             });
-        } catch (Exception e)
-        {
+        } catch (Exception e) {
             LOGGER.error("release redisDistributeLock occured an exception", e);
-        } finally
-        {
+        } finally {
             lockFlag.remove();
         }
         return false;
     }
 
-    private boolean setRedis(final String key, final long expire)
-    {
-        try
-        {
+    private boolean setRedis(final String key, final long expire) {
+        try {
             return redisTemplate.execute((RedisCallback<Boolean>) connection -> {
                 String uuid = UUID.randomUUID().toString();
                 lockFlag.set(uuid);
@@ -119,8 +109,7 @@ public class RedisDistributedLock extends AbstractDistributedLock
                 boolean result = connection.set(keyByte, uuidByte, Expiration.from(expire, TimeUnit.MILLISECONDS), RedisStringCommands.SetOption.ifAbsent());
                 return result;
             });
-        } catch (Exception e)
-        {
+        } catch (Exception e) {
             LOGGER.error("set redisDistributeLock occured an exception", e);
         }
         return false;

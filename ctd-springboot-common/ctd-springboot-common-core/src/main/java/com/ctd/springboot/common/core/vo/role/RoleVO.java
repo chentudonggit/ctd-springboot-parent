@@ -13,8 +13,7 @@ import java.util.Date;
  * @date 2020/3/7 16:23
  * @since 1.0
  */
-public class RoleVO implements Serializable
-{
+public class RoleVO implements Serializable {
     private static final long serialVersionUID = 6534130632366133165L;
 
     /**
@@ -52,59 +51,48 @@ public class RoleVO implements Serializable
     @JSONField(name = "create_time")
     private Date createTime;
 
-    public String getId()
-    {
+    public String getId() {
         return id;
     }
 
-    public void setId(String id)
-    {
+    public void setId(String id) {
         this.id = id;
     }
 
-    public String getCode()
-    {
+    public String getCode() {
         return code;
     }
 
-    public void setCode(String code)
-    {
+    public void setCode(String code) {
         this.code = code;
     }
 
-    public String getName()
-    {
+    public String getName() {
         return name;
     }
 
-    public void setName(String name)
-    {
+    public void setName(String name) {
         this.name = name;
     }
 
-    public Long getUserId()
-    {
+    public Long getUserId() {
         return userId;
     }
 
-    public void setUserId(Long userId)
-    {
+    public void setUserId(Long userId) {
         this.userId = userId;
     }
 
-    public Date getCreateTime()
-    {
+    public Date getCreateTime() {
         return createTime;
     }
 
-    public void setCreateTime(Date createTime)
-    {
+    public void setCreateTime(Date createTime) {
         this.createTime = createTime;
     }
 
     @Override
-    public String toString()
-    {
+    public String toString() {
         return "RoleVO{" +
                 "id='" + id + '\'' +
                 ", code='" + code + '\'' +

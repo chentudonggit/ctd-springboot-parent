@@ -30,8 +30,7 @@ import java.util.stream.Collectors;
  * @date 2020/5/12 11:15 上午
  * @since 1.0
  */
-public abstract class AbstractDefaultPermission
-{
+public abstract class AbstractDefaultPermission {
     private static final Logger LOGGER = LoggerFactory.getLogger(AbstractDefaultPermission.class);
     @Autowired
     private SecurityProperties securityProperties;
@@ -53,46 +52,37 @@ public abstract class AbstractDefaultPermission
      * @param requestUri     requestUri
      * @return boolean
      */
-    public boolean hasPermission(Authentication authentication, String requestMethod, String requestUri)
-    {
+    public boolean hasPermission(Authentication authentication, String requestMethod, String requestUri) {
         // 前端跨域OPTIONS请求预检放行 也可通过前端配置代理实现
-        if (HttpMethod.OPTIONS.name().equalsIgnoreCase(requestMethod))
-        {
+        if (HttpMethod.OPTIONS.name().equalsIgnoreCase(requestMethod)) {
             return true;
         }
-        if (!(authentication instanceof AnonymousAuthenticationToken))
-        {
+        if (!(authentication instanceof AnonymousAuthenticationToken)) {
             //判断是否开启url权限验证
-            if (!securityProperties.getAuth().getUrlPermission().getEnable())
-            {
+            if (!securityProperties.getAuth().getUrlPermission().getEnable()) {
                 return true;
             }
             //超级管理员admin不需认证
             String username = AuthUtils.getUsername(authentication);
-            if (CommonConstant.ADMIN_USER_NAME.equals(username))
-            {
+            if (CommonConstant.ADMIN_USER_NAME.equals(username)) {
                 return true;
             }
 
             OAuth2Authentication auth2Authentication = (OAuth2Authentication) authentication;
             //判断应用黑白名单
-            if (!isNeedAuth(auth2Authentication.getOAuth2Request().getClientId()))
-            {
+            if (!isNeedAuth(auth2Authentication.getOAuth2Request().getClientId())) {
                 return true;
             }
 
             //判断不进行url权限认证的api，所有已登录用户都能访问的url
-            for (String path : securityProperties.getAuth().getUrlPermission().getIgnoreUrls())
-            {
-                if (antPathMatcher.match(path, requestUri))
-                {
+            for (String path : securityProperties.getAuth().getUrlPermission().getIgnoreUrls()) {
+                if (antPathMatcher.match(path, requestUri)) {
                     return true;
                 }
             }
 
             List<SimpleGrantedAuthority> grantedAuthorityList = (List<SimpleGrantedAuthority>) authentication.getAuthorities();
-            if (CollectionUtil.isEmpty(grantedAuthorityList))
-            {
+            if (CollectionUtil.isEmpty(grantedAuthorityList)) {
                 LOGGER.warn("角色列表为空：{}", authentication.getPrincipal());
                 return false;
             }
@@ -101,15 +91,12 @@ public abstract class AbstractDefaultPermission
             String clientId = auth2Authentication.getOAuth2Request().getClientId();
             TenantContextHolder.setTenant(clientId);
 
-            Collection<String> roleCodes = grantedAuthorityList.stream().map(SimpleGrantedAuthority :: getAuthority).collect(Collectors.toSet());
+            Collection<String> roleCodes = grantedAuthorityList.stream().map(SimpleGrantedAuthority::getAuthority).collect(Collectors.toSet());
             List<MenuVO> menuList = findMenuByRoleCodes(roleCodes);
-            for (MenuVO menu : menuList)
-            {
-                if (StringUtils.isNotBlank(menu.getUrl()) && antPathMatcher.match(menu.getUrl(), requestUri))
-                {
+            for (MenuVO menu : menuList) {
+                if (StringUtils.isNotBlank(menu.getUrl()) && antPathMatcher.match(menu.getUrl(), requestUri)) {
                     MethodEnum method = menu.getMethod();
-                    if (Objects.nonNull(method))
-                    {
+                    if (Objects.nonNull(method)) {
                         return requestMethod.equalsIgnoreCase(method.toString());
                     }
                 }
@@ -125,19 +112,16 @@ public abstract class AbstractDefaultPermission
      * @param clientId 应用id
      * @return true(需要认证)，false(不需要认证)
      */
-    private boolean isNeedAuth(String clientId)
-    {
+    private boolean isNeedAuth(String clientId) {
         boolean result = true;
         //白名单
         List<String> includeClientIds = securityProperties.getAuth().getUrlPermission().getIncludeClientIds();
         //黑名单
         List<String> exclusiveClientIds = securityProperties.getAuth().getUrlPermission().getExclusiveClientIds();
 
-        if (Objects.nonNull(includeClientIds) && (!includeClientIds.isEmpty()))
-        {
+        if (Objects.nonNull(includeClientIds) && (!includeClientIds.isEmpty())) {
             result = includeClientIds.contains(clientId);
-        } else if (Objects.nonNull(exclusiveClientIds) && (!exclusiveClientIds.isEmpty()))
-        {
+        } else if (Objects.nonNull(exclusiveClientIds) && (!exclusiveClientIds.isEmpty())) {
             result = !exclusiveClientIds.contains(clientId);
         }
         return result;

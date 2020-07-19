@@ -27,8 +27,7 @@ import java.util.Objects;
  * @date 2020/3/8 9:27
  * @since 1.0
  */
-public class SuperServiceImpl<M extends SuperMapper<T>, T extends BaseEntity<T>> extends ServiceImpl<M, T> implements SuperService<T>
-{
+public class SuperServiceImpl<M extends SuperMapper<T>, T extends BaseEntity<T>> extends ServiceImpl<M, T> implements SuperService<T> {
     @Autowired
     protected M mapper;
 
@@ -43,34 +42,26 @@ public class SuperServiceImpl<M extends SuperMapper<T>, T extends BaseEntity<T>>
      * @return Boolean
      */
     @Override
-    public Boolean saveIdempotent(T entity, DistributedLock lock, String lockKey, Wrapper<T> countWrapper, String msg)
-    {
+    public Boolean saveIdempotent(T entity, DistributedLock lock, String lockKey, Wrapper<T> countWrapper, String msg) {
         AssertUtils.isNull(lock, "lock 不能为空");
         AssertUtils.isNull(lockKey, "lockKey 不能为空");
-        try
-        {
+        try {
             //加锁
-            if (lock.lock(lockKey))
-            {
+            if (lock.lock(lockKey)) {
                 //判断记录是否已存在
                 int count = super.count(countWrapper);
-                if (count == 0)
-                {
+                if (count == 0) {
                     return super.save(entity);
-                } else
-                {
-                    if (StringUtils.isBlank(msg))
-                    {
+                } else {
+                    if (StringUtils.isBlank(msg)) {
                         msg = entity.getTipsMsg().append("已存在").toString();
                     }
                     AssertUtils.msgDevelopment(msg);
                 }
-            } else
-            {
+            } else {
                 AssertUtils.msgDevelopment("锁等待超时");
             }
-        } finally
-        {
+        } finally {
             lock.releaseLock(lockKey);
         }
         return true;
@@ -86,8 +77,7 @@ public class SuperServiceImpl<M extends SuperMapper<T>, T extends BaseEntity<T>>
      * @return Boolean
      */
     @Override
-    public Boolean saveIdempotent(T entity, DistributedLock lock, String lockKey, Wrapper<T> countWrapper)
-    {
+    public Boolean saveIdempotent(T entity, DistributedLock lock, String lockKey, Wrapper<T> countWrapper) {
         return saveIdempotent(entity, lock, lockKey, countWrapper, null);
     }
 
@@ -102,28 +92,21 @@ public class SuperServiceImpl<M extends SuperMapper<T>, T extends BaseEntity<T>>
      * @return Boolean
      */
     @Override
-    public Boolean saveOrUpdateIdempotent(T entity, DistributedLock lock, String lockKey, Wrapper<T> countWrapper, String msg)
-    {
-        if (Objects.nonNull(entity))
-        {
+    public Boolean saveOrUpdateIdempotent(T entity, DistributedLock lock, String lockKey, Wrapper<T> countWrapper, String msg) {
+        if (Objects.nonNull(entity)) {
             Class<?> cls = entity.getClass();
             TableInfo tableInfo = TableInfoHelper.getTableInfo(cls);
-            if (Objects.nonNull(tableInfo) && StringUtils.isNotBlank(tableInfo.getKeyProperty()))
-            {
+            if (Objects.nonNull(tableInfo) && StringUtils.isNotBlank(tableInfo.getKeyProperty())) {
                 Object idVal = ReflectionKit.getMethodValue(cls, entity, tableInfo.getKeyProperty());
-                if (com.baomidou.mybatisplus.core.toolkit.StringUtils.checkValNull(idVal) || Objects.isNull(entity.selectById()))
-                {
-                    if (StringUtils.isBlank(msg))
-                    {
+                if (com.baomidou.mybatisplus.core.toolkit.StringUtils.checkValNull(idVal) || Objects.isNull(entity.selectById())) {
+                    if (StringUtils.isBlank(msg)) {
                         msg = "已存在";
                     }
                     return this.saveIdempotent(entity, lock, lockKey, countWrapper, msg);
-                } else
-                {
+                } else {
                     return updateById(entity);
                 }
-            } else
-            {
+            } else {
                 AssertUtils.msgDevelopment("Error:  Can not execute. Could not find @TableId.");
             }
         }
@@ -140,8 +123,7 @@ public class SuperServiceImpl<M extends SuperMapper<T>, T extends BaseEntity<T>>
      * @return Boolean
      */
     @Override
-    public Boolean saveOrUpdateIdempotent(T entity, DistributedLock lock, String lockKey, Wrapper<T> countWrapper)
-    {
+    public Boolean saveOrUpdateIdempotent(T entity, DistributedLock lock, String lockKey, Wrapper<T> countWrapper) {
         return this.saveOrUpdateIdempotent(entity, lock, lockKey, countWrapper, null);
     }
 
@@ -152,8 +134,7 @@ public class SuperServiceImpl<M extends SuperMapper<T>, T extends BaseEntity<T>>
      * @return Page<T>
      */
     @Override
-    public IPage<T> findAll(SearchVO search)
-    {
+    public IPage<T> findAll(SearchVO search) {
         Integer page = AssertUtils.isNullReturnParam(search.getPage(), 0);
         Integer size = AssertUtils.isNullReturnParam(search.getSize(), 10);
         return page(new Page<>(page, size), ConditionUtils.getCondition(search));

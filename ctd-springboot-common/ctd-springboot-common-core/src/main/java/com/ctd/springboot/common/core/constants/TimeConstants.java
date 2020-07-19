@@ -7,8 +7,7 @@ package com.ctd.springboot.common.core.constants;
  * @date 2020/3/25 18:17
  * @since 1.0
  */
-public interface TimeConstants
-{
+public interface TimeConstants {
     /**
      * 短信过期时间
      */

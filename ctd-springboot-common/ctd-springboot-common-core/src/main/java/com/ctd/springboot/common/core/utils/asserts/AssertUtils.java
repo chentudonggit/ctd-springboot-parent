@@ -16,10 +16,8 @@ import java.util.Objects;
  * @date 2020/3/7 10:46
  * @since 1.0
  */
-public final class AssertUtils
-{
-    private AssertUtils()
-    {
+public final class AssertUtils {
+    private AssertUtils() {
         throw new IllegalStateException("Utility class");
     }
 
@@ -29,10 +27,8 @@ public final class AssertUtils
      * @param obj obj
      * @param msg msg
      */
-    public static void isNull(Object obj, String msg, Object... args)
-    {
-        if (isNull(obj))
-        {
+    public static void isNull(Object obj, String msg, Object... args) {
+        if (isNull(obj)) {
             msgDevelopment(msg, args);
         }
     }
@@ -43,10 +39,8 @@ public final class AssertUtils
      * @param obj obj
      * @param msg msg
      */
-    public static void isNullToUser(Object obj, String msg, Object... args)
-    {
-        if (isNull(obj))
-        {
+    public static void isNullToUser(Object obj, String msg, Object... args) {
+        if (isNull(obj)) {
             msgUser(msg, args);
         }
     }
@@ -57,8 +51,7 @@ public final class AssertUtils
      * @param obj obj
      * @return boolean
      */
-    public static boolean isNull(Object obj)
-    {
+    public static boolean isNull(Object obj) {
         return !nonNull(obj);
     }
 
@@ -68,21 +61,15 @@ public final class AssertUtils
      * @param obj obj
      * @return boolean
      */
-    public static boolean nonNull(Object obj)
-    {
-        if (Objects.nonNull(obj))
-        {
-            if (obj instanceof String)
-            {
+    public static boolean nonNull(Object obj) {
+        if (Objects.nonNull(obj)) {
+            if (obj instanceof String) {
                 return StringUtils.isNotBlank(obj.toString());
-            } else if (obj instanceof Collection)
-            {
+            } else if (obj instanceof Collection) {
                 return !((Collection) obj).isEmpty();
-            } else if (obj instanceof Map)
-            {
+            } else if (obj instanceof Map) {
                 return !((Map) obj).isEmpty();
-            } else if (obj.getClass().isArray())
-            {
+            } else if (obj.getClass().isArray()) {
                 return Array.getLength(obj) > 0;
             }
             return true;
@@ -96,10 +83,8 @@ public final class AssertUtils
      * @param obj obj
      * @param e   e
      */
-    public static void isNull(Object obj, RuntimeException e)
-    {
-        if (isNull(obj))
-        {
+    public static void isNull(Object obj, RuntimeException e) {
+        if (isNull(obj)) {
             throw new RuntimeException(e);
         }
     }
@@ -111,8 +96,7 @@ public final class AssertUtils
      * @param <T> <T>
      * @return T
      */
-    public static <T> T isNullReturnNull(Object obj)
-    {
+    public static <T> T isNullReturnNull(Object obj) {
         return isNull(obj) ? null : transform(obj);
     }
 
@@ -124,9 +108,8 @@ public final class AssertUtils
      * @param <T>   <T>
      * @return T
      */
-    public static <T> T isNullReturnParam(Object obj, T param)
-    {
-        return isNull(obj) ? param : transform(obj) ;
+    public static <T> T isNullReturnParam(Object obj, T param) {
+        return isNull(obj) ? param : transform(obj);
     }
 
     /**
@@ -134,8 +117,7 @@ public final class AssertUtils
      *
      * @param msg msg
      */
-    public static void msgDevelopment(String msg, Object... args)
-    {
+    public static void msgDevelopment(String msg, Object... args) {
         throw new InternalException(msg(msg, args));
     }
 
@@ -144,8 +126,7 @@ public final class AssertUtils
      *
      * @param msg msg
      */
-    public static void msgUser(String msg, Object... args)
-    {
+    public static void msgUser(String msg, Object... args) {
         throw new UnifiedException(msg(msg, args));
     }
 
@@ -169,8 +150,7 @@ public final class AssertUtils
      * @param msg msg
      * @return String
      */
-    public static String msg(String msg, Object... args)
-    {
+    public static String msg(String msg, Object... args) {
         return StringUtils.isBlank(msg) ? "网络异常，请稍后重试！" : String.format(msg, args);
     }
 
@@ -181,8 +161,7 @@ public final class AssertUtils
      * @param <T> <T>
      * @return T
      */
-    public static <T> T transform(Object obj)
-    {
+    public static <T> T transform(Object obj) {
         return (T) obj;
     }
 }

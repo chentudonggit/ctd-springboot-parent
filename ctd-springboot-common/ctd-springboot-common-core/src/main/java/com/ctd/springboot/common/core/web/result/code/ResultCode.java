@@ -7,8 +7,7 @@ package com.ctd.springboot.common.core.web.result.code;
  * @date 2020/3/7 11:40
  * @since 1.0
  */
-public interface ResultCode
-{
+public interface ResultCode {
     /**
      * success
      *

@@ -14,14 +14,11 @@ import java.lang.reflect.Type;
  * @date 2020/3/27 17:43
  * @since 1.0
  */
-public class DefaultOauth2RefreshTokenSerializer implements ObjectDeserializer
-{
+public class DefaultOauth2RefreshTokenSerializer implements ObjectDeserializer {
 
     @Override
-    public <T> T deserialze(DefaultJSONParser parser, Type type, Object fieldName)
-    {
-        if (type instanceof DefaultOAuth2RefreshToken)
-        {
+    public <T> T deserialze(DefaultJSONParser parser, Type type, Object fieldName) {
+        if (type instanceof DefaultOAuth2RefreshToken) {
             JSONObject jsonObject = parser.parseObject();
             String tokenId = jsonObject.getString("value");
             DefaultOAuth2RefreshToken refreshToken = new DefaultOAuth2RefreshToken(tokenId);
@@ -31,8 +28,7 @@ public class DefaultOauth2RefreshTokenSerializer implements ObjectDeserializer
     }
 
     @Override
-    public int getFastMatchToken()
-    {
+    public int getFastMatchToken() {
         return 0;
     }
 }

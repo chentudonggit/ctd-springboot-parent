@@ -15,8 +15,7 @@ import java.util.List;
  * @date 2020/3/7 16:22
  * @since 1.0
  */
-public class UserVO implements Serializable
-{
+public class UserVO implements Serializable {
     private static final long serialVersionUID = -8960027113388647737L;
     /**
      * id
@@ -123,159 +122,128 @@ public class UserVO implements Serializable
     @JSONField(name = "create_time")
     private Date createTime;
 
-    public String getId()
-    {
+    public String getId() {
         return id;
     }
 
-    public void setId(String id)
-    {
+    public void setId(String id) {
         this.id = id;
     }
 
-    public String getUsername()
-    {
+    public String getUsername() {
         return username;
     }
 
-    public void setUsername(String username)
-    {
+    public void setUsername(String username) {
         this.username = username;
     }
 
-    public String getPassword()
-    {
+    public String getPassword() {
         return password;
     }
 
-    public void setPassword(String password)
-    {
+    public void setPassword(String password) {
         this.password = password;
     }
 
-    public String getNickname()
-    {
+    public String getNickname() {
         return nickname;
     }
 
-    public void setNickname(String nickname)
-    {
+    public void setNickname(String nickname) {
         this.nickname = nickname;
     }
 
-    public String getHeadImgUrl()
-    {
+    public String getHeadImgUrl() {
         return headImgUrl;
     }
 
-    public void setHeadImgUrl(String headImgUrl)
-    {
+    public void setHeadImgUrl(String headImgUrl) {
         this.headImgUrl = headImgUrl;
     }
 
-    public String getMobile()
-    {
+    public String getMobile() {
         return mobile;
     }
 
-    public void setMobile(String mobile)
-    {
+    public void setMobile(String mobile) {
         this.mobile = mobile;
     }
 
-    public Integer getSex()
-    {
+    public Integer getSex() {
         return sex;
     }
 
-    public void setSex(Integer sex)
-    {
+    public void setSex(Integer sex) {
         this.sex = sex;
     }
 
-    public Boolean getEnabled()
-    {
+    public Boolean getEnabled() {
         return enabled;
     }
 
-    public void setEnabled(Boolean enabled)
-    {
+    public void setEnabled(Boolean enabled) {
         this.enabled = enabled;
     }
 
-    public String getType()
-    {
+    public String getType() {
         return type;
     }
 
-    public void setType(String type)
-    {
+    public void setType(String type) {
         this.type = type;
     }
 
-    public String getOpenId()
-    {
+    public String getOpenId() {
         return openId;
     }
 
-    public void setOpenId(String openId)
-    {
+    public void setOpenId(String openId) {
         this.openId = openId;
     }
 
-    public List<RoleVO> getRoles()
-    {
+    public List<RoleVO> getRoles() {
         return roles;
     }
 
-    public void setRoles(List<RoleVO> roles)
-    {
+    public void setRoles(List<RoleVO> roles) {
         this.roles = roles;
     }
 
-    public List<String> getRoleIds()
-    {
+    public List<String> getRoleIds() {
         return roleIds;
     }
 
-    public void setRoleIds(List<String> roleIds)
-    {
+    public void setRoleIds(List<String> roleIds) {
         this.roleIds = roleIds;
     }
 
-    public String getOldPassword()
-    {
+    public String getOldPassword() {
         return oldPassword;
     }
 
-    public void setOldPassword(String oldPassword)
-    {
+    public void setOldPassword(String oldPassword) {
         this.oldPassword = oldPassword;
     }
 
-    public String getNewPassword()
-    {
+    public String getNewPassword() {
         return newPassword;
     }
 
-    public void setNewPassword(String newPassword)
-    {
+    public void setNewPassword(String newPassword) {
         this.newPassword = newPassword;
     }
 
-    public Date getCreateTime()
-    {
+    public Date getCreateTime() {
         return createTime;
     }
 
-    public void setCreateTime(Date createTime)
-    {
+    public void setCreateTime(Date createTime) {
         this.createTime = createTime;
     }
 
     @Override
-    public String toString()
-    {
+    public String toString() {
         return "UserVO{" +
                 "id='" + id + '\'' +
                 ", username='" + username + '\'' +

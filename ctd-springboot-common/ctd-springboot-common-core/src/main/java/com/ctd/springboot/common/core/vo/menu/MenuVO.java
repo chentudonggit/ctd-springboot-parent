@@ -17,8 +17,7 @@ import java.util.Set;
  * @date 2020/3/9 9:03
  * @since 1.0
  */
-public class MenuVO implements Serializable
-{
+public class MenuVO implements Serializable {
     private static final long serialVersionUID = -5335524456445365347L;
 
     /**
@@ -120,149 +119,120 @@ public class MenuVO implements Serializable
     @JSONField(name = "children")
     private List<MenuVO> children;
 
-    public String getId()
-    {
+    public String getId() {
         return id;
     }
 
-    public void setId(String id)
-    {
+    public void setId(String id) {
         this.id = id;
     }
 
-    public String getParentId()
-    {
+    public String getParentId() {
         return parentId;
     }
 
-    public void setParentId(String parentId)
-    {
+    public void setParentId(String parentId) {
         this.parentId = parentId;
     }
 
-    public String getName()
-    {
+    public String getName() {
         return name;
     }
 
-    public void setName(String name)
-    {
+    public void setName(String name) {
         this.name = name;
     }
 
-    public String getUrl()
-    {
+    public String getUrl() {
         return url;
     }
 
-    public void setUrl(String url)
-    {
+    public void setUrl(String url) {
         this.url = url;
     }
 
-    public String getPath()
-    {
+    public String getPath() {
         return path;
     }
 
-    public void setPath(String path)
-    {
+    public void setPath(String path) {
         this.path = path;
     }
 
-    public Integer getSort()
-    {
+    public Integer getSort() {
         return sort;
     }
 
-    public void setSort(Integer sort)
-    {
+    public void setSort(Integer sort) {
         this.sort = sort;
     }
 
-    public Integer getType()
-    {
+    public Integer getType() {
         return type;
     }
 
-    public void setType(Integer type)
-    {
+    public void setType(Integer type) {
         this.type = type;
     }
 
-    public Boolean getHidden()
-    {
+    public Boolean getHidden() {
         return hidden;
     }
 
-    public void setHidden(Boolean hidden)
-    {
+    public void setHidden(Boolean hidden) {
         this.hidden = hidden;
     }
 
-    public MethodEnum getMethod()
-    {
+    public MethodEnum getMethod() {
         return method;
     }
 
-    public void setMethod(MethodEnum method)
-    {
+    public void setMethod(MethodEnum method) {
         this.method = method;
     }
 
-    public Set<String> getRoleIds()
-    {
+    public Set<String> getRoleIds() {
         return roleIds;
     }
 
-    public void setRoleIds(Set<String> roleIds)
-    {
+    public void setRoleIds(Set<String> roleIds) {
         this.roleIds = roleIds;
     }
 
-    public Set<String> getMenuIds()
-    {
+    public Set<String> getMenuIds() {
         return menuIds;
     }
 
-    public void setMenuIds(Set<String> menuIds)
-    {
+    public void setMenuIds(Set<String> menuIds) {
         this.menuIds = menuIds;
     }
 
-    public String getTenantId()
-    {
+    public String getTenantId() {
         return tenantId;
     }
 
-    public void setTenantId(String tenantId)
-    {
+    public void setTenantId(String tenantId) {
         this.tenantId = tenantId;
     }
 
-    public Date getCreateTime()
-    {
+    public Date getCreateTime() {
         return createTime;
     }
 
-    public void setCreateTime(Date createTime)
-    {
+    public void setCreateTime(Date createTime) {
         this.createTime = createTime;
     }
 
-    public List<MenuVO> getChildren()
-    {
+    public List<MenuVO> getChildren() {
         return children;
     }
 
-    public void setChildren(List<MenuVO> children)
-    {
+    public void setChildren(List<MenuVO> children) {
         this.children = children;
     }
 
     @Override
-    public String toString()
-    {
+    public String toString() {
         return "MenuVO{" +
                 "id='" + id + '\'' +
                 ", parentId='" + parentId + '\'' +

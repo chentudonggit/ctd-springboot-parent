@@ -15,8 +15,7 @@ import java.util.Objects;
  * @date 2020/3/7 21:40
  * @since 1.0
  */
-public class RedisObjectSerializer implements RedisSerializer<Object>
-{
+public class RedisObjectSerializer implements RedisSerializer<Object> {
     /**
      * 空数组，不是null
      */
@@ -28,11 +27,9 @@ public class RedisObjectSerializer implements RedisSerializer<Object>
     private Converter<byte[], Object> deserializingConverter = new DeserializingConverter();
 
     @Override
-    public byte[] serialize(Object obj)
-    {
+    public byte[] serialize(Object obj) {
         // 这个时候没有要序列化的对象出现，所以返回的字节数组应该就是一个空数组
-        if (Objects.isNull(obj))
-        {
+        if (Objects.isNull(obj)) {
             return EMPTY_BYTE_ARRAY;
         }
         // 将对象变为字节数组
@@ -40,11 +37,9 @@ public class RedisObjectSerializer implements RedisSerializer<Object>
     }
 
     @Override
-    public Object deserialize(byte[] data)
-    {
+    public Object deserialize(byte[] data) {
         // 此时没有对象的内容信息
-        if (AssertUtils.isNull(data))
-        {
+        if (AssertUtils.isNull(data)) {
             return null;
         }
         return this.deserializingConverter.convert(data);

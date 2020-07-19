@@ -7,8 +7,7 @@ package com.ctd.springboot.common.core.constants.eureka.server.type;
  * @date 2020/3/8 12:55
  * @since 1.0
  */
-public interface EurekaServerType
-{
+public interface EurekaServerType {
     /**
      * 用户服务
      */
