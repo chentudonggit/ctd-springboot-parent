@@ -20,6 +20,8 @@ public final class ParamUtils {
 
     public static final String MOBILE = "mobile";
     public static final String CODE = "code";
+    public static final String PASSWORD = "password";
+    public static final String OPEN_ID = "openId";
 
     /**
      * 获取参数

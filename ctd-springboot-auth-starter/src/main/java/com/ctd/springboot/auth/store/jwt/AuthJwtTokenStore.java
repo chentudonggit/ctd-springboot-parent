@@ -5,6 +5,7 @@ import com.ctd.springboot.common.core.vo.user.UserVO;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.cloud.bootstrap.encrypt.KeyProperties;
 import org.springframework.context.annotation.Bean;
+import org.springframework.core.annotation.Order;
 import org.springframework.security.oauth2.common.DefaultOAuth2AccessToken;
 import org.springframework.security.oauth2.provider.token.DefaultAccessTokenConverter;
 import org.springframework.security.oauth2.provider.token.TokenEnhancer;
@@ -41,6 +42,7 @@ public class AuthJwtTokenStore {
     }
 
     @Bean
+    @Order(2)
     public JwtAccessTokenConverter jwtAccessTokenConverter() {
         final JwtAccessTokenConverter converter = new JwtAccessTokenConverter();
         KeyProperties.KeyStore keyStore = keyProperties.getKeyStore();
@@ -67,6 +69,7 @@ public class AuthJwtTokenStore {
      * @return TokenEnhancer
      */
     @Bean
+    @Order(1)
     public TokenEnhancer tokenEnhancer() {
         return (accessToken, authentication) -> {
             final Map<String, Object> additionalInfo = new HashMap<>(1);
