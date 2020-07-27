@@ -5,6 +5,7 @@ import com.ctd.springboot.common.core.enums.status.StatusEnum;
 import org.apache.ibatis.reflection.MetaObject;
 
 import java.util.Date;
+import java.util.Objects;
 
 /**
  * 自动填充
@@ -37,7 +38,9 @@ public class BaseMetaObjectHandler implements MetaObjectHandler {
 
     private void fieldValByName(String key, Object fieldVal, MetaObject metaObject) {
         if (metaObject.hasGetter(key)) {
-            this.setFieldValByName(key, fieldVal, metaObject);
+            if (Objects.isNull(this.getFieldValByName(key, metaObject))) {
+                this.setFieldValByName(key, fieldVal, metaObject);
+            }
         }
     }
 }
