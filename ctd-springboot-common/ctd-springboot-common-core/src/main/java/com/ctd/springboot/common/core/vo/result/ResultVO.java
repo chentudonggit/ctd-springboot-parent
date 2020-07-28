@@ -52,6 +52,9 @@ public class ResultVO<T> implements Serializable {
         this.success = success;
     }
 
+    public static <T> ResultVO<T> succeed() {
+        return succeedWith(null, CodeEnum.SUCCESS.code(), CodeEnum.SUCCESS.message());
+    }
 
     public static <T> ResultVO<T> succeed(String msg) {
         return succeedWith(null, CodeEnum.SUCCESS.getCode(), msg);
@@ -79,6 +82,10 @@ public class ResultVO<T> implements Serializable {
 
     public static <T> ResultVO<T> failedWith(T data, Integer code, String msg) {
         return new ResultVO<>(data, code, msg, false);
+    }
+
+    public static <T> ResultVO<T> failedWith(Integer code, String msg) {
+        return new ResultVO<>(null, code, msg, false);
     }
 
     public T getData() {
