@@ -1,7 +1,7 @@
 package com.ctd.springboot.common.core.resolver.client;
 
 import com.ctd.springboot.common.core.annotation.login.LoginClient;
-import com.ctd.springboot.common.core.constant.security.SecurityConstants;
+import com.ctd.springboot.common.core.constants.security.SecurityConstants;
 import com.ctd.springboot.common.core.exception.UnifiedException;
 import com.ctd.springboot.common.core.utils.asserts.AssertUtils;
 import org.springframework.core.MethodParameter;

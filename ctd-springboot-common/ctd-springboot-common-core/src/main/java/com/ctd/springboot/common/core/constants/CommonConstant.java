@@ -1,4 +1,4 @@
-package com.ctd.springboot.common.core.constant;
+package com.ctd.springboot.common.core.constants;
 
 /**
  * CommonConstant

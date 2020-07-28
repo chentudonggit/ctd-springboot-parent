@@ -1,7 +1,7 @@
 package com.ctd.springboot.auth.store.jwt;
 
 import com.ctd.springboot.auth.converter.authentication.CustomUserAuthenticationConverter;
-import com.ctd.springboot.common.core.constant.security.SecurityConstants;
+import com.ctd.springboot.common.core.constants.security.SecurityConstants;
 import com.ctd.springboot.common.core.utils.param.ParamUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -3,7 +3,7 @@ package com.ctd.springboot.auth.store.redis;
 import com.ctd.springboot.auth.properties.security.SecurityProperties;
 import com.ctd.springboot.auth.token.CustomDefaultAuthenticationKeyGenerator;
 import com.ctd.springboot.auth.token.fastjson.serialization.FastJsonRedisTokenStoreSerializationStrategy;
-import com.ctd.springboot.common.core.constant.security.SecurityConstants;
+import com.ctd.springboot.common.core.constants.security.SecurityConstants;
 import com.ctd.springboot.common.core.utils.asserts.AssertUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.data.redis.connection.RedisConnection;

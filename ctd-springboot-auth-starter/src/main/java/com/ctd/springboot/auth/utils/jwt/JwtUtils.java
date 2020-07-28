@@ -1,7 +1,7 @@
 package com.ctd.springboot.auth.utils.jwt;
 
 import com.alibaba.fastjson.JSONObject;
-import com.ctd.springboot.common.core.constant.security.SecurityConstants;
+import com.ctd.springboot.common.core.constants.security.SecurityConstants;
 import com.ctd.springboot.common.core.utils.rsa.RsaUtils;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;

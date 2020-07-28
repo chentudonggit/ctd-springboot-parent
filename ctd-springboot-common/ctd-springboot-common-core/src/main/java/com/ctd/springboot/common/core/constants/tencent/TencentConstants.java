@@ -1,4 +1,4 @@
-package com.ctd.springboot.common.core.constant.tencent;
+package com.ctd.springboot.common.core.constants.tencent;
 
 /**
  * 腾讯常量

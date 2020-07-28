@@ -2,6 +2,8 @@ package com.ctd.springboot.common.core.vo.page;
 
 import com.alibaba.fastjson.annotation.JSONField;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -15,6 +17,7 @@ import java.util.Objects;
  * @date 2020/3/7 12:14
  * @since 1.0
  */
+@ApiModel("PageVO")
 public class PageVO<T> implements Serializable {
     private static final long serialVersionUID = -4315354068187132885L;
 
@@ -23,17 +26,20 @@ public class PageVO<T> implements Serializable {
      *
      * @since 1.0
      */
+    @ApiModelProperty("page")
     @JSONField(name = "page")
     private Integer page;
     /**
      * size
      */
+    @ApiModelProperty("size")
     @JSONField(name = "size")
     private Integer size;
 
     /**
      * totalPage
      */
+    @ApiModelProperty("total_page")
     @JsonProperty(value = "total_page")
     @JSONField(name = "total_page")
     private Integer totalPage;
@@ -41,6 +47,7 @@ public class PageVO<T> implements Serializable {
     /**
      * totalCount
      */
+    @ApiModelProperty("total_count")
     @JsonProperty(value = "total_count")
     @JSONField(name = "total_count")
     private Long totalCount;
@@ -48,6 +55,7 @@ public class PageVO<T> implements Serializable {
     /**
      * result
      */
+    @ApiModelProperty("data")
     @JSONField(name = "data")
     private List<T> data;
 

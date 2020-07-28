@@ -3,6 +3,8 @@ package com.ctd.springboot.common.core.vo.user;
 import com.alibaba.fastjson.annotation.JSONField;
 import com.ctd.springboot.common.core.vo.role.RoleVO;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -15,11 +17,13 @@ import java.util.List;
  * @date 2020/3/7 16:22
  * @since 1.0
  */
+@ApiModel("UserVO")
 public class UserVO implements Serializable {
     private static final long serialVersionUID = -8960027113388647737L;
     /**
      * id
      */
+    @ApiModelProperty("id")
     @JsonProperty(value = "id")
     @JSONField(name = "id")
     private String id;
@@ -27,6 +31,7 @@ public class UserVO implements Serializable {
     /**
      * username
      */
+    @ApiModelProperty("姓名")
     @JsonProperty(value = "user_name")
     @JSONField(name = "user_name")
     private String username;
@@ -39,8 +44,9 @@ public class UserVO implements Serializable {
     private String password;
 
     /**
-     *
+     * 昵称
      */
+    @ApiModelProperty("昵称")
     @JsonProperty(value = "nick_name")
     @JSONField(name = "nick_name")
     private String nickname;
@@ -48,6 +54,7 @@ public class UserVO implements Serializable {
     /**
      * headImgUrl
      */
+    @ApiModelProperty("头像")
     @JsonProperty(value = "head_img_url")
     @JSONField(name = "head_img_url")
     private String headImgUrl;
@@ -55,6 +62,7 @@ public class UserVO implements Serializable {
     /**
      * mobile
      */
+    @ApiModelProperty("手机号")
     @JsonProperty(value = "mobile")
     @JSONField(name = "mobile")
     private String mobile;
@@ -62,13 +70,15 @@ public class UserVO implements Serializable {
     /**
      * sex
      */
-    @JsonProperty(value = "sex")
+    @ApiModelProperty(value = "性别", example = "0")
+    @JsonProperty(value = "sex", defaultValue = "0")
     @JSONField(name = "sex")
     private Integer sex;
 
     /**
      * enabled
      */
+    @ApiModelProperty("是否开启")
     @JsonProperty(value = "enabled")
     @JSONField(name = "enabled")
     private Boolean enabled;
@@ -76,6 +86,7 @@ public class UserVO implements Serializable {
     /**
      * type
      */
+    @ApiModelProperty("类型")
     @JsonProperty(value = "type")
     @JSONField(name = "type")
     private String type;
@@ -83,6 +94,7 @@ public class UserVO implements Serializable {
     /**
      * openId
      */
+    @ApiModelProperty("openId")
     @JsonProperty(value = "open_id")
     @JSONField(name = "open_id")
     private String openId;
@@ -90,6 +102,7 @@ public class UserVO implements Serializable {
     /**
      * roles
      */
+    @ApiModelProperty("角色集合")
     @JsonProperty(value = "roles")
     @JSONField(name = "roles")
     private List<RoleVO> roles;
@@ -97,6 +110,7 @@ public class UserVO implements Serializable {
     /**
      * roleId
      */
+    @ApiModelProperty("角色id")
     @JsonProperty(value = "role_ids")
     @JSONField(name = "role_ids")
     private List<String> roleIds;
@@ -118,6 +132,7 @@ public class UserVO implements Serializable {
     /**
      * 创建时间
      */
+    @ApiModelProperty("创建时间")
     @JsonProperty(value = "create_time")
     @JSONField(name = "create_time")
     private Date createTime;

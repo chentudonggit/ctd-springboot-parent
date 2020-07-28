@@ -2,6 +2,8 @@ package com.ctd.springboot.common.core.vo.role;
 
 import com.alibaba.fastjson.annotation.JSONField;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -13,12 +15,14 @@ import java.util.Date;
  * @date 2020/3/7 16:23
  * @since 1.0
  */
+@ApiModel("RoleVO")
 public class RoleVO implements Serializable {
     private static final long serialVersionUID = 6534130632366133165L;
 
     /**
      * id
      */
+    @ApiModelProperty("id")
     @JsonProperty(value = "id")
     @JSONField(name = "id")
     private String id;
@@ -26,6 +30,7 @@ public class RoleVO implements Serializable {
     /**
      * code
      */
+    @ApiModelProperty("代码")
     @JsonProperty(value = "code")
     @JSONField(name = "code")
     private String code;
@@ -33,6 +38,7 @@ public class RoleVO implements Serializable {
     /**
      * name
      */
+    @ApiModelProperty("名称")
     @JsonProperty(value = "name")
     @JSONField(name = "name")
     private String name;
@@ -40,13 +46,15 @@ public class RoleVO implements Serializable {
     /**
      * userId
      */
+    @ApiModelProperty("用户id")
     @JsonProperty(value = "user_id")
     @JSONField(name = "user_id")
-    private Long userId;
+    private String userId;
 
     /**
      * createTime
      */
+    @ApiModelProperty("创建时间")
     @JsonProperty(value = "create_time")
     @JSONField(name = "create_time")
     private Date createTime;
@@ -75,11 +83,11 @@ public class RoleVO implements Serializable {
         this.name = name;
     }
 
-    public Long getUserId() {
+    public String getUserId() {
         return userId;
     }
 
-    public void setUserId(Long userId) {
+    public void setUserId(String userId) {
         this.userId = userId;
     }
 

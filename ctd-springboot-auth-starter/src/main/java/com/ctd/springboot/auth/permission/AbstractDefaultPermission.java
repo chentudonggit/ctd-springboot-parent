@@ -3,7 +3,7 @@ package com.ctd.springboot.auth.permission;
 import cn.hutool.core.collection.CollectionUtil;
 import com.ctd.springboot.auth.properties.security.SecurityProperties;
 import com.ctd.springboot.auth.utils.auth.AuthUtils;
-import com.ctd.springboot.common.core.constant.CommonConstant;
+import com.ctd.springboot.common.core.constants.CommonConstant;
 import com.ctd.springboot.common.core.enums.method.MethodEnum;
 import com.ctd.springboot.common.core.holder.context.TenantContextHolder;
 import com.ctd.springboot.common.core.vo.menu.MenuVO;

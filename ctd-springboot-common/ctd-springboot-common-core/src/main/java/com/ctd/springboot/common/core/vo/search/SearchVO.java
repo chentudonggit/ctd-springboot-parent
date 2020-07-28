@@ -1,5 +1,8 @@
 package com.ctd.springboot.common.core.vo.search;
 
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+
 import java.io.Serializable;
 import java.util.Map;
 
@@ -10,25 +13,30 @@ import java.util.Map;
  * @date 2020/5/4 2:17
  * @since 1.0
  */
+@ApiModel("SearchVO")
 public class SearchVO implements Serializable {
     /**
      * page
      */
+    @ApiModelProperty("当前页")
     private Integer page;
 
     /**
      * size
      */
+    @ApiModelProperty("每页显示多少条数据")
     private Integer size;
 
     /**
      * where
      */
+    @ApiModelProperty("查询条件")
     private Map<String, Object> where;
 
     /**
      * orderBy
      */
+    @ApiModelProperty("排序")
     private Map<String, String> orderBy;
 
     public Integer getPage() {

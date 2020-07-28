@@ -1,4 +1,4 @@
-package com.ctd.springboot.common.core.constant.security;
+package com.ctd.springboot.common.core.constants.security;
 
 /**
  * SecurityConstants

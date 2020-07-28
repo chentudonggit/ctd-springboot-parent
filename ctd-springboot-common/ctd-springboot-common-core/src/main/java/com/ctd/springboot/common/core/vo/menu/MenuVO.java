@@ -4,6 +4,8 @@ import com.alibaba.fastjson.annotation.JSONField;
 import com.ctd.springboot.common.core.enums.method.MethodEnum;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -17,12 +19,14 @@ import java.util.Set;
  * @date 2020/3/9 9:03
  * @since 1.0
  */
+@ApiModel("MenuVO")
 public class MenuVO implements Serializable {
     private static final long serialVersionUID = -5335524456445365347L;
 
     /**
      * id
      */
+    @ApiModelProperty("id")
     @JsonProperty(value = "id")
     @JSONField(name = "id")
     private String id;
@@ -30,6 +34,7 @@ public class MenuVO implements Serializable {
     /**
      * parentId
      */
+    @ApiModelProperty("父id")
     @JsonProperty(value = "parent_id")
     @JSONField(name = "parent_id")
     private String parentId;
@@ -37,6 +42,7 @@ public class MenuVO implements Serializable {
     /**
      * name
      */
+    @ApiModelProperty("名称")
     @JsonProperty(value = "name")
     @JSONField(name = "name")
     private String name;
@@ -44,6 +50,7 @@ public class MenuVO implements Serializable {
     /**
      * url
      */
+    @ApiModelProperty("url")
     @JsonProperty(value = "url")
     @JSONField(name = "url")
     private String url;
@@ -51,6 +58,7 @@ public class MenuVO implements Serializable {
     /**
      * path
      */
+    @ApiModelProperty("path")
     @JsonProperty(value = "path")
     @JSONField(name = "path")
     private String path;
@@ -58,20 +66,23 @@ public class MenuVO implements Serializable {
     /**
      * sort
      */
-    @JsonProperty(value = "sort")
+    @ApiModelProperty(value = "排序", example = "0")
+    @JsonProperty(value = "sort", defaultValue = "0")
     @JSONField(name = "sort")
     private Integer sort;
 
     /**
      * type
      */
-    @JsonProperty(value = "type")
+    @ApiModelProperty(value = "type", example = "0")
+    @JsonProperty(value = "type", defaultValue = "0")
     @JSONField(name = "type")
     private Integer type;
 
     /**
      * hidden
      */
+    @ApiModelProperty("隐藏 = false")
     @JsonProperty(value = "hidden")
     @JSONField(name = "hidden")
     private Boolean hidden;
@@ -79,6 +90,7 @@ public class MenuVO implements Serializable {
     /**
      * method
      */
+    @ApiModelProperty("方法类型 {GET、POST、PUT、DELETE}")
     @JsonProperty(value = "method")
     @JSONField(name = "method")
     private MethodEnum method;
@@ -86,6 +98,7 @@ public class MenuVO implements Serializable {
     /**
      * roleIds
      */
+    @ApiModelProperty("角色ids")
     @JsonProperty(value = "role_ids")
     @JSONField(name = "role_ids")
     private Set<String> roleIds;
@@ -93,6 +106,7 @@ public class MenuVO implements Serializable {
     /**
      * menuIds
      */
+    @ApiModelProperty("菜单ids")
     @JsonProperty(value = "menu_ids")
     @JSONField(name = "menu_ids")
     private Set<String> menuIds;
@@ -108,6 +122,7 @@ public class MenuVO implements Serializable {
     /**
      * 创建时间
      */
+    @ApiModelProperty("创建时间")
     @JsonProperty(value = "create_time")
     @JSONField(name = "create_time")
     private Date createTime;
@@ -115,6 +130,7 @@ public class MenuVO implements Serializable {
     /**
      * children
      */
+    @ApiModelProperty("children")
     @JsonProperty(value = "children")
     @JSONField(name = "children")
     private List<MenuVO> children;

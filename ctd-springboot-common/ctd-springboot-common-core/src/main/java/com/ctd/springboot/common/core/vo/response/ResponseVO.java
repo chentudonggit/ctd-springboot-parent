@@ -5,6 +5,8 @@ import com.ctd.springboot.common.core.vo.page.PageVO;
 import com.ctd.springboot.common.core.vo.result.ResultVO;
 import com.ctd.springboot.common.core.web.result.code.ResultCode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 import org.springframework.core.io.buffer.DataBuffer;
 import org.springframework.core.io.buffer.DataBufferFactory;
 import org.springframework.core.io.buffer.DataBufferUtils;
@@ -28,6 +30,7 @@ import java.util.LinkedHashMap;
  * @date 2020/3/7 11:38
  * @since 1.0
  */
+@ApiModel("ResponseVO")
 public class ResponseVO extends LinkedHashMap<String, Object> implements Serializable {
     private static final long serialVersionUID = -6870182069212716606L;
 
@@ -36,48 +39,56 @@ public class ResponseVO extends LinkedHashMap<String, Object> implements Seriali
      *
      * @since 1.0
      */
+    @ApiModelProperty("data")
     private static final String KEY_DATA = "data";
     /**
      * KEY_CODE
      *
      * @since 1.0
      */
+    @ApiModelProperty("code")
     public static final String KEY_CODE = "code";
     /**
      * KEY_MESSAGE
      *
      * @since 1.0
      */
+    @ApiModelProperty("message")
     public static final String KEY_MESSAGE = "message";
     /**
      * KEY_SUCCESS
      *
      * @since 1.0
      */
+    @ApiModelProperty("成功/失败")
     private static final String KEY_SUCCESS = "success";
     /**
      * 总页码
      *
      * @since 1.0
      */
+    @ApiModelProperty("总页码")
     private static final String KEY_TOTAL_PAGE = "total_page";
     /**
      * 总记录数
      *
      * @since 1.0
      */
+    @ApiModelProperty("总记录数")
     private static final String KEY_TOTAL_COUNT = "total_count";
     /**
      * 当前页码
      *
      * @since 1.0
      */
+    @ApiModelProperty("当前页码")
     private static final String KEY_PAGE = "page";
     /**
      * 每页显示多少条数据
      *
      * @since 1.0
      */
+    @ApiModelProperty("每页显示多少条数据")
     private static final String KEY_SIZE = "size";
 
     public static void responseWriter(ObjectMapper objectMapper, HttpServletResponse response, String msg, int httpStatus) throws IOException {
