@@ -96,7 +96,7 @@ public class ResponseVO extends LinkedHashMap<String, Object> implements Seriali
     }
 
     public static void responseWrite(ObjectMapper objectMapper, HttpServletResponse response, ResultVO<Object> result) throws IOException {
-        response.setContentType(MediaType.APPLICATION_JSON_UTF8_VALUE);
+        response.setContentType(MediaType.APPLICATION_JSON_VALUE);
         try (Writer writer = response.getWriter()) {
             writer.write(objectMapper.writeValueAsString(result));
             writer.flush();
@@ -104,13 +104,40 @@ public class ResponseVO extends LinkedHashMap<String, Object> implements Seriali
     }
 
     /**
+     * 成功
      * webflux的response返回json对象
+     *
+     * @param exchange   exchange
+     * @param httpStatus httpStatus
+     * @param msg        msg
+     * @return Mono<Void>
      */
     public static Mono<Void> responseWriter(ServerWebExchange exchange, int httpStatus, String msg) {
         ResultVO result = ResultVO.succeedWith(null, httpStatus, msg);
         ServerHttpResponse response = exchange.getResponse();
+        response.getHeaders().setContentType(MediaType.APPLICATION_JSON);
+        response.setStatusCode(HttpStatus.INTERNAL_SERVER_ERROR);
+        DataBufferFactory dataBufferFactory = response.bufferFactory();
+        DataBuffer buffer = dataBufferFactory.wrap(JSONObject.toJSONString(result).getBytes(Charset.defaultCharset()));
+        return response.writeWith(Mono.just(buffer)).doOnError((error) -> {
+            DataBufferUtils.release(buffer);
+        });
+    }
+
+    /**
+     * 失败
+     * webflux的response返回json对象
+     *
+     * @param exchange   exchange
+     * @param httpStatus httpStatus
+     * @param msg        msg
+     * @return Mono<Void>
+     */
+    public static Mono<Void> responseFailureWriter(ServerWebExchange exchange, int httpStatus, String msg) {
+        ResultVO result = ResultVO.failedWith(null, httpStatus, msg);
+        ServerHttpResponse response = exchange.getResponse();
         response.setStatusCode(HttpStatus.valueOf(result.getCode()));
-        response.getHeaders().setContentType(MediaType.APPLICATION_JSON_UTF8);
+        response.getHeaders().setContentType(MediaType.APPLICATION_JSON);
         DataBufferFactory dataBufferFactory = response.bufferFactory();
         DataBuffer buffer = dataBufferFactory.wrap(JSONObject.toJSONString(result).getBytes(Charset.defaultCharset()));
         return response.writeWith(Mono.just(buffer)).doOnError((error) -> {

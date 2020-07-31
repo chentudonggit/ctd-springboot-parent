@@ -19,6 +19,11 @@ public interface SecurityConstants {
     String USER_HEADER = "x-user-header";
 
     /**
+     * 用户信息头
+     */
+    String USER_NAME_HEADER = "x-user-name-header";
+
+    /**
      * 用户id信息头
      */
     String USER_ID_HEADER = "x-user-id-header";

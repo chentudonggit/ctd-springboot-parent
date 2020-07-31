@@ -9,20 +9,16 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>ctd-springboot-cloud-starter</artifactId>
+    <artifactId>ctd-springboot-eureka-starter</artifactId>
     <dependencies>
         <dependency>
             <groupId>com.ctd.springboot</groupId>
-            <artifactId>ctd-springboot-common-core</artifactId>
+            <artifactId>ctd-springboot-cloud-starter</artifactId>
             <version>${ctd-springboot.version}</version>
         </dependency>
         <dependency>
             <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-starter-openfeign</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.squareup.okhttp3</groupId>
-            <artifactId>okhttp</artifactId>
+            <artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
         </dependency>
     </dependencies>
 </project>
