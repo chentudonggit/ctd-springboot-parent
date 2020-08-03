@@ -124,7 +124,7 @@ public class PageVO<T> implements Serializable {
         result.setPage(Objects.isNull(page) ? 0 : size);
         result.setSize(Objects.isNull(size) ? 10 : size);
         result.setTotalPage(0);
-        result.setData(new ArrayList<T>());
+        result.setData(new ArrayList<T>(0));
         return result;
     }
 }
