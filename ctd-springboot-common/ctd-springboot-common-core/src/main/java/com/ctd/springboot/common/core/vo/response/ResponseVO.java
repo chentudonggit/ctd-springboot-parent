@@ -116,7 +116,7 @@ public class ResponseVO extends LinkedHashMap<String, Object> implements Seriali
         ResultVO result = ResultVO.succeedWith(null, httpStatus, msg);
         ServerHttpResponse response = exchange.getResponse();
         response.getHeaders().setContentType(MediaType.APPLICATION_JSON);
-        response.setStatusCode(HttpStatus.INTERNAL_SERVER_ERROR);
+        response.setStatusCode(HttpStatus.valueOf(result.getCode()));
         DataBufferFactory dataBufferFactory = response.bufferFactory();
         DataBuffer buffer = dataBufferFactory.wrap(JSONObject.toJSONString(result).getBytes(Charset.defaultCharset()));
         return response.writeWith(Mono.just(buffer)).doOnError((error) -> {
@@ -136,7 +136,7 @@ public class ResponseVO extends LinkedHashMap<String, Object> implements Seriali
     public static Mono<Void> responseFailureWriter(ServerWebExchange exchange, int httpStatus, String msg) {
         ResultVO result = ResultVO.failedWith(null, httpStatus, msg);
         ServerHttpResponse response = exchange.getResponse();
-        response.setStatusCode(HttpStatus.valueOf(result.getCode()));
+        response.setStatusCode(HttpStatus.INTERNAL_SERVER_ERROR);
         response.getHeaders().setContentType(MediaType.APPLICATION_JSON);
         DataBufferFactory dataBufferFactory = response.bufferFactory();
         DataBuffer buffer = dataBufferFactory.wrap(JSONObject.toJSONString(result).getBytes(Charset.defaultCharset()));

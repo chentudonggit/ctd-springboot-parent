@@ -11,6 +11,7 @@ import org.springframework.cloud.openfeign.FeignFormatterRegistrar;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
+import org.springframework.core.annotation.Order;
 import org.springframework.format.FormatterRegistry;
 
 /**
@@ -21,6 +22,7 @@ import org.springframework.format.FormatterRegistry;
  * @since 1.0
  */
 @Configuration
+@Order(Integer.MIN_VALUE)
 public class FeignConfigRegistrar implements FeignFormatterRegistrar {
     /**
      * 注入Bean : HttpMessageConverters，以支持fastjson

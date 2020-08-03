@@ -1,10 +1,11 @@
 package com.ctd.springboot.webflux.handler;
 
 import com.ctd.springboot.common.core.enums.code.CodeEnum;
-import org.springframework.cloud.gateway.support.NotFoundException;
 import com.ctd.springboot.common.core.vo.response.ResponseVO;
+import com.netflix.client.ClientException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.cloud.gateway.support.NotFoundException;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;
 import org.springframework.http.HttpStatus;
@@ -56,7 +57,7 @@ public class CustomResponseStatusExceptionHandler extends ResponseStatusExceptio
             HttpStatus unauthorized = HttpStatus.UNAUTHORIZED;
             return ResponseVO.responseWriter(exchange, unauthorized.value(), ex.getMessage());
         }
-        if (ex instanceof NotFoundException) {
+        if (ex instanceof NotFoundException ||  ex instanceof ClientException) {
             LOGGER.error("未发现服务");
             return serverError(exchange);
         }
