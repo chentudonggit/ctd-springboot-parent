@@ -26,6 +26,7 @@
         <module>ctd-springboot-webflux-starter</module>
         <module>ctd-springboot-nacos-starter</module>
         <module>ctd-springboot-eureka-starter</module>
+        <module>ctd-springboot-feign-exception-starter</module>
     </modules>
 
     <properties>

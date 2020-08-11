@@ -2,7 +2,10 @@ package com.ctd.springboot.cloud.exception.service;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
+import com.ctd.springboot.common.core.domain.exception.ExceptionChain;
+import com.ctd.springboot.common.core.domain.exception.ExceptionModel;
 import com.ctd.springboot.common.core.exception.InternalException;
+import com.ctd.springboot.common.core.utils.asserts.AssertUtils;
 import feign.Response;
 import feign.Util;
 import feign.codec.ErrorDecoder;
@@ -11,6 +14,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.lang.reflect.Constructor;
+import java.nio.charset.StandardCharsets;
+import java.util.List;
 import java.util.Objects;
 
 /**
@@ -31,10 +36,17 @@ public class ErrorDecoderException implements ErrorDecoder {
             Response.Body body = response.body();
             if (Objects.nonNull(body)) {
                 // 获取原始的返回内容
-                String json = Util.toString(body.asReader());
-                JSONObject responseJson = JSON.parseObject(json);
-                String classPath = responseJson.getString("exception");
+                String json = Util.toString(body.asReader(StandardCharsets.UTF_8));
+                ExceptionModel exceptionModel = toExceptionModel(json);
+                String classPath = null;
+                String message = null;
+                if (Objects.nonNull(exceptionModel)) {
+                    classPath = exceptionModel.getThrowExceptionClass();
+                    message = exceptionModel.getMessage();
+                }
                 if (StringUtils.isBlank(classPath)) {
+                    JSONObject responseJson = JSON.parseObject(json);
+                    classPath = responseJson.getString("exception");
                     String error = responseJson.getString("error");
                     if (StringUtils.isNotBlank(error)) {
                         Exception exception = new InternalException("path:" + responseJson.getString("path")
@@ -48,7 +60,7 @@ public class ErrorDecoderException implements ErrorDecoder {
                 // 取得Class对象
                 Class<?> cls = Class.forName(classPath);
                 Constructor<Exception> con = (Constructor<Exception>) cls.getConstructor(String.class);
-                Exception exception = con.newInstance(responseJson.getString("message"));
+                Exception exception = con.newInstance(message);
                 LOGGER.error("catch exception : {}\r\nexception: ", json, exception);
                 return exception;
             }
@@ -56,5 +68,28 @@ public class ErrorDecoderException implements ErrorDecoder {
             return new InternalException(var4.getMessage());
         }
         return new InternalException("处理失败.");
+    }
+
+    private ExceptionModel toExceptionModel(String json) {
+        if (StringUtils.isNotBlank(json)) {
+            try {
+                ExceptionModel exceptionModel = JSON.parseObject(json, ExceptionModel.class);
+                if (Objects.nonNull(exceptionModel)) {
+                    exceptionModel.setThrowExceptionClass(getFirstThrowExceptionClass(exceptionModel.getExceptionChain()));
+                }
+                return exceptionModel;
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        return null;
+    }
+
+    private String getFirstThrowExceptionClass(List<ExceptionChain> exceptionChains) {
+        if (AssertUtils.nonNull(exceptionChains) && !exceptionChains.isEmpty()) {
+            LOGGER.error("exceptionChains = {}", JSON.toJSONString(exceptionChains));
+            return exceptionChains.get(0).getExceptionClass();
+        }
+        return null;
     }
 }
