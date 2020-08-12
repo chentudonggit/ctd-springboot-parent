@@ -1,7 +1,8 @@
 package com.ctd.springboot.feign.exception.registry;
 
-import com.ctd.springboot.feign.exception.annotation.EnableFeignExceptionHandler;
+import com.ctd.springboot.feign.exception.annotation.mvc.EnableFeignWebMvcExceptionHandler;
 import feign.codec.ErrorDecoder;
+import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.support.AbstractBeanDefinition;
@@ -13,7 +14,6 @@ import org.springframework.context.annotation.ImportBeanDefinitionRegistrar;
 import org.springframework.core.annotation.AnnotationAttributes;
 import org.springframework.core.env.Environment;
 import org.springframework.core.type.AnnotationMetadata;
-import org.slf4j.Logger;
 
 import static org.springframework.beans.factory.config.AutowireCapableBeanFactory.AUTOWIRE_BY_TYPE;
 
@@ -34,7 +34,7 @@ public class RegistryFeignExceptionHandler implements ImportBeanDefinitionRegist
 
     @Override
     public void registerBeanDefinitions(AnnotationMetadata annotationMetadata, BeanDefinitionRegistry registry) {
-        AnnotationAttributes annotationAttributes = AnnotationAttributes.fromMap(annotationMetadata.getAnnotationAttributes(EnableFeignExceptionHandler.class.getName()));
+        AnnotationAttributes annotationAttributes = AnnotationAttributes.fromMap(annotationMetadata.getAnnotationAttributes(EnableFeignWebMvcExceptionHandler.class.getName()));
         Class<? extends ErrorDecoder> decoderClass = annotationAttributes.getClass("decoderClass");
         ErrorDecoder errorDecoder = BeanUtils.instantiateClass(decoderClass);
 

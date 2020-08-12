@@ -1,6 +1,6 @@
-package com.ctd.springboot.feign.exception.configuration.error;
+package com.ctd.springboot.feign.exception.configuration.error.mvc;
 
-import com.ctd.springboot.feign.exception.handler.FeignExceptionHandler;
+import com.ctd.springboot.feign.exception.handler.mvc.FeignMvcExceptionHandler;
 import org.springframework.boot.autoconfigure.AutoConfigureBefore;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.condition.SearchStrategy;
@@ -19,10 +19,10 @@ import org.springframework.context.annotation.Configuration;
  */
 @Configuration
 @AutoConfigureBefore(ErrorMvcAutoConfiguration.class)
-public class OverriderErrorMvcAutoConfiguration {
+public class CustomErrorMvcAutoConfiguration {
     @Bean
     @ConditionalOnMissingBean(value = ErrorAttributes.class, search = SearchStrategy.CURRENT)
     public DefaultErrorAttributes errorAttributes() {
-        return new FeignExceptionHandler();
+        return new FeignMvcExceptionHandler();
     }
 }

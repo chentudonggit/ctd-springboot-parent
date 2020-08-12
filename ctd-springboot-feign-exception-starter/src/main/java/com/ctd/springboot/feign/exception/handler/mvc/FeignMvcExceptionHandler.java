@@ -1,4 +1,4 @@
-package com.ctd.springboot.feign.exception.handler;
+package com.ctd.springboot.feign.exception.handler.mvc;
 
 import com.alibaba.fastjson.JSON;
 import com.ctd.springboot.feign.exception.constant.ExceptionConstant;
@@ -12,13 +12,13 @@ import org.springframework.web.context.request.WebRequest;
 import java.util.*;
 
 /**
- * FeignExceptionHandler
+ * FeignMvcExceptionHandler
  *
  * @author chentudong
  * @date 2020/8/11 23:24
  * @since 1.0
  */
-public class FeignExceptionHandler extends DefaultErrorAttributes {
+public class FeignMvcExceptionHandler extends DefaultErrorAttributes {
     @Override
     public Map<String, Object> getErrorAttributes(WebRequest webRequest, boolean includeStackTrace) {
         Throwable error = super.getError(webRequest);
