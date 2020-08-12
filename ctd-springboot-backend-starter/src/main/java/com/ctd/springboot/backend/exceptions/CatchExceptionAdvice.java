@@ -19,7 +19,6 @@ import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.security.oauth2.common.exceptions.InvalidTokenException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
@@ -64,7 +63,7 @@ public class CatchExceptionAdvice {
         HttpStatus unauthorized = HttpStatus.UNAUTHORIZED;
         try {
             response.sendError(unauthorized.value(), unauthorized.getReasonPhrase());
-            response.setContentType(MediaType.APPLICATION_JSON_UTF8_VALUE);
+            response.setContentType(MediaType.APPLICATION_JSON_VALUE);
             try (Writer writer = response.getWriter()) {
                 writer.flush();
             }
@@ -73,45 +72,43 @@ public class CatchExceptionAdvice {
         }
     }
 
+
     /**
      * 捕获 CustomException 类型的异常
-     * ResponseBody 转成Json返回给前端
      *
-     * @since 1.0
+     * @param e        e
+     * @param response response
      */
     @ExceptionHandler(InternalException.class)
-    @ResponseBody
-    public ResponseVO customException(InternalException e) {
+    public void customException(InternalException e, HttpServletResponse response) {
         // 记录日志
         LOGGER.error(e.getMessage(), e);
         // 把错误信息返回给前端
-        return new ResponseVO(HttpStatus.INTERNAL_SERVER_ERROR.value(), false, getMessage(e));
+        ResponseVO.responseFailure(response, HttpStatus.INTERNAL_SERVER_ERROR.value(), getMessage(e));
     }
 
     /**
      * 统一弹窗提示
      *
-     * @param e e
-     * @return ResponseResult
+     * @param e        e
+     * @param response response
      */
     @ExceptionHandler(UnifiedException.class)
-    @ResponseBody
-    public ResponseVO unifiedException(UnifiedException e) {
+    public void unifiedException(UnifiedException e, HttpServletResponse response) {
         // 记录日志
         LOGGER.error(e.getMessage(), e);
         // 把错误信息返回给前端
-        return new ResponseVO(ResultCodeSequence.CODE_ERROR_POPUP, false, getMessage(e));
+        ResponseVO.responseFailure(response, ResultCodeSequence.CODE_ERROR_POPUP, getMessage(e));
     }
 
     /**
      * 捕获 Exception 类型的异常
-     * ResponseBody 转成Json返回给前端
      *
-     * @since 1.0
+     * @param e        e
+     * @param response response
      */
-    @ResponseBody
     @ExceptionHandler(Exception.class)
-    public ResponseVO exception(Exception e) {
+    public void exception(Exception e, HttpServletResponse response) {
         LOGGER.error("catch exception : {}\r\nexception: ", e.getMessage(), e);
         if (Objects.isNull(EXCEPTIONS)) {
             EXCEPTIONS = builder.build();
@@ -124,13 +121,14 @@ public class CatchExceptionAdvice {
             c = cause.getClass();
         }
         final ResultCode resultCode = EXCEPTIONS.get(c);
-        final ResponseVO responseResult;
+        Integer code = 500;
         if (Objects.nonNull(resultCode)) {
-            responseResult = new ResponseVO(resultCode);
+            code = resultCode.code();
         } else {
-            responseResult = new ResponseVO(CodeEnum.SERVER_ERROR);
+            code = CodeEnum.SERVER_ERROR.code();
         }
-        return responseResult;
+        // 把错误信息返回给前端
+        ResponseVO.responseFailure(response, code, getMessage(e));
     }
 
     /**

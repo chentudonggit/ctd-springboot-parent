@@ -1,6 +1,8 @@
 package com.ctd.springboot.common.core.vo.response;
 
+import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
+import com.ctd.springboot.common.core.constants.code.ResultCodeSequence;
 import com.ctd.springboot.common.core.vo.page.PageVO;
 import com.ctd.springboot.common.core.vo.result.ResultVO;
 import com.ctd.springboot.common.core.web.result.code.ResultCode;
@@ -91,10 +93,27 @@ public class ResponseVO extends LinkedHashMap<String, Object> implements Seriali
     @ApiModelProperty("每页显示多少条数据")
     private static final String KEY_SIZE = "size";
 
+    /**
+     * responseWriter
+     *
+     * @param objectMapper objectMapper
+     * @param response     response
+     * @param msg          msg
+     * @param httpStatus
+     * @throws IOException IOException
+     */
     public static void responseWriter(ObjectMapper objectMapper, HttpServletResponse response, String msg, int httpStatus) throws IOException {
         responseWrite(objectMapper, response, ResultVO.succeedWith(null, httpStatus, msg));
     }
 
+    /**
+     * responseWrite
+     *
+     * @param objectMapper objectMapper
+     * @param response     response
+     * @param result       result
+     * @throws IOException IOException
+     */
     public static void responseWrite(ObjectMapper objectMapper, HttpServletResponse response, ResultVO<Object> result) throws IOException {
         response.setContentType(MediaType.APPLICATION_JSON_VALUE);
         try (Writer writer = response.getWriter()) {
@@ -113,15 +132,7 @@ public class ResponseVO extends LinkedHashMap<String, Object> implements Seriali
      * @return Mono<Void>
      */
     public static Mono<Void> responseWriter(ServerWebExchange exchange, int httpStatus, String msg) {
-        ResultVO result = ResultVO.succeedWith(null, httpStatus, msg);
-        ServerHttpResponse response = exchange.getResponse();
-        response.getHeaders().setContentType(MediaType.APPLICATION_JSON);
-        response.setStatusCode(HttpStatus.valueOf(result.getCode()));
-        DataBufferFactory dataBufferFactory = response.bufferFactory();
-        DataBuffer buffer = dataBufferFactory.wrap(JSONObject.toJSONString(result).getBytes(Charset.defaultCharset()));
-        return response.writeWith(Mono.just(buffer)).doOnError((error) -> {
-            DataBufferUtils.release(buffer);
-        });
+        return responseWriter(exchange, ResultVO.succeedWith(null, httpStatus, msg), HttpStatus.valueOf(httpStatus));
     }
 
     /**
@@ -134,10 +145,32 @@ public class ResponseVO extends LinkedHashMap<String, Object> implements Seriali
      * @return Mono<Void>
      */
     public static Mono<Void> responseFailureWriter(ServerWebExchange exchange, int httpStatus, String msg) {
-        ResultVO result = ResultVO.failedWith(null, httpStatus, msg);
+        return responseWriter(exchange, ResultVO.failedWith(null, httpStatus, msg), HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+
+    /**
+     * responseNotLogin
+     *
+     * @param exchange exchange
+     * @param msg      msg
+     * @return Mono<Void>
+     */
+    public static Mono<Void> responseNotLogin(ServerWebExchange exchange, String msg) {
+        return responseWriter(exchange, ResultVO.failedWith(null, HttpStatus.UNAUTHORIZED.value(), msg), HttpStatus.UNAUTHORIZED);
+    }
+
+    /**
+     * responseWriter
+     *
+     * @param exchange   exchange
+     * @param result     result
+     * @param httpStatus httpStatus
+     * @return Mono<Void>
+     */
+    public static Mono<Void> responseWriter(ServerWebExchange exchange, ResultVO result, HttpStatus httpStatus) {
         ServerHttpResponse response = exchange.getResponse();
-        response.setStatusCode(HttpStatus.INTERNAL_SERVER_ERROR);
         response.getHeaders().setContentType(MediaType.APPLICATION_JSON);
+        response.setStatusCode(httpStatus);
         DataBufferFactory dataBufferFactory = response.bufferFactory();
         DataBuffer buffer = dataBufferFactory.wrap(JSONObject.toJSONString(result).getBytes(Charset.defaultCharset()));
         return response.writeWith(Mono.just(buffer)).doOnError((error) -> {
@@ -245,6 +278,26 @@ public class ResponseVO extends LinkedHashMap<String, Object> implements Seriali
      */
     public static void responseSucceed(ObjectMapper objectMapper, HttpServletResponse response, Object obj) throws IOException {
         responseWrite(objectMapper, response, ResultVO.succeed(obj));
+    }
+
+    /**
+     * responseFailure
+     *
+     * @param response response
+     * @param code     code
+     * @param message  message
+     */
+    public static void responseFailure(HttpServletResponse response, Integer code, String message) {
+        response.setStatus(ResultCodeSequence.SYSTEM_ERROR);
+        response.setContentType(MediaType.APPLICATION_JSON_UTF8_VALUE);
+        try {
+            try (Writer writer = response.getWriter()) {
+                writer.write(JSON.toJSONString(new ResponseVO(code, false, message)));
+                writer.flush();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     /**

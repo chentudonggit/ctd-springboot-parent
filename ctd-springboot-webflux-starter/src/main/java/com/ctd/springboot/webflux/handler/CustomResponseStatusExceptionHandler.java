@@ -8,7 +8,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.cloud.gateway.support.NotFoundException;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.server.reactive.ServerHttpRequest;
 import org.springframework.http.server.reactive.ServerHttpResponse;
@@ -54,10 +53,9 @@ public class CustomResponseStatusExceptionHandler extends ResponseStatusExceptio
         }
         LOGGER.error(formatError(ex, exchange.getRequest()));
         if (ex instanceof InvalidTokenException) {
-            HttpStatus unauthorized = HttpStatus.UNAUTHORIZED;
-            return ResponseVO.responseWriter(exchange, unauthorized.value(), ex.getMessage());
+            return ResponseVO.responseNotLogin(exchange, ex.getMessage());
         }
-        if (ex instanceof NotFoundException ||  ex instanceof ClientException) {
+        if (ex instanceof NotFoundException || ex instanceof ClientException) {
             LOGGER.error("未发现服务");
             return serverError(exchange);
         }
