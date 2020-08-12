@@ -40,7 +40,6 @@
         <spring-boot-dependencies.version>2.2.9.RELEASE</spring-boot-dependencies.version>
         <spring-cloud-dependencies.version>Hoxton.SR6</spring-cloud-dependencies.version>
         <servlet-api.version>4.0.1</servlet-api.version>
-        <reactor.version>3.3.0.RELEASE</reactor.version>
         <mysql.version>5.1.41</mysql.version>
         <mybatis-plus-boot-starter.version>3.1.2</mybatis-plus-boot-starter.version>
         <mybatis-plus-suppor.version>2.1.6</mybatis-plus-suppor.version>
@@ -57,6 +56,7 @@
         <spring-boot-maven-plugin.version>2.1.1.RELEASE</spring-boot-maven-plugin.version>
         <txlcn.version>5.0.2.RELEASE</txlcn.version>
         <reactor-core.version>3.3.8.RELEASE</reactor-core.version>
+        <spring-webflux.version>5.2.8.RELEASE</spring-webflux.version>
     </properties>
     <dependencyManagement>
         <dependencies>
@@ -101,9 +101,9 @@
                 <version>${oauth.version}</version>
             </dependency>
             <dependency>
-                <groupId>io.projectreactor</groupId>
-                <artifactId>reactor-core</artifactId>
-                <version>${reactor.version}</version>
+                <groupId>org.springframework</groupId>
+                <artifactId>spring-webflux</artifactId>
+                <version>${spring-webflux.version}</version>
             </dependency>
             <dependency>
                 <groupId>mysql</groupId>

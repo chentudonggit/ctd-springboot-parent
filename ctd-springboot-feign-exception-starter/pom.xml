@@ -37,5 +37,11 @@
             <artifactId>ctd-springboot-common-starter</artifactId>
             <version>${ctd-springboot.version}</version>
         </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-webflux</artifactId>
+            <scope>compile</scope>
+            <optional>true</optional>
+        </dependency>
     </dependencies>
 </project>

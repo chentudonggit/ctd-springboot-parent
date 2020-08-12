@@ -1,4 +1,4 @@
-package com.ctd.springboot.feign.exception.configuration.handler;
+package com.ctd.springboot.feign.exception.configuration.handler.mvc;
 
 import org.springframework.boot.autoconfigure.web.servlet.WebMvcRegistrations;
 import org.springframework.cloud.openfeign.FeignClient;
@@ -7,14 +7,14 @@ import org.springframework.core.annotation.AnnotatedElementUtils;
 import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping;
 
 /**
- * RequestMappingHandlerMappingConfiguration
+ * WebMvcRequestMappingHandlerMappingConfiguration
  *
  * @author chentudong
  * @date 2020/8/11 21:43
  * @since 1.0
  */
 @Configuration
-public class RequestMappingHandlerMappingConfiguration  implements WebMvcRegistrations {
+public class WebMvcRequestMappingHandlerMappingConfiguration  implements WebMvcRegistrations {
     @Override
     public RequestMappingHandlerMapping getRequestMappingHandlerMapping() {
         return new FeignRequestMappingHandlerMapping();
