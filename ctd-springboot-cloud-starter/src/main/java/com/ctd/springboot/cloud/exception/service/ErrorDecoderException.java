@@ -34,11 +34,22 @@ public class ErrorDecoderException implements ErrorDecoder {
     public Exception decode(String methodKey, Response response) {
         try {
             Response.Body body = response.body();
-            if (Objects.nonNull(body)) {
-                // 获取原始的返回内容
-                String json = Util.toString(body.asReader(StandardCharsets.UTF_8));
+            if (Objects.isNull(body)) {
+                return new InternalException("处理失败.");
+            }
+            // 获取原始的返回内容
+            String json = Util.toString(body.asReader(StandardCharsets.UTF_8));
+            ExceptionModel exceptionModel = toExceptionModel(json);
+            String classPath = null;
+            String message = null;
+            if (Objects.nonNull(exceptionModel)) {
+                classPath = exceptionModel.getThrowExceptionClass();
+                message = exceptionModel.getMessage();
+            }
+            if (StringUtils.isBlank(classPath)) {
                 JSONObject responseJson = JSON.parseObject(json);
-                String classPath = responseJson.getString("exception");
+                classPath = responseJson.getString("exception");
+                message = responseJson.getString("message");
                 if (StringUtils.isBlank(classPath)) {
                     String error = responseJson.getString("error");
                     if (StringUtils.isNotBlank(error)) {
@@ -50,17 +61,16 @@ public class ErrorDecoderException implements ErrorDecoder {
                         return exception;
                     }
                 }
-                // 取得Class对象
-                Class<?> cls = Class.forName(classPath);
-                Constructor<Exception> con = (Constructor<Exception>) cls.getConstructor(String.class);
-                Exception exception = con.newInstance(responseJson.getString("message"));
-                LOGGER.error("catch exception : {}\r\nexception: ", json, exception);
-                return exception;
             }
+            // 取得Class对象
+            Class<?> cls = Class.forName(classPath);
+            Constructor<Exception> con = (Constructor<Exception>) cls.getConstructor(String.class);
+            Exception exception = con.newInstance(message);
+            LOGGER.error("catch exception : {}\r\nexception: ", json, exception);
+            return exception;
         } catch (Exception e) {
             return new InternalException(e.getMessage());
         }
-        return new InternalException("处理失败.");
     }
 
     private ExceptionModel toExceptionModel(String json) {
