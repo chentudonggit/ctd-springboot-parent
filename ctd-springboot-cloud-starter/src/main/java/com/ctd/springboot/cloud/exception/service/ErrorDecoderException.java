@@ -37,16 +37,9 @@ public class ErrorDecoderException implements ErrorDecoder {
             if (Objects.nonNull(body)) {
                 // 获取原始的返回内容
                 String json = Util.toString(body.asReader(StandardCharsets.UTF_8));
-                ExceptionModel exceptionModel = toExceptionModel(json);
-                String classPath = null;
-                String message = null;
-                if (Objects.nonNull(exceptionModel)) {
-                    classPath = exceptionModel.getThrowExceptionClass();
-                    message = exceptionModel.getMessage();
-                }
+                JSONObject responseJson = JSON.parseObject(json);
+                String classPath = responseJson.getString("exception");
                 if (StringUtils.isBlank(classPath)) {
-                    JSONObject responseJson = JSON.parseObject(json);
-                    classPath = responseJson.getString("exception");
                     String error = responseJson.getString("error");
                     if (StringUtils.isNotBlank(error)) {
                         Exception exception = new InternalException("path:" + responseJson.getString("path")
@@ -60,12 +53,12 @@ public class ErrorDecoderException implements ErrorDecoder {
                 // 取得Class对象
                 Class<?> cls = Class.forName(classPath);
                 Constructor<Exception> con = (Constructor<Exception>) cls.getConstructor(String.class);
-                Exception exception = con.newInstance(message);
+                Exception exception = con.newInstance(responseJson.getString("message"));
                 LOGGER.error("catch exception : {}\r\nexception: ", json, exception);
                 return exception;
             }
-        } catch (Exception var4) {
-            return new InternalException(var4.getMessage());
+        } catch (Exception e) {
+            return new InternalException(e.getMessage());
         }
         return new InternalException("处理失败.");
     }

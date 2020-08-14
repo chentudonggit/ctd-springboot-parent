@@ -42,5 +42,15 @@
             <artifactId>aspectjweaver</artifactId>
             <optional>true</optional>
         </dependency>
+        <dependency>
+            <groupId>io.github.openfeign</groupId>
+            <artifactId>feign-core</artifactId>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.netflix.ribbon</groupId>
+            <artifactId>ribbon-core</artifactId>
+            <scope>compile</scope>
+        </dependency>
     </dependencies>
 </project>

@@ -18,10 +18,9 @@ import org.springframework.http.server.reactive.ServerHttpResponse;
 import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Mono;
 
+import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
-import java.io.Serializable;
-import java.io.Writer;
+import java.io.*;
 import java.nio.charset.Charset;
 import java.util.LinkedHashMap;
 
@@ -116,7 +115,7 @@ public class ResponseVO extends LinkedHashMap<String, Object> implements Seriali
      */
     public static void responseWrite(ObjectMapper objectMapper, HttpServletResponse response, ResultVO<Object> result) throws IOException {
         response.setContentType(MediaType.APPLICATION_JSON_VALUE);
-        try (Writer writer = response.getWriter()) {
+        try (Writer writer = getWriter(response.getOutputStream())) {
             writer.write(objectMapper.writeValueAsString(result));
             writer.flush();
         }
@@ -291,13 +290,23 @@ public class ResponseVO extends LinkedHashMap<String, Object> implements Seriali
         response.setStatus(ResultCodeSequence.SYSTEM_ERROR);
         response.setContentType(MediaType.APPLICATION_JSON_UTF8_VALUE);
         try {
-            try (Writer writer = response.getWriter()) {
+            try (Writer writer = getWriter(response.getOutputStream())) {
                 writer.write(JSON.toJSONString(new ResponseVO(code, false, message)));
                 writer.flush();
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    /**
+     * getWriter
+     *
+     * @param outputStream outputStream
+     * @return Writer
+     */
+    public static Writer getWriter(ServletOutputStream outputStream) {
+        return new BufferedWriter(new OutputStreamWriter(outputStream));
     }
 
     /**
