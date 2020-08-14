@@ -9,9 +9,8 @@ import java.lang.annotation.*;
  * @date 2020/8/14 9:17
  * @since 1.0
  */
-@Target(ElementType.TYPE)
+@Target({ElementType.TYPE, ElementType.METHOD})
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
-@Deprecated
 public @interface GlobalErrorException {
 }

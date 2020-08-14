@@ -1,4 +1,4 @@
-package com.ctd.springboot.web.aspect.global.error;
+package com.ctd.springboot.web.common;
 
 import com.ctd.springboot.common.core.enums.code.CodeEnum;
 import com.ctd.springboot.common.core.exception.InternalException;
@@ -9,25 +9,22 @@ import com.google.common.collect.ImmutableMap;
 import com.netflix.client.ClientException;
 import feign.RetryableException;
 import org.apache.commons.lang3.StringUtils;
-import org.aspectj.lang.annotation.AfterThrowing;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.converter.HttpMessageNotReadableException;
-import org.springframework.web.context.request.RequestContextHolder;
-import org.springframework.web.context.request.ServletRequestAttributes;
 
 import javax.servlet.http.HttpServletResponse;
 import java.util.Objects;
 
 /**
- * 全局异常拦截
+ * CommonException
  *
  * @author chentudong
- * @date 2020/8/14 9:23
+ * @date 2020/8/14 17:18
  * @since 1.0
  */
-public abstract class AbstractGlobalErrorAspect {
-    private static final Logger LOGGER = LoggerFactory.getLogger(AbstractGlobalErrorAspect.class);
+public class CommonException {
+    private static final Logger LOGGER = LoggerFactory.getLogger(CommonException.class);
     private static final String MESSAGE = "message:";
 
     /**
@@ -47,29 +44,13 @@ public abstract class AbstractGlobalErrorAspect {
         builder.put(HttpMessageNotReadableException.class, CodeEnum.MISSING_REQUEST_BODY);
     }
 
-
-    /**
-     * log
-     */
-    public abstract void log();
-
-    /**
-     * doAfterThrowing
-     *
-     * @param e e
-     */
-    @AfterThrowing(throwing = "e", pointcut = "log()")
-    public void doAfterThrowing(Throwable e) {
-        exception(e, ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getResponse());
-    }
-
     /**
      * exception
      *
      * @param e        e
      * @param response response
      */
-    private void exception(Throwable e, HttpServletResponse response) {
+    public static void exception(Throwable e, HttpServletResponse response) {
         LOGGER.error("catch exception : {}\r\nexception: ", e.getMessage(), e);
         int code = 500;
         String message = getMessage(e);
@@ -102,7 +83,7 @@ public abstract class AbstractGlobalErrorAspect {
      * @param e e
      * @return String
      */
-    private String getMessage(Throwable e) {
+    public static String getMessage(Throwable e) {
         // 把错误信息返回给前端
         String message = e.getMessage();
         if (StringUtils.isNoneBlank(message)) {
@@ -114,4 +95,5 @@ public abstract class AbstractGlobalErrorAspect {
         }
         return message;
     }
+
 }
