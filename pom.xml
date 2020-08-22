@@ -27,6 +27,7 @@
         <module>ctd-springboot-nacos-starter</module>
         <module>ctd-springboot-eureka-starter</module>
         <module>ctd-springboot-feign-exception-starter</module>
+        <module>ctd-springboot-upload-file-starter</module>
     </modules>
 
     <properties>
@@ -57,6 +58,7 @@
         <txlcn.version>5.0.2.RELEASE</txlcn.version>
         <reactor-core.version>3.3.8.RELEASE</reactor-core.version>
         <spring-webflux.version>5.2.8.RELEASE</spring-webflux.version>
+        <thumbnailator.version>0.4.8</thumbnailator.version>
     </properties>
     <dependencyManagement>
         <dependencies>
@@ -206,6 +208,11 @@
                 <groupId>io.projectreactor</groupId>
                 <artifactId>reactor-core</artifactId>
                 <version>${reactor-core.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>net.coobird</groupId>
+                <artifactId>thumbnailator</artifactId>
+                <version>${thumbnailator.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.springframework.cloud</groupId>
