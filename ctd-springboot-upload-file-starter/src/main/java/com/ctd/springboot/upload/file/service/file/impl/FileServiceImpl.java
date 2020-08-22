@@ -80,9 +80,27 @@ public class FileServiceImpl implements FileService {
      * @return Boolean
      */
     @Override
-    public Boolean deleteFile(String path, String[] fileNames) {
+    public Boolean deleteFiles(String path, String[] fileNames) {
         try {
             FileUtils.delete(path, fileNames);
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    /**
+     * 删除文件
+     *
+     * @param path     路径
+     * @param fileName 文件名称
+     * @return Boolean
+     */
+    @Override
+    public Boolean deleteFile(String path, String fileName) {
+        try {
+            FileUtils.delete(path, fileName);
             return true;
         } catch (Exception e) {
             e.printStackTrace();

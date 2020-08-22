@@ -35,4 +35,28 @@ public class FileController {
     public ResultVO<FileVO> uploadImage(@RequestParam("path") String path, @RequestBody MultipartFile file) {
         return ResultVO.succeed(fileService.pathMultipartImage(path, file));
     }
+
+    /***
+     *
+     * @param path path
+     * @param fileName fileName
+     * @return
+     */
+    @ApiOperation("删除文件")
+    @DeleteMapping("delete")
+    public ResultVO<Boolean> delete(@RequestParam("path") String path, @RequestParam("fileName") String fileName) {
+        return ResultVO.succeed(fileService.deleteFile(path, fileName));
+    }
+
+    /***
+     *
+     * @param path path
+     * @param fileNames fileNames
+     * @return
+     */
+    @ApiOperation("删除文件")
+    @DeleteMapping("deletes")
+    public ResultVO<Boolean> deletes(@RequestParam("path") String path, @RequestBody String[] fileNames) {
+        return ResultVO.succeed(fileService.deleteFiles(path, fileNames));
+    }
 }

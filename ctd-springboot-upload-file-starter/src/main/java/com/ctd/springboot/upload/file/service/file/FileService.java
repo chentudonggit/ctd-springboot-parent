@@ -71,8 +71,18 @@ public interface FileService {
      * @param fileNames 文件名称
      * @return Boolean
      */
+    @RequestMapping("/deleteFiles")
+    Boolean deleteFiles(@RequestParam("path") String path, @RequestParam("fileNames") String[] fileNames);
+
+    /**
+     * 删除文件
+     *
+     * @param path     路径
+     * @param fileName 文件名称
+     * @return Boolean
+     */
     @RequestMapping("/deleteFile")
-    Boolean deleteFile(@RequestParam("path") String path, @RequestParam("images") String[] fileNames);
+    Boolean deleteFile(@RequestParam("path") String path, @RequestParam("fileName") String fileName);
 
     /**
      * 图片上传
