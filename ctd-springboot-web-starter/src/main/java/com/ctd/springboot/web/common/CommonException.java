@@ -14,6 +14,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 
 import javax.servlet.http.HttpServletResponse;
+import java.net.SocketTimeoutException;
 import java.util.Objects;
 
 /**
@@ -40,6 +41,7 @@ public class CommonException {
         //在这里加入一些基础的异常类型判断
         builder.put(RetryableException.class, CodeEnum.SERVER_ERROR);
         builder.put(ClientException.class, CodeEnum.SERVER_ERROR);
+        builder.put(SocketTimeoutException.class, CodeEnum.SERVER_ERROR);
         builder.put(InternalException.class, CodeEnum.MISSING_REQUEST_BODY);
         builder.put(HttpMessageNotReadableException.class, CodeEnum.MISSING_REQUEST_BODY);
     }
