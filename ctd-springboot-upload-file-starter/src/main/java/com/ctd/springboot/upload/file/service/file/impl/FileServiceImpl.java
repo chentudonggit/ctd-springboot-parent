@@ -38,7 +38,7 @@ public class FileServiceImpl implements FileService {
         file.setFileSize(size);
         file.setId(UUID.randomUUID().toString());
         file.setOriginalFileName(fileName);
-        file.setNewFileName(fileName);
+        file.setNewFileName(FileUtils.newFileName(fileName, prefix));
         FileUtils.addFile(path, fileName, bytes);
         return file;
     }
