@@ -24,9 +24,9 @@ import java.nio.file.Paths;
  * @since 1.0
  */
 public class ImageUtils {
-    private static final Integer MAX_SIZE = 200;
-    private static final Integer K500 = 500;
-    private static final Integer M1 = 1024;
+    private static final Integer MAX_SIZE = 200000;
+    private static final Integer K500 = 500000;
+    private static final Integer M1 = 1024000;
     private static final String JPG = "jpg";
     private static final String JPEG = "jpeg";
     private static final String PNG = "png";
