@@ -2,17 +2,14 @@ package com.ctd.springboot.common.core.utils.file;
 
 import com.ctd.springboot.common.core.exception.UnifiedException;
 import com.ctd.springboot.common.core.utils.asserts.AssertUtils;
+import com.ctd.springboot.common.core.vo.file.FileVO;
+import org.apache.commons.lang3.StringUtils;
 
 import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
-import java.util.UUID;
-
-import org.apache.commons.lang3.StringUtils;
+import java.util.*;
 
 /**
  * FileUtils
@@ -131,4 +128,53 @@ public class FileUtils {
     public static String newFileName(String fileName, String prefix) {
         return fileName.replace("." + prefix, "").concat(uuidSubstring(0, 16)).concat(".").concat(prefix);
     }
+
+    /**
+     * initFileVO
+     *
+     * @param size     size
+     * @param fileName fileName
+     * @param prefix   prefix
+     * @return FileVO
+     */
+    public static FileVO initFileVO(Long size, String fileName, String prefix) {
+        FileVO file = new FileVO();
+        file.setFileSize(size);
+        file.setId(uuid());
+        file.setOriginalFileName(fileName);
+        String newFileName = newFileName(fileName, prefix);
+        file.setNewFileName(newFileName);
+        file.setUploadTime(new Date());
+        return file;
+    }
+
+    /**
+     * 删除文件
+     *
+     * @param filePath  文件路径
+     * @param fileNames 文件名称
+     */
+    public static void delete(String filePath, String[] fileNames) {
+        if (StringUtils.isNoneBlank(filePath) && Objects.nonNull(fileNames) && fileNames.length > 0) {
+            for (String fileName : fileNames) {
+                delete(filePath, fileName);
+            }
+        }
+    }
+
+    /**
+     * 删除文件
+     *
+     * @param filePath 文件路径
+     * @param fileName 文件名称
+     */
+    public static void delete(String filePath, String fileName) {
+        AssertUtils.isNull(filePath, "filePath 不能为空");
+        AssertUtils.isNull(fileName, "fileName 不能为空");
+        File file = new File(filePath.concat("/").concat(fileName));
+        if (file.exists() && file.isFile()) {
+            file.delete();
+        }
+    }
+
 }

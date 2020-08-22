@@ -59,6 +59,7 @@
         <reactor-core.version>3.3.8.RELEASE</reactor-core.version>
         <spring-webflux.version>5.2.8.RELEASE</spring-webflux.version>
         <thumbnailator.version>0.4.8</thumbnailator.version>
+        <commons-io.version>2.6</commons-io.version>
     </properties>
     <dependencyManagement>
         <dependencies>
@@ -213,6 +214,11 @@
                 <groupId>net.coobird</groupId>
                 <artifactId>thumbnailator</artifactId>
                 <version>${thumbnailator.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>commons-io</groupId>
+                <artifactId>commons-io</artifactId>
+                <version>${commons-io.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.springframework.cloud</groupId>

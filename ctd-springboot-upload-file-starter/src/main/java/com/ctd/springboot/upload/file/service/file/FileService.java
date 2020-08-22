@@ -57,12 +57,12 @@ public interface FileService {
     /**
      * 多个文件上传
      *
-     * @param files files
-     * @param path  path
+     * @param fileJsons fileJsons
+     * @param path      path
      * @return List<FileVO>
      */
     @RequestMapping(value = "uploads")
-    List<FileVO> upload(@RequestParam("path") String path, @RequestParam("files") String files);
+    List<FileVO> upload(@RequestParam("path") String path, @RequestParam("files") String fileJsons);
 
     /**
      * 删除文件
@@ -74,17 +74,6 @@ public interface FileService {
     @RequestMapping("/deleteFile")
     Boolean deleteFile(@RequestParam("path") String path, @RequestParam("images") String[] fileNames);
 
-
-    /**
-     * 按路径保存图片
-     *
-     * @param path       路径
-     * @param imageJsons 图片json格式字符串
-     * @return List<FileVO>
-     */
-    @RequestMapping("/pathImageJsons")
-    List<FileVO> pathImages(@RequestParam("path") String path, @RequestParam("images") String[] imageJsons);
-
     /**
      * 图片上传
      *
@@ -93,7 +82,7 @@ public interface FileService {
      * @return List<FileVO>
      */
     @RequestMapping("/pathImages")
-    List<FileVO> pathImages(@RequestParam("path") String path, @RequestBody ArrayList<RequestFileVO> files);
+    List<FileVO> pathImages(@RequestParam("path") String path, @RequestBody RequestFileVO[] files);
 
     /**
      * 上传图片
@@ -112,6 +101,26 @@ public interface FileService {
      * @param files files
      * @return List<FileVO>
      */
+    @RequestMapping("pathMultipartFiles")
+    List<FileVO> pathMultipartFiles(@RequestParam("path") String path, @RequestBody ArrayList<MultipartFile> files);
+
+    /**
+     * 上传文件
+     *
+     * @param path path
+     * @param file file
+     * @return FileVO
+     */
     @RequestMapping("pathMultipartFile")
-    List<FileVO> pathMultipartFile(@RequestParam("path") String path, @RequestBody ArrayList<MultipartFile> files);
+    FileVO pathMultipartFile(@RequestParam("path") String path, @RequestBody MultipartFile file);
+
+    /**
+     * 上传图片
+     *
+     * @param path path
+     * @param file file
+     * @return FileVO
+     */
+    @RequestMapping("pathMultipartImage")
+    FileVO pathMultipartImage(@RequestParam("path") String path, @RequestBody MultipartFile file);
 }

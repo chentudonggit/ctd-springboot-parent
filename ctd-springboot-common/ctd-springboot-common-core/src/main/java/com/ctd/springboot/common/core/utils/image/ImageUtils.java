@@ -1,6 +1,7 @@
 package com.ctd.springboot.common.core.utils.image;
 
 import com.ctd.springboot.common.core.utils.asserts.AssertUtils;
+import com.ctd.springboot.common.core.utils.file.FileUtils;
 import net.coobird.thumbnailator.Thumbnails;
 import net.coobird.thumbnailator.Thumbnails.Builder;
 import net.coobird.thumbnailator.geometry.Positions;
@@ -287,5 +288,27 @@ public class ImageUtils {
         if (!prefix.equalsIgnoreCase(JPEG) && !prefix.equalsIgnoreCase(JPG) && !prefix.equalsIgnoreCase(PNG) && !prefix.equalsIgnoreCase(GIF)) {
             AssertUtils.msgUser("文件格式不正确， 只支持：%s,%s,%s,%s,", JPEG, JPG, PNG, GIF);
         }
+    }
+
+    /**
+     * getByte
+     *
+     * @param size size
+     * @param file file
+     * @return Byte[]
+     */
+    public static Byte[] shrinkToScale(long size, MultipartFile file) {
+        Byte[] bytes = null;
+        try {
+            if (isMax(size)) {
+                //添加压缩
+                bytes = FileUtils.copy(shrinkToScale(file.getInputStream(), proportion(size), null));
+            } else {
+                bytes = FileUtils.copy(file.getBytes());
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return bytes;
     }
 }
