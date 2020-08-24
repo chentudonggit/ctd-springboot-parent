@@ -161,7 +161,8 @@ public class ImageUtils {
     public static byte[] addWatermark(InputStream img, String watermarkIMG, String outFilePath) {
         // watermark(位置，水印图，透明度)
         try {
-            Builder<? extends InputStream> builder = Thumbnails.of(img).scale(1f).watermark(Positions.TOP_RIGHT, ImageIO.read(new File(watermarkIMG)), 0.5f).outputQuality(0.8f);
+            Builder<? extends InputStream> builder = Thumbnails.of(img).scale(1f).watermark(Positions.TOP_RIGHT,
+                    ImageIO.read(new File(watermarkIMG)), 0.5f).outputQuality(0.8f);
 
             if (StringUtils.isNotBlank(outFilePath)) {
                 builder.toFile(outFilePath);
@@ -240,7 +241,7 @@ public class ImageUtils {
     public static void contraction(MultipartFile file, String outPath, String fileName) {
         AssertUtils.isNull(file, "file不能为空");
         try {
-            long size = file.getSize() / 1000;
+            long size = file.getSize();
             if (size > MAX_SIZE) {
                 double scale = proportion(size);
                 shrinkToScale(file.getInputStream(), scale, outPath + "/" + fileName);
