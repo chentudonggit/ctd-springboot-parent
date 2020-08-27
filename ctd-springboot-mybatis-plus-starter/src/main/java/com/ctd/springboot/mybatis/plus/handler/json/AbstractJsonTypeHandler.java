@@ -19,10 +19,10 @@ import java.util.Objects;
  * @date 2020/8/26 22:58
  * @since 1.0
  */
-public abstract class JsonTypeHandler<T> extends BaseTypeHandler<T> {
-    private Class<T> type;
+public abstract class AbstractJsonTypeHandler<T> extends BaseTypeHandler<T> {
+    private final Class<T> type;
 
-    public JsonTypeHandler(Class<T> type) {
+    public AbstractJsonTypeHandler(Class<T> type) {
         AssertUtils.isNull(type, "type 不能为空");
         this.type = type;
     }
