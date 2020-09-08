@@ -3,6 +3,7 @@ package com.ctd.springboot.redis.repository;
 import com.alibaba.fastjson.JSON;
 import com.ctd.springboot.common.core.utils.asserts.AssertUtils;
 import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.redis.connection.RedisClusterNode;
@@ -107,6 +108,49 @@ public class RedisRepository {
     }
 
     /**
+     * 添加到带有 过期时间的  缓存
+     *
+     * @param key   key
+     * @param value value
+     * @param time  time
+     */
+    public void set(final String key, final Object value, final long time) {
+        setExpire(key, value, time);
+    }
+
+    /**
+     * parseObject
+     *
+     * @param key   key
+     * @param clazz clazz
+     * @param <T>   <T>
+     * @return T
+     */
+    public <T> T parseObject(final String key, Class<T> clazz) {
+        String value = get(key);
+        if (StringUtils.isNoneBlank(value)) {
+            return JSON.parseObject(value, clazz);
+        }
+        return null;
+    }
+
+    /**
+     * parseArray
+     *
+     * @param key   key
+     * @param clazz clazz
+     * @param <T>   <T>
+     * @return List<T>
+     */
+    public <T> List<T> parseArray(final String key, Class<T> clazz) {
+        String value = get(key);
+        if (StringUtils.isNoneBlank(value)) {
+            return JSON.parseArray(value, clazz);
+        }
+        return null;
+    }
+
+    /**
      * 一次性添加数组到   过期时间的  缓存，不用多次连接，节省开销
      *
      * @param keys   redis主键数组
@@ -119,7 +163,7 @@ public class RedisRepository {
             for (int i = 0; i < keys.length; i++) {
                 byte[] bKeys = serializer.serialize(keys[i]);
                 byte[] bValues = STRING_SERIALIZER.serialize(JSON.toJSONString(values[i]));
-                if (!AssertUtils.nonNull(bKeys) && AssertUtils.nonNull(bValues)) {
+                if (AssertUtils.isNull(bKeys) && AssertUtils.nonNull(bValues)) {
                     connection.setEx(bKeys, time, bValues);
                 }
             }
@@ -140,7 +184,7 @@ public class RedisRepository {
             for (int i = 0; i < keys.length; i++) {
                 byte[] bKeys = serializer.serialize(keys[i]);
                 byte[] bValues = STRING_SERIALIZER.serialize(JSON.toJSONString(values[i]));
-                if (!AssertUtils.nonNull(bKeys) && AssertUtils.nonNull(bValues)) {
+                if (AssertUtils.isNull(bKeys) && AssertUtils.nonNull(bValues)) {
                     connection.set(bKeys, bValues);
                 }
             }

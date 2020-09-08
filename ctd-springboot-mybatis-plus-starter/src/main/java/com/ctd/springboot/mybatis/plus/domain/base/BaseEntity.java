@@ -18,7 +18,6 @@ import java.util.Date;
  * @since 1.0
  */
 public abstract class BaseEntity<T extends Model<T>> extends Model<T> {
-    private static final long serialVersionUID = -4526116791401550737L;
 
     /**
      * id
