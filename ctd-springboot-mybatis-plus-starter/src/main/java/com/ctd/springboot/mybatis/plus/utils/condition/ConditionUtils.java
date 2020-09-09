@@ -26,6 +26,7 @@ public class ConditionUtils {
     public static final String L_LIKE = "_llike";
     public static final String R_LIKE = "_rlike";
     public static final String LIKE = "_like";
+    public static final String OR_LIKE = "_orLike";
     public static final String IN = "_in";
     public static final String ISNULL = "_isNull";
     public static final String IS_NOTNULL = "_isNotNull";
@@ -55,9 +56,13 @@ public class ConditionUtils {
                     condition.in(StringUtils.camelToUnderline(k.split(IN)[0]), String.valueOf(v));
                 } else if (ConditionUtils.isLoadCondition(ISNULL, k, v)) {
                     String camel = StringUtils.camelToUnderline(k.split(ISNULL)[0]);
-                    condition.comment(camel + " IS NULL OR " + camel + " = '' ");
+                    condition.or();
+                    condition.apply("{0}", camel.concat(" IS NULL OR ").concat(camel).concat(" = '' "));
                 } else if (ConditionUtils.isLoadCondition(IS_NOTNULL, k, v)) {
                     condition.isNotNull(StringUtils.camelToUnderline(k.split(IS_NOTNULL)[0]));
+                } else if (ConditionUtils.isLoadCondition(OR_LIKE, k, v)) {
+                    condition.or();
+                    condition.like(StringUtils.camelToUnderline(k.split(OR_LIKE)[0]), String.valueOf(v));
                 }
             });
         }
