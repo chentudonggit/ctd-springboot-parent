@@ -1,3 +1,3 @@
 # Auto Configure
 org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
-com.ctd.springboot.mysql.MySqlAutoConfiguration
+com.ctd.springboot.oracle.OracleAutoConfiguration

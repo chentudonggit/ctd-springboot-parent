@@ -1,4 +1,4 @@
 # Auto Configure
 org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
-  com.ctd.springboot.cloud.config.feign.FeignConfigRegistrar,\
-  com.ctd.springboot.cloud.CloudEnableAutoConfiguration
+com.ctd.springboot.cloud.config.feign.FeignConfigRegistrar,\
+com.ctd.springboot.cloud.CloudEnableAutoConfiguration
