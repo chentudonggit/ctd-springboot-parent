@@ -84,6 +84,21 @@ public class BeanHelper {
     }
 
     /**
+     * convertToPageVO
+     *
+     * @param list      list
+     * @param page      page
+     * @param size      size
+     * @param totalPage totalPage
+     * @param total     total
+     * @param <T>       <T>
+     * @return PageVO<T>
+     */
+    public static <T> PageVO<T> convertToPageVO(List<T> list, Integer page, Integer size, Integer totalPage, Long total) {
+        return convert(list, page, size, false, totalPage, total);
+    }
+
+    /**
      * 将集合转换为pageVO
      *
      * @param list list
@@ -92,32 +107,7 @@ public class BeanHelper {
      * @return PageVO
      */
     public static <T> PageVO<T> convertListToPageVO(List<T> list, Integer page, Integer size) {
-        page = AssertUtils.isNullReturnParam(page, 0);
-        size = AssertUtils.isNullReturnParam(size, 10);
-        PageVO<T> pageVO = new PageVO<>();
-        if (Objects.isNull(list) || list.isEmpty()) {
-            pageVO.setPage(size);
-            pageVO.setTotalCount(0L);
-            pageVO.setTotalPage(0);
-            pageVO.setData(new ArrayList<>());
-            return pageVO;
-        }
-        pageVO.setTotalPage((list.size() + size - 1) / size);
-        pageVO.setSize(size);
-        pageVO.setTotalCount((long) list.size());
-        List<T> resultList = new ArrayList<>();
-        for (int i = page * size; i < (page + 1) * size; i++) {
-            if (i < (list.size())) {
-                T t = list.get(i);
-                if (Objects.nonNull(t)) {
-                    resultList.add(list.get(i));
-                }
-            } else {
-                break;
-            }
-        }
-        pageVO.setData(resultList);
-        return pageVO;
+        return convert(list, page, size, true, null, null);
     }
 
     /**
@@ -184,5 +174,51 @@ public class BeanHelper {
                 }
             }
         }
+    }
+
+    /**
+     * convert
+     *
+     * @param list      list
+     * @param page      page
+     * @param size      size
+     * @param isForEach isForEach
+     * @param totalPage totalPage
+     * @param total     total
+     * @param <T>       <T>
+     * @return PageVO<T>
+     */
+    private static <T> PageVO<T> convert(List<T> list, Integer page, Integer size, boolean isForEach, Integer totalPage, Long total) {
+        page = AssertUtils.isNullReturnParam(page, 0);
+        size = AssertUtils.isNullReturnParam(size, 10);
+        PageVO<T> pageVO = new PageVO<>();
+        if (Objects.isNull(list) || list.isEmpty()) {
+            pageVO.setPage(size);
+            pageVO.setTotalCount(0L);
+            pageVO.setTotalPage(0);
+            pageVO.setData(new ArrayList<>());
+            return pageVO;
+        }
+        totalPage = Objects.nonNull(totalPage) ? totalPage : list.size();
+        pageVO.setTotalPage((totalPage + size - 1) / size);
+        pageVO.setSize(size);
+        pageVO.setTotalCount(Objects.isNull(total) ? list.size() : total);
+        if (isForEach) {
+            List<T> resultList = new ArrayList<>();
+            for (int i = page * size; i < (page + 1) * size; i++) {
+                if (i < (list.size())) {
+                    T t = list.get(i);
+                    if (Objects.nonNull(t)) {
+                        resultList.add(t);
+                    }
+                } else {
+                    break;
+                }
+            }
+            pageVO.setData(resultList);
+        } else {
+            pageVO.setData(list);
+        }
+        return pageVO;
     }
 }
