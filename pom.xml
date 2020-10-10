@@ -62,6 +62,7 @@
         <thumbnailator.version>0.4.8</thumbnailator.version>
         <commons-io.version>2.6</commons-io.version>
         <oracle.version>11.2.0.3.0</oracle.version>
+        <easypoi.version>3.0.3</easypoi.version>
     </properties>
     <dependencyManagement>
         <dependencies>
@@ -233,6 +234,21 @@
                 <version>${spring-cloud-dependencies.version}</version>
                 <type>pom</type>
                 <scope>import</scope>
+            </dependency>
+            <dependency>
+                <groupId>cn.afterturn</groupId>
+                <artifactId>easypoi-base</artifactId>
+                <version>${easypoi.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>cn.afterturn</groupId>
+                <artifactId>easypoi-web</artifactId>
+                <version>${easypoi.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>cn.afterturn</groupId>
+                <artifactId>easypoi-annotation</artifactId>
+                <version>${easypoi.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
