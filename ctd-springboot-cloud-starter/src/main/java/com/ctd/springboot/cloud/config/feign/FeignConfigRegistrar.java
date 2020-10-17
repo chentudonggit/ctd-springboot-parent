@@ -4,6 +4,8 @@ import com.alibaba.fastjson.serializer.SerializerFeature;
 import com.alibaba.fastjson.support.config.FastJsonConfig;
 import com.alibaba.fastjson.support.spring.FastJsonHttpMessageConverter;
 import com.ctd.springboot.cloud.exception.service.ErrorDecoderException;
+import com.ctd.springboot.cloud.format.date.CustomLocalDateStringConverter;
+import com.ctd.springboot.cloud.format.date.CustomLocalDateTimeStringConverter;
 import com.ctd.springboot.cloud.format.date.DateFormatter;
 import feign.codec.ErrorDecoder;
 import org.springframework.boot.autoconfigure.http.HttpMessageConverters;
@@ -37,6 +39,16 @@ public class FeignConfigRegistrar implements FeignFormatterRegistrar {
         fastJsonConfig.setSerializerFeatures(SerializerFeature.DisableCircularReferenceDetect);
         fastConvert.setFastJsonConfig(fastJsonConfig);
         return new HttpMessageConverters(fastConvert);
+    }
+
+    @Bean
+    public FeignFormatterRegistrar localDataTimeFormatRegister() {
+        return registry -> registry.addConverter(new CustomLocalDateTimeStringConverter());
+    }
+
+    @Bean
+    public FeignFormatterRegistrar localDataFormatRegister() {
+        return registry -> registry.addConverter(new CustomLocalDateStringConverter());
     }
 
     /**

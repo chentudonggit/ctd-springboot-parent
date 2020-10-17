@@ -14,15 +14,11 @@ import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.converter.HttpMessageNotReadableException;
-import org.springframework.security.oauth2.common.exceptions.InvalidTokenException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
 import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
-import java.io.Writer;
 import java.util.Objects;
 
 /**
@@ -52,26 +48,6 @@ public class CatchExceptionAdvice {
         builder.put(ClientException.class, CodeEnum.SERVICE_CALL_ERROR);
         builder.put(HttpMessageNotReadableException.class, CodeEnum.MISSING_REQUEST_BODY);
     }
-
-    /**
-     * invalidToken
-     *
-     * @param response response
-     */
-    @ExceptionHandler(InvalidTokenException.class)
-    public void invalidToken(HttpServletResponse response) {
-        HttpStatus unauthorized = HttpStatus.UNAUTHORIZED;
-        try {
-            response.sendError(unauthorized.value(), unauthorized.getReasonPhrase());
-            response.setContentType(MediaType.APPLICATION_JSON_VALUE);
-            try (Writer writer = response.getWriter()) {
-                writer.flush();
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
 
     /**
      * 捕获 CustomException 类型的异常
