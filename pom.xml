@@ -65,9 +65,15 @@
         <easypoi.version>3.0.3</easypoi.version>
         <springfox-core.version>2.9.2</springfox-core.version>
         <pinyin4j.version>2.5.0</pinyin4j.version>
+        <bcprov-jdk.version>1.55</bcprov-jdk.version>
     </properties>
     <dependencyManagement>
         <dependencies>
+            <dependency>
+                <groupId>org.bouncycastle</groupId>
+                <artifactId>bcprov-jdk15on</artifactId>
+                <version>${bcprov-jdk.version}</version>
+            </dependency>
             <dependency>
                 <groupId>com.belerweb</groupId>
                 <artifactId>pinyin4j</artifactId>
