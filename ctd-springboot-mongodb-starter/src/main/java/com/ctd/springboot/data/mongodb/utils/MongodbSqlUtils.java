@@ -51,7 +51,7 @@ public class MongodbSqlUtils {
      * @param <T>    <T>
      * @return Example<T>
      */
-    public <T> Example<T> example(Object object) {
+    public static <T> Example<T> example(Object object) {
         return (Example<T>) Example.of(object, matching(object));
     }
 
