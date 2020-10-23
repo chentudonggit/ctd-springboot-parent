@@ -29,6 +29,7 @@
         <module>ctd-springboot-feign-exception-starter</module>
         <module>ctd-springboot-upload-file-starter</module>
         <module>ctd-springboot-oracle-starter</module>
+        <module>ctd-springboot-mongodb-starter</module>
     </modules>
 
     <properties>
