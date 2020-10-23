@@ -28,7 +28,10 @@ public class MongodbSqlUtils {
      * @return Pageable
      */
     public static Pageable initPageable(Integer page, Integer size, Sort.Direction direction, String... properties) {
-        page = AssertUtils.isNullReturnParam(page, 0);
+        page = AssertUtils.isNullReturnParam(page, 1);
+        if (page < 1) {
+            page = 1;
+        }
         size = AssertUtils.isNullReturnParam(size, 10);
         size = Objects.isNull(size) ? 10 : size;
         if (Objects.nonNull(direction) && Objects.nonNull(properties)) {
