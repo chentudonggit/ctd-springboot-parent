@@ -5,6 +5,7 @@ import com.ctd.springboot.common.core.utils.asserts.AssertUtils;
 import com.ctd.springboot.common.core.vo.page.PageVO;
 import org.springframework.data.domain.*;
 
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -17,6 +18,43 @@ import java.util.Objects;
  * @since 1.0
  */
 public class MongodbSqlUtils {
+
+
+    /**
+     * matching
+     *
+     * @param object object
+     * @return ExampleMatcher
+     */
+    public static ExampleMatcher matching(Object object) {
+        ExampleMatcher exampleMatcher = ExampleMatcher.matching();
+        if (Objects.nonNull(object)) {
+            Field[] fields = object.getClass().getDeclaredFields();
+            for (Field field : fields) {
+                field.setAccessible(true);
+                try {
+                    if (Objects.nonNull(field.get(object))) {
+                        exampleMatcher.withMatcher(field.getName(), ExampleMatcher.GenericPropertyMatchers.contains());
+                    }
+                } catch (IllegalAccessException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        return exampleMatcher;
+    }
+
+    /**
+     * example
+     *
+     * @param object object
+     * @param <T>    <T>
+     * @return Example<T>
+     */
+    public <T> Example<T> example(Object object) {
+        return (Example<T>) Example.of(object, matching(object));
+    }
+
 
     /**
      * 分页对象
