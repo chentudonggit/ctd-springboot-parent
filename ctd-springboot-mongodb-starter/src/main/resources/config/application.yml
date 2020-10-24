@@ -1,8 +1,6 @@
 spring:
   data:
     mongodb:
-      uri: mongodb://iot.ghome.ink:27017
-      database: xc_cms
       option:
         min-connection-per-host: 20
         max-connection-per-host: 200

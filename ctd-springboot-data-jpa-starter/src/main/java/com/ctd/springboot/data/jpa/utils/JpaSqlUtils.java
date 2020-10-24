@@ -48,7 +48,6 @@ public class JpaSqlUtils {
     public static Pageable initPageable(Integer page, Integer size, Sort.Direction direction, String... properties) {
         page = AssertUtils.isNullReturnParam(page, 0);
         size = AssertUtils.isNullReturnParam(size, 10);
-        size = Objects.isNull(size) ? 10 : size;
         if (Objects.nonNull(direction) && Objects.nonNull(properties)) {
             return PageRequest.of(page, size, Sort.by(direction, properties));
         } else if (Objects.nonNull(direction)) {

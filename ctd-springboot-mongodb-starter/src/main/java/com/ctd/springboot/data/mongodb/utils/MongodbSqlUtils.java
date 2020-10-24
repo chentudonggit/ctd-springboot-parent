@@ -3,6 +3,7 @@ package com.ctd.springboot.data.mongodb.utils;
 import com.ctd.springboot.common.core.bean.BeanHelper;
 import com.ctd.springboot.common.core.utils.asserts.AssertUtils;
 import com.ctd.springboot.common.core.vo.page.PageVO;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.data.domain.*;
 
 import java.lang.reflect.Field;
@@ -19,6 +20,7 @@ import java.util.Objects;
  */
 public class MongodbSqlUtils {
 
+    public static final String SERIAL_VERSION_UID = "serialVersionUID";
 
     /**
      * matching
@@ -27,21 +29,34 @@ public class MongodbSqlUtils {
      * @return ExampleMatcher
      */
     public static ExampleMatcher matching(Object object) {
-        ExampleMatcher exampleMatcher = ExampleMatcher.matching();
+        ExampleMatcher exampleMatcher = ExampleMatcher.matching()
+                //创建匹配器，即如何使用查询条件
+                //改变默认字符串匹配方式：模糊查询
+                .withStringMatcher(ExampleMatcher.StringMatcher.CONTAINING)
+                //改变默认大小写忽略方式：忽略大小写
+                .withIgnoreCase(true)
+                //采用“包含匹配”的方式查询
+                //忽略属性，不参与查询
+                .withIgnorePaths("page", "size", "pageNumber", "pageSize", "_class");
         if (Objects.nonNull(object)) {
             Field[] fields = object.getClass().getDeclaredFields();
             for (Field field : fields) {
                 field.setAccessible(true);
                 try {
-                    if (Objects.nonNull(field.get(object))) {
-                        exampleMatcher.withMatcher(field.getName(), ExampleMatcher.GenericPropertyMatchers.contains());
+                    String fieldName = field.getName();
+                    if (SERIAL_VERSION_UID.equalsIgnoreCase(fieldName)) {
+                        continue;
+                    }
+                    Object fieldValue = field.get(object);
+                    if (Objects.nonNull(fieldValue) && StringUtils.isNotBlank(fieldValue.toString())) {
+                        exampleMatcher.withMatcher(fieldName, ExampleMatcher.GenericPropertyMatcher::exact);
                     }
                 } catch (IllegalAccessException e) {
                     e.printStackTrace();
                 }
             }
         }
-        return exampleMatcher;
+        return exampleMatcher.withIgnoreNullValues();
     }
 
     /**
@@ -66,12 +81,8 @@ public class MongodbSqlUtils {
      * @return Pageable
      */
     public static Pageable initPageable(Integer page, Integer size, Sort.Direction direction, String... properties) {
-        page = AssertUtils.isNullReturnParam(page, 1);
-        if (page < 1) {
-            page = 1;
-        }
+        page = AssertUtils.isNullReturnParam(page, 0);
         size = AssertUtils.isNullReturnParam(size, 10);
-        size = Objects.isNull(size) ? 10 : size;
         if (Objects.nonNull(direction) && Objects.nonNull(properties)) {
             return PageRequest.of(page, size, Sort.by(direction, properties));
         } else if (Objects.nonNull(direction)) {
