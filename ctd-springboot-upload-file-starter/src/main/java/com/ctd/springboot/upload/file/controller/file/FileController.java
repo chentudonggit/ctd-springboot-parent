@@ -3,6 +3,7 @@ package com.ctd.springboot.upload.file.controller.file;
 import com.ctd.springboot.common.core.vo.file.FileVO;
 import com.ctd.springboot.common.core.vo.result.ResultVO;
 import com.ctd.springboot.upload.file.service.file.FileService;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -14,6 +15,7 @@ import org.springframework.web.multipart.MultipartFile;
  * @date 2020/8/22 17:45
  * @since 1.0
  */
+@Api(tags = "文件上传")
 @RestController
 @RequestMapping("file")
 public class FileController {
@@ -36,9 +38,26 @@ public class FileController {
         return ResultVO.succeed(fileService.pathMultipartImage(path, file));
     }
 
-    /***
+    /**
+     * uploadFile
      *
-     * @param path path
+     * @param path     path
+     * @param fileName fileName
+     * @param file     file
+     * @return ResultVO<FileVO>
+     */
+    @ApiOperation("上传文件")
+    @PostMapping("uploadFile")
+    public ResultVO<FileVO> uploadFile(@RequestParam("path") String path,
+                                       @RequestParam("fileName") String fileName,
+                                       @RequestBody MultipartFile file) {
+        return ResultVO.succeed(fileService.pathMultipartFile(path, fileName, file));
+    }
+
+    /**
+     * delete
+     *
+     * @param path     path
      * @param fileName fileName
      * @return
      */
@@ -48,9 +67,10 @@ public class FileController {
         return ResultVO.succeed(fileService.deleteFile(path, fileName));
     }
 
-    /***
+    /**
+     * deletes
      *
-     * @param path path
+     * @param path      path
      * @param fileNames fileNames
      * @return
      */

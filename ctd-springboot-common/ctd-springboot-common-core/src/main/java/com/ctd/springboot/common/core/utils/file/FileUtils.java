@@ -132,17 +132,24 @@ public class FileUtils {
     /**
      * initFileVO
      *
-     * @param size     size
-     * @param fileName fileName
-     * @param prefix   prefix
+     * @param size          size
+     * @param fileName      fileName
+     * @param prefix        prefix
+     * @param isNewFileName isNewFileName
      * @return FileVO
      */
-    public static FileVO initFileVO(Long size, String fileName, String prefix) {
+    public static FileVO initFileVO(Long size, String fileName, String prefix, boolean isNewFileName) {
         FileVO file = new FileVO();
         file.setFileSize(size);
         file.setId(uuid());
+        fileName = StringUtils.isNoneBlank(fileName) ? fileName.replace("." + prefix, "").concat(".").concat(prefix) : fileName;
         file.setOriginalFileName(fileName);
-        String newFileName = newFileName(fileName, prefix);
+        String newFileName;
+        if (isNewFileName) {
+            newFileName = newFileName(fileName, prefix);
+        } else {
+            newFileName = file.getOriginalFileName();
+        }
         file.setNewFileName(newFileName);
         file.setUploadTime(new Date());
         return file;

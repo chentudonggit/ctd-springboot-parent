@@ -34,9 +34,9 @@ public class FileServiceImpl implements FileService {
      * @return FileVO
      */
     @Override
-    public FileVO upload(String fileName, String prefix, Long size, Byte[] bytes, String path) {
+    public FileVO upload(String fileName, String prefix, Long size, Byte[] bytes, String path, Boolean isNewFileName) {
         isNull(fileName, prefix, path, bytes);
-        FileVO file = FileUtils.initFileVO(size, fileName, prefix);
+        FileVO file = FileUtils.initFileVO(size, fileName, prefix, isNewFileName);
         FileUtils.addFile(path, file.getNewFileName(), bytes);
         return file;
     }
@@ -55,7 +55,7 @@ public class FileServiceImpl implements FileService {
     public FileVO uploadImage(String fileName, String prefix, Long size, Byte[] bytes, String path) {
         isNull(fileName, prefix, path, bytes);
         ImageUtils.isPrefix(prefix);
-        return upload(fileName, prefix, size, bytes, path);
+        return upload(fileName, prefix, size, bytes, path, true);
     }
 
     /**
@@ -121,7 +121,7 @@ public class FileServiceImpl implements FileService {
         AssertUtils.isNull(files, "files 不能为空");
         List<FileVO> result = new ArrayList<>(files.length);
         for (RequestFileVO file : files) {
-            result.add(upload(file.getFileName(), file.getPrefix(), file.getSize(), file.getBytes(), path));
+            result.add(upload(file.getFileName(), file.getPrefix(), file.getSize(), file.getBytes(), path, true));
         }
         return result;
     }
@@ -156,7 +156,25 @@ public class FileServiceImpl implements FileService {
     public FileVO pathMultipartFile(String path, MultipartFile file) {
         String fileName = file.getOriginalFilename();
         try {
-            return upload(fileName, FilenameUtils.getExtension(fileName), file.getSize(), FileUtils.copy(file.getBytes()), path);
+            return upload(fileName, FilenameUtils.getExtension(fileName), file.getSize(), FileUtils.copy(file.getBytes()), path, true);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    /**
+     * 上传文件
+     *
+     * @param path     path
+     * @param fileName fileName
+     * @param file     file
+     * @return FileVO
+     */
+    @Override
+    public FileVO pathMultipartFile(String path, String fileName, MultipartFile file) {
+        try {
+            return upload(fileName, FilenameUtils.getExtension(file.getOriginalFilename()), file.getSize(), FileUtils.copy(file.getBytes()), path, false);
         } catch (Exception e) {
             e.printStackTrace();
         }

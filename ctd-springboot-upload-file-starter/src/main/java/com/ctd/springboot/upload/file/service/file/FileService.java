@@ -23,11 +23,12 @@ public interface FileService {
     /**
      * 单个文件上传
      *
-     * @param fileName fileName
-     * @param prefix   prefix
-     * @param size     size
-     * @param bytes    bytes
-     * @param path     path
+     * @param fileName      fileName
+     * @param prefix        prefix
+     * @param size          size
+     * @param bytes         bytes
+     * @param path          path
+     * @param isNewFileName isNewFileName
      * @return FileVO
      */
     @RequestMapping(value = "upload")
@@ -35,7 +36,8 @@ public interface FileService {
                   @RequestParam("prefix") String prefix,
                   @RequestParam("size") Long size,
                   @RequestParam("bytes") Byte[] bytes,
-                  @RequestParam("path") String path);
+                  @RequestParam("path") String path,
+                  @RequestParam(value = "isNewFileName", defaultValue = "true") Boolean isNewFileName);
 
     /**
      * 图片上传
@@ -123,6 +125,19 @@ public interface FileService {
      */
     @RequestMapping("pathMultipartFile")
     FileVO pathMultipartFile(@RequestParam("path") String path, @RequestBody MultipartFile file);
+
+    /**
+     * 上传文件
+     *
+     * @param path     path
+     * @param fileName fileName
+     * @param file     file
+     * @return FileVO
+     */
+    @RequestMapping("pathMultipartFileName")
+    FileVO pathMultipartFile(@RequestParam("path") String path,
+                             @RequestParam("fileName") String fileName,
+                             @RequestBody MultipartFile file);
 
     /**
      * 上传图片
