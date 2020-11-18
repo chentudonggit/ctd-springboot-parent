@@ -67,9 +67,15 @@
         <springfox-core.version>2.9.2</springfox-core.version>
         <pinyin4j.version>2.5.0</pinyin4j.version>
         <bcprov-jdk.version>1.55</bcprov-jdk.version>
+        <disruptor.version>3.3.4</disruptor.version>
     </properties>
     <dependencyManagement>
         <dependencies>
+            <dependency>
+                <groupId>com.lmax</groupId>
+                <artifactId>disruptor</artifactId>
+                <version>${disruptor.version}</version>
+            </dependency>
             <dependency>
                 <groupId>org.bouncycastle</groupId>
                 <artifactId>bcprov-jdk15on</artifactId>
