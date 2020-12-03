@@ -9,7 +9,7 @@ import java.util.Random;
  * @date 2020/12/3 21:08
  * @since 1.0
  */
-public class SixCodeUtils {
+public class CodeUtils {
 
     /**
      * 自定义进制(0,1没有加入,容易与o,l混淆)
