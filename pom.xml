@@ -66,7 +66,7 @@
         <easypoi.version>3.0.3</easypoi.version>
         <springfox-core.version>2.9.2</springfox-core.version>
         <pinyin4j.version>2.5.0</pinyin4j.version>
-        <bcprov-jdk.version>1.55</bcprov-jdk.version>
+        <bcprov-jdk.version>1.67</bcprov-jdk.version>
         <disruptor.version>3.3.4</disruptor.version>
     </properties>
     <dependencyManagement>
