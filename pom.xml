@@ -59,7 +59,7 @@
         <spring-boot-maven-plugin.version>2.1.1.RELEASE</spring-boot-maven-plugin.version>
         <txlcn.version>5.0.2.RELEASE</txlcn.version>
         <reactor-core.version>3.3.8.RELEASE</reactor-core.version>
-        <spring-webflux.version>5.2.8.RELEASE</spring-webflux.version>
+        <spring-webflux.version>5.3.18</spring-webflux.version>
         <thumbnailator.version>0.4.8</thumbnailator.version>
         <commons-io.version>2.6</commons-io.version>
         <oracle.version>11.2.0.3.0</oracle.version>
